@@ -85,7 +85,7 @@ const Compare = () => {
                     >
                       <img
                         src={
-                          process.env.VITE_APP_URL +
+                          
                           "/assets/img/icons/close.svg"
                         }
                         className="svg_img"

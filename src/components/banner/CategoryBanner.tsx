@@ -12,7 +12,7 @@ const CategoryBanner = () => {
                   <span className="lbl">70% Off</span>
                   <img
                     src={
-                      process.env.VITE_APP_URL + "/assets/img/banner/5.jpg"
+                       "/assets/img/banner/5.jpg"
                     }
                     alt="banner"
                   />
@@ -34,7 +34,7 @@ const CategoryBanner = () => {
                   <span className="lbl">50% Off</span>
                   <img
                     src={
-                      process.env.VITE_APP_URL + "/assets/img/banner/6.jpg"
+                       "/assets/img/banner/6.jpg"
                     }
                     alt="banner"
                   />

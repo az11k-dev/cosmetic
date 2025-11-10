@@ -28,7 +28,7 @@ const MultiCatalog = () => {
             <Col lg={12}>
               <div className="gi-page-description">
                 <img
-                  src={process.env.VITE_APP_URL + "/assets/img/vendor/1.jpg"}
+                  src={ "/assets/img/vendor/1.jpg"}
                   alt="vendor"
                 />
                 <div className="detail">
@@ -130,7 +130,7 @@ const MultiCatalog = () => {
             <Col lg={12}>
               <div className="gi-page-description">
                 <img
-                  src={process.env.VITE_APP_URL + "/assets/img/vendor/3.jpg"}
+                  src={ "/assets/img/vendor/3.jpg"}
                   alt="vendor"
                 />
                 <div className="detail">

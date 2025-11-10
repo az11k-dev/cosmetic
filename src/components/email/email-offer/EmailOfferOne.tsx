@@ -85,7 +85,7 @@ const EmailConformOne = () => {
                             title="Image"
                             alt="Image"
                             src={
-                              process.env.VITE_APP_URL +
+                              
                               "/assets/img/logo/logo.png"
                             }
                             width="174"
@@ -154,7 +154,7 @@ const EmailConformOne = () => {
                             title="Image"
                             alt="Image"
                             src={
-                              process.env.VITE_APP_URL +
+                              
                               "/assets/img/email/6.jpg"
                             }
                             width="300"
@@ -314,7 +314,7 @@ const EmailConformOne = () => {
                             }}
                             title="I'm an image"
                             src={
-                              process.env.VITE_APP_URL +
+                              
                               "/assets/img/product-images/36_1.jpg"
                             }
                             alt="I'm an image"
@@ -378,7 +378,7 @@ const EmailConformOne = () => {
                             }}
                             title="I'm an image"
                             src={
-                              process.env.VITE_APP_URL +
+                              
                               "/assets/img/product-images/37_1.jpg"
                             }
                             alt="I'm an image"
@@ -442,7 +442,7 @@ const EmailConformOne = () => {
                             }}
                             title="I'm an image"
                             src={
-                              process.env.VITE_APP_URL +
+                              
                               "/assets/img/product-images/33_1.jpg"
                             }
                             alt="I'm an image"

@@ -68,7 +68,7 @@ const HeaderBottom = ({ cartItems, wishlistItems }: any) => {
                   <Link to="/">
                     <img
                       src={
-                        process.env.VITE_APP_URL +
+                        
                         "/assets/img/logo/logo.png"
                       }
                       alt="Site Logo"

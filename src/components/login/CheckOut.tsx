@@ -580,7 +580,7 @@ const CheckOut = () => {
                         <div className="gi-check-pay-img">
                           <img
                             src={
-                              process.env.VITE_APP_URL +
+                              
                               "/assets/img/hero-bg/payment.png"
                             }
                             alt="payment"

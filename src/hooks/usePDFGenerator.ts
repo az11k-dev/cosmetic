@@ -23,7 +23,7 @@ export const usePDFGenerator = (options: PDFGeneratorOptions = {}) => {
     pageSize: pageSize,
     margins: margins,
     contentId: "pdf-content",
-    cssPath: process.env.VITE_APP_URL + "/assets/css/style.css",
+    cssPath:  "/assets/css/style.css",
     additionalStyles: `
       .no-print { display: none }
       .print-only { display: block }

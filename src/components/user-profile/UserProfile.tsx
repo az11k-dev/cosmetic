@@ -75,7 +75,7 @@ const UserProfile = () => {
                       <img
                         src={
                           userData.profilePhoto ||
-                          process.env.VITE_APP_URL +
+                          
                             "/assets/img/avatar/placeholder.jpg"
                         }
                         alt="vendor"

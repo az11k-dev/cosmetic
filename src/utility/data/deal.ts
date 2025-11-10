@@ -5,9 +5,9 @@ const deal: Deal[] = [
   {
     title: "Mixed Nuts Berries Pack",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/6_1.jpg",
+    image:  "/assets/img/product-images/6_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/6_2.jpg",
+       "/assets/img/product-images/6_2.jpg",
     category: "Dried Fruits",
     oldPrice: 45.0,
     newPrice: 56.0,
@@ -23,9 +23,9 @@ const deal: Deal[] = [
   {
     title: "Multi Grain Combo Cookies",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/3_1.jpg",
+    image:  "/assets/img/product-images/3_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/3_1.jpg",
+       "/assets/img/product-images/3_1.jpg",
     category: "Cookies",
     weight: "10kg",
     oldPrice: 25.0,
@@ -41,9 +41,9 @@ const deal: Deal[] = [
   {
     title: "Fresh Mango juice pack",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/9_1.jpg",
+    image:  "/assets/img/product-images/9_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/9_2.jpg",
+       "/assets/img/product-images/9_2.jpg",
     category: "Foods",
     oldPrice: 46.0,
     newPrice: 65.0,
@@ -59,9 +59,9 @@ const deal: Deal[] = [
   {
     title: "Dates Value Fresh Pouch",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/2_1.jpg",
+    image:  "/assets/img/product-images/2_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/2_2.jpg",
+       "/assets/img/product-images/2_2.jpg",
     category: "Dried Fruits",
     oldPrice: 78.0,
     newPrice: 85.0,
@@ -77,9 +77,9 @@ const deal: Deal[] = [
   {
     title: "Stick Fiber Masala Magic",
     sale: "New",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/1_1.jpg",
+    image:  "/assets/img/product-images/1_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/1_2.jpg",
+       "/assets/img/product-images/1_2.jpg",
     category: "Foods",
     oldPrice: 45.0,
     newPrice: 50.0,
@@ -95,9 +95,9 @@ const deal: Deal[] = [
   {
     title: "Natural Hub Cherry Karonda",
     sale: "New",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/24_1.jpg",
+    image:  "/assets/img/product-images/24_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/24_1.jpg",
+       "/assets/img/product-images/24_1.jpg",
     category: "Fresh Fruit",
     oldPrice: 49.0,
     newPrice: 65.0,
@@ -113,9 +113,9 @@ const deal: Deal[] = [
   {
     title: "Fresh Mango juice pack",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/9_1.jpg",
+    image:  "/assets/img/product-images/9_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/9_2.jpg",
+       "/assets/img/product-images/9_2.jpg",
     category: "Foods",
     oldPrice: 20.0,
     newPrice: 21.0,
@@ -131,9 +131,9 @@ const deal: Deal[] = [
   {
     title: "Fresh Organic Ginger Pack",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/17_1.jpg",
+    image:  "/assets/img/product-images/17_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/17_1.jpg",
+       "/assets/img/product-images/17_1.jpg",
     category: "Tuber root",
     oldPrice: 2.0,
     newPrice: 3.0,

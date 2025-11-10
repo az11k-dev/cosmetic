@@ -57,7 +57,7 @@ function Footer() {
                     <div className="gi-footer-widget gi-footer-company">
                       <img
                         src={
-                          process.env.VITE_APP_URL +
+                          
                           "/assets/img/logo/logo.png"
                         }
                         className="gi-footer-logo"
@@ -71,7 +71,7 @@ function Footer() {
                         <a className="app-img">
                           <img
                             src={
-                              process.env.VITE_APP_URL +
+                              
                               "/assets/img/app/android.png"
                             }
                             className="adroid"
@@ -81,7 +81,7 @@ function Footer() {
                         <a className="app-img">
                           <img
                             src={
-                              process.env.VITE_APP_URL +
+                              
                               "/assets/img/app/apple.png"
                             }
                             className="apple"
@@ -392,7 +392,7 @@ function Footer() {
                       <div className="payment-link">
                         <img
                           src={
-                            process.env.VITE_APP_URL +
+                            
                             "/assets/img/hero-bg/payment.png"
                           }
                           alt="payment"

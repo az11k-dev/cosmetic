@@ -36,7 +36,7 @@ const UserInvoice = () => {
                   <div className="gi-Track-image-inner">
                     <img
                       src={
-                        process.env.VITE_APP_URL +
+                        
                         "/assets/img/logo/logo.png"
                       }
                       alt="Site Logo"

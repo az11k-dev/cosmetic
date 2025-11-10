@@ -112,7 +112,7 @@ const BlogDetailFullwidth = ({ order = "" }: any) => {
                   <a>
                     <img
                       src={
-                        process.env.VITE_APP_URL + "/assets/img/blog/8.jpg"
+                         "/assets/img/blog/8.jpg"
                       }
                       alt="news imag"
                     />
@@ -152,7 +152,7 @@ const BlogDetailFullwidth = ({ order = "" }: any) => {
                       <div className="col-md-6">
                         <img
                           src={
-                            process.env.VITE_APP_URL +
+                            
                             "/assets/img/blog/3.jpg"
                           }
                           alt="blog"
@@ -161,7 +161,7 @@ const BlogDetailFullwidth = ({ order = "" }: any) => {
                       <div className="col-md-6">
                         <img
                           src={
-                            process.env.VITE_APP_URL +
+                            
                             "/assets/img/blog/4.jpg"
                           }
                           alt="blog"
@@ -200,7 +200,7 @@ const BlogDetailFullwidth = ({ order = "" }: any) => {
                         <img
                           src={
                             data.profilePhoto ||
-                            process.env.VITE_APP_URL +
+                            
                               "/assets/img/avatar/placeholder.jpg"
                           }
                           alt="blog image"
@@ -240,7 +240,7 @@ const BlogDetailFullwidth = ({ order = "" }: any) => {
                           <img
                             src={
                               reply.profilePhoto ||
-                              process.env.VITE_APP_URL +
+                              
                                 "/assets/img/avatar/placeholder.jpg"
                             }
                             alt="blog image"

@@ -234,7 +234,7 @@ const Header = () => {
                     <Link to="/">
                       <img
                         src={
-                          process.env.VITE_APP_URL +
+                          
                           "/assets/img/logo/logo-2.png"
                         }
                         alt="Site Logo"

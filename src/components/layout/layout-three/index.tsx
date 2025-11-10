@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 const LayoutThree = ({ children }: any) => {
   useEffect(() => {
-    const cssFilePath = process.env.VITE_APP_URL + "/assets/css/demo-3.css";
+    const cssFilePath =  "/assets/css/demo-3.css";
     const link = document.createElement("link");
     link.href = cssFilePath;
     link.rel = "stylesheet";

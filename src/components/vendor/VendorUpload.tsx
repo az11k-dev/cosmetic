@@ -29,10 +29,10 @@ const VendorUpload = () => {
   });
 
   const [images, setImages] = useState<string[]>([
-    process.env.VITE_APP_URL + "/assets/img/product-images/10_1.jpg",
-    process.env.VITE_APP_URL + "/assets/img/product-images/6_1.jpg",
-    process.env.VITE_APP_URL + "/assets/img/product-images/7_1.jpg",
-    process.env.VITE_APP_URL + "/assets/img/product-images/8_1.jpg",
+     "/assets/img/product-images/10_1.jpg",
+     "/assets/img/product-images/6_1.jpg",
+     "/assets/img/product-images/7_1.jpg",
+     "/assets/img/product-images/8_1.jpg",
   ]);
 
   if (!login) {
@@ -243,7 +243,7 @@ const VendorUpload = () => {
                                   <img
                                     className="gi-image-preview"
                                     src={
-                                      process.env.VITE_APP_URL +
+                                      
                                       "/assets/img/product-images/6_1.jpg"
                                     }
                                     alt="product"
@@ -271,7 +271,7 @@ const VendorUpload = () => {
                                   <img
                                     className="gi-image-preview"
                                     src={
-                                      process.env.VITE_APP_URL +
+                                      
                                       "/assets/img/product-images/7_1.jpg"
                                     }
                                     alt="product"
@@ -299,7 +299,7 @@ const VendorUpload = () => {
                                   <img
                                     className="gi-image-preview"
                                     src={
-                                      process.env.VITE_APP_URL +
+                                      
                                       "/assets/img/product-images/8_1.jpg"
                                     }
                                     alt="product"

@@ -2,7 +2,7 @@ import { Wishlist } from "@/types/data.types";
 
 const wishlist: Wishlist[] = [
   {
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/1_1.jpg",
+    image:  "/assets/img/product-images/1_1.jpg",
     title: "Californian Almonds Value 250g + 50g Pack",
     date: "June 30, 2026",
     status: "Available",
@@ -10,7 +10,7 @@ const wishlist: Wishlist[] = [
     waight: "",
   },
   {
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/10_1.jpg",
+    image:  "/assets/img/product-images/10_1.jpg",
     date: "April 02, 2025",
     title: "Healthy Nutmix, 200g Pack",
     status: "Out Of Stock",
@@ -18,7 +18,7 @@ const wishlist: Wishlist[] = [
     waight: "",
   },
   {
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/15_1.jpg",
+    image:  "/assets/img/product-images/15_1.jpg",
     date: "Mar 09, 2026",
     title: "Capsicum - Red",
     status: "Available",
@@ -26,7 +26,7 @@ const wishlist: Wishlist[] = [
     waight: "",
   },
   {
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/17_1.jpg",
+    image:  "/assets/img/product-images/17_1.jpg",
     date: "January 25, 2027",
     title: "Ginger - Organic",
     status: "Out Of Stock",
@@ -35,7 +35,7 @@ const wishlist: Wishlist[] = [
 
   },
   {
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/18_1.jpg",
+    image:  "/assets/img/product-images/18_1.jpg",
     date: "December 10, 2025",
     title: "Lemon - Seedless",
     status: "Out Of Stock",
@@ -44,7 +44,7 @@ const wishlist: Wishlist[] = [
 
   },
   {
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/20_1.jpg",
+    image:  "/assets/img/product-images/20_1.jpg",
     date: "August 08, 2024",
     title: "Organic fresh Broccoli",
     status: "Disabled",
@@ -53,7 +53,7 @@ const wishlist: Wishlist[] = [
 
   },
   {
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/25_1.jpg",
+    image:  "/assets/img/product-images/25_1.jpg",
     date: "August 08, 2024",
     title: "Fresh Lichi",
     status: "Available",

@@ -37,7 +37,7 @@ const BlogDetail = ({ order = "" }: any) => {
       email: "john@example.com",
       comment: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
       date: "October 14, 2025",
-      profilePhoto: process.env.VITE_APP_URL + "/assets/img/user/2.jpg",
+      profilePhoto:  "/assets/img/user/2.jpg",
       replies: [],
     },
     {
@@ -46,7 +46,7 @@ const BlogDetail = ({ order = "" }: any) => {
       email: "jenifer@example.com",
       comment: "Lorem ipsum dolor sit amet, consectetur adipisicing elit.",
       date: "October 14, 2025",
-      profilePhoto: process.env.VITE_APP_URL + "/assets/img/user/1.jpg",
+      profilePhoto:  "/assets/img/user/1.jpg",
       replies: [],
     },
   ]);
@@ -130,7 +130,7 @@ const BlogDetail = ({ order = "" }: any) => {
                   <a>
                     <img
                       src={
-                        process.env.VITE_APP_URL + "/assets/img/blog/8.jpg"
+                         "/assets/img/blog/8.jpg"
                       }
                       alt="news imag"
                     />
@@ -170,7 +170,7 @@ const BlogDetail = ({ order = "" }: any) => {
                       <div className="col-md-6">
                         <img
                           src={
-                            process.env.VITE_APP_URL +
+                            
                             "/assets/img/blog/3.jpg"
                           }
                           alt="blog"
@@ -179,7 +179,7 @@ const BlogDetail = ({ order = "" }: any) => {
                       <div className="col-md-6">
                         <img
                           src={
-                            process.env.VITE_APP_URL +
+                            
                             "/assets/img/blog/4.jpg"
                           }
                           alt="blog"
@@ -219,7 +219,7 @@ const BlogDetail = ({ order = "" }: any) => {
                             <img
                               src={
                                 data.profilePhoto ||
-                                process.env.VITE_APP_URL +
+                                
                                   "/assets/img/avatar/placeholder.jpg"
                               }
                               alt="blog image"
@@ -260,7 +260,7 @@ const BlogDetail = ({ order = "" }: any) => {
                               <img
                                 src={
                                   reply.profilePhoto ||
-                                  process.env.VITE_APP_URL +
+                                  
                                     "/assets/img/avatar/placeholder.jpg"
                                 }
                                 alt="blog image"

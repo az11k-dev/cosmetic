@@ -5,9 +5,9 @@ export const shopitem: Item[] = [
   {
     title: "Mixed Nuts Berries Pack",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/6_1.jpg",
+    image:  "/assets/img/product-images/6_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/6_2.jpg",
+       "/assets/img/product-images/6_2.jpg",
     category: "Dried Fruit",
     oldPrice: 45.0,
     newPrice: 56.0,
@@ -26,9 +26,9 @@ export const shopitem: Item[] = [
   {
     title: "Multi Grain Combo Cookies",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/3_1.jpg",
+    image:  "/assets/img/product-images/3_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/3_1.jpg",
+       "/assets/img/product-images/3_1.jpg",
     category: "Cookies",
     weight: "10kg",
     oldPrice: 25.0,
@@ -48,9 +48,9 @@ export const shopitem: Item[] = [
     title: "Dates Value Fresh Pouch",
     sale: "Sale",
     status: "Out Of Stock",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/2_1.jpg",
+    image:  "/assets/img/product-images/2_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/2_2.jpg",
+       "/assets/img/product-images/2_2.jpg",
     category: "Dried Fruit",
     oldPrice: 78.0,
     newPrice: 85.0,
@@ -68,9 +68,9 @@ export const shopitem: Item[] = [
   {
     title: "Stick Fiber Masala Magic",
     sale: "New",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/1_1.jpg",
+    image:  "/assets/img/product-images/1_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/1_2.jpg",
+       "/assets/img/product-images/1_2.jpg",
     category: "Foods",
     oldPrice: 45.0,
     newPrice: 50.0,
@@ -90,9 +90,9 @@ export const shopitem: Item[] = [
     title: "Natural Hub Cherry Karonda",
     sale: "New",
     status: "Available",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/24_1.jpg",
+    image:  "/assets/img/product-images/24_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/24_1.jpg",
+       "/assets/img/product-images/24_1.jpg",
     category: "Fresh Fruit",
     oldPrice: 49.0,
     newPrice: 65.0,
@@ -110,9 +110,9 @@ export const shopitem: Item[] = [
   {
     title: "Fresh Mango juice pack",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/9_1.jpg",
+    image:  "/assets/img/product-images/9_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/9_2.jpg",
+       "/assets/img/product-images/9_2.jpg",
     category: "Foods",
     oldPrice: 20.0,
     newPrice: 21.0,
@@ -132,9 +132,9 @@ export const shopitem: Item[] = [
     title: "Fresh Organic Ginger Pack",
     sale: "",
     status: "Available",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/17_1.jpg",
+    image:  "/assets/img/product-images/17_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/17_1.jpg",
+       "/assets/img/product-images/17_1.jpg",
     category: "Tuber root",
     oldPrice: 2.0,
     newPrice: 3.0,
@@ -152,9 +152,9 @@ export const shopitem: Item[] = [
   {
     title: "Natural Hub Cherry Karonda",
     sale: "New",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/4_1.jpg",
+    image:  "/assets/img/product-images/4_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/4_2.jpg",
+       "/assets/img/product-images/4_2.jpg",
     category: "Foods",
     oldPrice: 49.0,
     newPrice: 65.0,
@@ -173,9 +173,9 @@ export const shopitem: Item[] = [
   {
     title: "Fresh Mango juice pack",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/25_1.jpg",
+    image:  "/assets/img/product-images/25_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/25_1.jpg",
+       "/assets/img/product-images/25_1.jpg",
     category: "Fresh Fruit",
     oldPrice: 20.0,
     newPrice: 21.0,
@@ -194,9 +194,9 @@ export const shopitem: Item[] = [
   {
     title: "Sweet Corn",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/16_1.jpg",
+    image:  "/assets/img/product-images/16_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/16_1.jpg",
+       "/assets/img/product-images/16_1.jpg",
     category: "Vegetables",
     oldPrice: 6.0,
     newPrice: 8.0,
@@ -215,9 +215,9 @@ export const shopitem: Item[] = [
   {
     title: "Fresh Organic Ginger Pack",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/17_1.jpg",
+    image:  "/assets/img/product-images/17_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/17_1.jpg",
+       "/assets/img/product-images/17_1.jpg",
     category: "Tuber root",
     oldPrice: 2.0,
     newPrice: 3.0,
@@ -236,9 +236,9 @@ export const shopitem: Item[] = [
   {
     title: "Kamalam Fruit",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/22_1.jpg",
+    image:  "/assets/img/product-images/22_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/22_1.jpg",
+       "/assets/img/product-images/22_1.jpg",
     category: "Fresh Fruit",
     weight: "3pcs",
     oldPrice: 15.0,
@@ -257,9 +257,9 @@ export const shopitem: Item[] = [
   {
     title: "Blue berry",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/23_1.jpg",
+    image:  "/assets/img/product-images/23_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/23_1.jpg",
+       "/assets/img/product-images/23_1.jpg",
     category: "Fresh Fruit",
     oldPrice: 11.0,
     newPrice: 12.0,
@@ -278,9 +278,9 @@ export const shopitem: Item[] = [
   {
     title: "Kamalam Fruit",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/22_1.jpg",
+    image:  "/assets/img/product-images/22_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/22_1.jpg",
+       "/assets/img/product-images/22_1.jpg",
     category: "Fresh Fruit",
     weight: "3pcs",
     oldPrice: 15.0,
@@ -299,9 +299,9 @@ export const shopitem: Item[] = [
   {
     title: "Smoked Honey Spiced Nuts",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/8_1.jpg",
+    image:  "/assets/img/product-images/8_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/8_1.jpg",
+       "/assets/img/product-images/8_1.jpg",
     category: "Snacks",
     oldPrice: 11.0,
     newPrice: 12.0,
@@ -320,9 +320,9 @@ export const shopitem: Item[] = [
   {
     title: "Printed Round Neck Tshirt",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/39_1.jpg",
+    image:  "/assets/img/product-images/39_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/39_2.jpg",
+       "/assets/img/product-images/39_2.jpg",
     category: "unisex",
     oldPrice: 32.0,
     newPrice: 45.0,
@@ -341,9 +341,9 @@ export const shopitem: Item[] = [
   {
     title: "Rose Gold Earring",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/53_1.jpg",
+    image:  "/assets/img/product-images/53_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/53_1.jpg",
+       "/assets/img/product-images/53_1.jpg",
     category: "jewellery",
     href: "",
     oldPrice: 60.0,

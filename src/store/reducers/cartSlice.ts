@@ -14,9 +14,9 @@ const defaultItems: Item[] = [
   {
     id: 1,
     title: "Women's wallet Hand Purse",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/48_1.jpg",
+    image:  "/assets/img/product-images/48_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/48_1.jpg",
+       "/assets/img/product-images/48_1.jpg",
     oldPrice: 50.0,
     newPrice: 70.0,
     date: "",
@@ -33,9 +33,9 @@ const defaultItems: Item[] = [
     id: 2,
     title: "Rose Gold Earring",
     date: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/53_1.jpg",
+    image:  "/assets/img/product-images/53_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/53_1.jpg",
+       "/assets/img/product-images/53_1.jpg",
     rating: 4,
     oldPrice: 60.0,
     newPrice: 80.0,
@@ -50,9 +50,9 @@ const defaultItems: Item[] = [
   {
     id: 161,
     title: "Apple",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/21_1.jpg",
+    image:  "/assets/img/product-images/21_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/21_1.jpg",
+       "/assets/img/product-images/21_1.jpg",
     oldPrice: 10.0,
     newPrice: 12.0,
     date: "",
@@ -80,9 +80,9 @@ const defaultOrders: object[] = [
         id: 1,
         title: "Women's wallet Hand Purse",
         image:
-          process.env.VITE_APP_URL + "/assets/img/product-images/48_1.jpg",
+           "/assets/img/product-images/48_1.jpg",
         imageTwo:
-          process.env.VITE_APP_URL + "/assets/img/product-images/48_1.jpg",
+           "/assets/img/product-images/48_1.jpg",
         oldPrice: 50,
         newPrice: 70,
         date: "",
@@ -100,9 +100,9 @@ const defaultOrders: object[] = [
         title: "Rose Gold Earring",
         date: "",
         image:
-          process.env.VITE_APP_URL + "/assets/img/product-images/53_1.jpg",
+           "/assets/img/product-images/53_1.jpg",
         imageTwo:
-          process.env.VITE_APP_URL + "/assets/img/product-images/53_1.jpg",
+           "/assets/img/product-images/53_1.jpg",
         rating: 4,
         oldPrice: 60,
         newPrice: 80,
@@ -118,9 +118,9 @@ const defaultOrders: object[] = [
         id: 3,
         title: "Apple",
         image:
-          process.env.VITE_APP_URL + "/assets/img/product-images/21_1.jpg",
+           "/assets/img/product-images/21_1.jpg",
         imageTwo:
-          process.env.VITE_APP_URL + "/assets/img/product-images/21_1.jpg",
+           "/assets/img/product-images/21_1.jpg",
         oldPrice: 10,
         newPrice: 12,
         date: "",
@@ -159,9 +159,9 @@ const defaultOrders: object[] = [
         title: "Multi Grain Combo Cookies",
         sale: "Sale",
         image:
-          process.env.VITE_APP_URL + "/assets/img/product-images/3_1.jpg",
+           "/assets/img/product-images/3_1.jpg",
         imageTwo:
-          process.env.VITE_APP_URL + "/assets/img/product-images/3_1.jpg",
+           "/assets/img/product-images/3_1.jpg",
         category: "Cookies",
         waight: "10 kg",
         oldPrice: 25,
@@ -178,9 +178,9 @@ const defaultOrders: object[] = [
         title: "Fresh Mango juice pack",
         sale: "",
         image:
-          process.env.VITE_APP_URL + "/assets/img/product-images/9_1.jpg",
+           "/assets/img/product-images/9_1.jpg",
         imageTwo:
-          process.env.VITE_APP_URL + "/assets/img/product-images/9_2.jpg",
+           "/assets/img/product-images/9_2.jpg",
         category: "Foods",
         oldPrice: 46,
         newPrice: 65,
@@ -197,9 +197,9 @@ const defaultOrders: object[] = [
         title: "Mixed Nuts Berries Pack",
         sale: "Sale",
         image:
-          process.env.VITE_APP_URL + "/assets/img/product-images/6_1.jpg",
+           "/assets/img/product-images/6_1.jpg",
         imageTwo:
-          process.env.VITE_APP_URL + "/assets/img/product-images/6_2.jpg",
+           "/assets/img/product-images/6_2.jpg",
         category: "Dried Fruits",
         oldPrice: 45,
         newPrice: 56,
@@ -238,9 +238,9 @@ const defaultOrders: object[] = [
         title: "Fresh Organic Ginger Pack",
         sale: "",
         image:
-          process.env.VITE_APP_URL + "/assets/img/product-images/17_1.jpg",
+           "/assets/img/product-images/17_1.jpg",
         imageTwo:
-          process.env.VITE_APP_URL + "/assets/img/product-images/17_1.jpg",
+           "/assets/img/product-images/17_1.jpg",
         category: "Tuber root",
         oldPrice: 2,
         newPrice: 3,
@@ -258,9 +258,9 @@ const defaultOrders: object[] = [
         title: "Natural Hub Cherry Karonda",
         sale: "New",
         image:
-          process.env.VITE_APP_URL + "/assets/img/product-images/4_1.jpg",
+           "/assets/img/product-images/4_1.jpg",
         imageTwo:
-          process.env.VITE_APP_URL + "/assets/img/product-images/4_2.jpg",
+           "/assets/img/product-images/4_2.jpg",
         category: "Foods",
         oldPrice: 49,
         newPrice: 65,
@@ -278,9 +278,9 @@ const defaultOrders: object[] = [
         title: "Fresh Mango juice pack",
         sale: "",
         image:
-          process.env.VITE_APP_URL + "/assets/img/product-images/25_1.jpg",
+           "/assets/img/product-images/25_1.jpg",
         imageTwo:
-          process.env.VITE_APP_URL + "/assets/img/product-images/25_1.jpg",
+           "/assets/img/product-images/25_1.jpg",
         category: "Fresh Fruit ",
         oldPrice: 20,
         newPrice: 21,

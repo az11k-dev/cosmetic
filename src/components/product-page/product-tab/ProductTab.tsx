@@ -23,7 +23,7 @@ const ProductTab = () => {
       rating: 3,
       comment:
         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...",
-      avatar: process.env.VITE_APP_URL + "/assets/img/avatar/placeholder.jpg",
+      avatar:  "/assets/img/avatar/placeholder.jpg",
     },
   ]);
 
@@ -55,7 +55,7 @@ const ProductTab = () => {
             rating,
             comment,
             avatar:
-              userData.profilePhoto || (process.env.VITE_APP_URL + "/assets/img/avatar/placeholder.jpg"),
+              userData.profilePhoto || ( "/assets/img/avatar/placeholder.jpg"),
           },
         ]);
 
@@ -239,7 +239,7 @@ const ProductTab = () => {
                     <span>
                       <img
                         src={
-                          process.env.VITE_APP_URL +
+                          
                           "/assets/img/vendor/3.jpg"
                         }
                         alt="vendor"
@@ -293,7 +293,7 @@ const ProductTab = () => {
                           <img
                             src={
                               data.avatar ||
-                              process.env.VITE_APP_URL +
+                              
                                 "/assets/img/avatar/placeholder.jpg"
                             }
                             alt="user"

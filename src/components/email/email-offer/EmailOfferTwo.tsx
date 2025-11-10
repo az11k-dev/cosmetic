@@ -51,7 +51,7 @@ const EmailOfferTwo = () => {
                     }}
                     title="Image"
                     alt="Image"
-                    src={process.env.VITE_APP_URL + "/assets/img/logo/logo-2.png"}
+                    src={ "/assets/img/logo/logo-2.png"}
                     width="101"
                   />
                 </div>
@@ -218,7 +218,7 @@ const EmailOfferTwo = () => {
                     display: 'block',
                   }}
                   title="I'm an image"
-                  src={process.env.VITE_APP_URL + "/assets/img/product-images/10_1.jpg"}
+                  src={ "/assets/img/product-images/10_1.jpg"}
                   alt="I'm an image"
                   width="290"
                 />
@@ -284,7 +284,7 @@ const EmailOfferTwo = () => {
                     display: 'block'
                   }}
                   title="Image"
-                  src={process.env.VITE_APP_URL + "/assets/img/product-images/14_1.jpg"}
+                  src={ "/assets/img/product-images/14_1.jpg"}
                   alt="Image"
                   width="290"
                 />
@@ -365,7 +365,7 @@ const EmailOfferTwo = () => {
                     display: 'block'
                   }}
                   title="I'm an image"
-                  src={process.env.VITE_APP_URL + "/assets/img/product-images/29_1.jpg"}
+                  src={ "/assets/img/product-images/29_1.jpg"}
                   alt="I'm an image"
                   width="290"
 
@@ -432,7 +432,7 @@ const EmailOfferTwo = () => {
                     display: 'block'
                   }}
                   title="Image"
-                  src={process.env.VITE_APP_URL + "/assets/img/product-images/16_1.jpg"}
+                  src={ "/assets/img/product-images/16_1.jpg"}
                   alt="Image"
                   width="290"
 
@@ -609,7 +609,7 @@ const EmailOfferTwo = () => {
                   }}
                   title="Image"
                   alt="Image"
-                  src={process.env.VITE_APP_URL + "/assets/img/logo/logo-2.png"}
+                  src={ "/assets/img/logo/logo-2.png"}
                   width="101"
 
                 />

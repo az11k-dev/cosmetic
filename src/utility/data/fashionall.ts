@@ -4,9 +4,9 @@ const fashionall: ProductItem[] = [
   {
     title: "Men's stylish printed shirt",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/32_1.jpg",
+    image:  "/assets/img/product-images/32_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/32_2.jpg",
+       "/assets/img/product-images/32_2.jpg",
     category: "men's wear",
     oldPrice: 59.0,
     newPrice: 87.0,
@@ -21,9 +21,9 @@ const fashionall: ProductItem[] = [
   {
     title: "Rose Gold Earring",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/53_1.jpg",
+    image:  "/assets/img/product-images/53_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/53_1.jpg",
+       "/assets/img/product-images/53_1.jpg",
     category: "jewellery",
     oldPrice: 60.0,
     newPrice: 80.0,
@@ -38,9 +38,9 @@ const fashionall: ProductItem[] = [
   {
     title: "Liquid Matte Lipstick",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/54_1.jpg",
+    image:  "/assets/img/product-images/54_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/54_1.jpg",
+       "/assets/img/product-images/54_1.jpg",
     category: "Lipstick",
     oldPrice: 20.0,
     newPrice: 30.0,
@@ -55,9 +55,9 @@ const fashionall: ProductItem[] = [
   {
     title: "Stylish printed women's dress",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/33_1.jpg",
+    image:  "/assets/img/product-images/33_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/33_1.jpg",
+       "/assets/img/product-images/33_1.jpg",
     category: "women's wear",
     oldPrice: 78.0,
     newPrice: 85.0,
@@ -72,9 +72,9 @@ const fashionall: ProductItem[] = [
   {
     title: "Printed Round Neck Tshirt",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/39_1.jpg",
+    image:  "/assets/img/product-images/39_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/39_2.jpg",
+       "/assets/img/product-images/39_2.jpg",
     category: "Unisex",
     oldPrice: 32.0,
     newPrice: 45.0,
@@ -89,9 +89,9 @@ const fashionall: ProductItem[] = [
   {
     title: "Long lasting perfume",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/50_1.jpg",
+    image:  "/assets/img/product-images/50_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/50_1.jpg",
+       "/assets/img/product-images/50_1.jpg",
     category: "perfume",
     oldPrice: 25.0,
     newPrice: 30.0,
@@ -106,9 +106,9 @@ const fashionall: ProductItem[] = [
   {
     title: "Women's sport shoes",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/45_1.jpg",
+    image:  "/assets/img/product-images/45_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/45_1.jpg",
+       "/assets/img/product-images/45_1.jpg",
     category: "Sports",
     oldPrice: 500.0,
     newPrice: 600.0,
@@ -123,9 +123,9 @@ const fashionall: ProductItem[] = [
   {
     title: "Men's Leather Belt",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/49_1.jpg",
+    image:  "/assets/img/product-images/49_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/49_1.jpg",
+       "/assets/img/product-images/49_1.jpg",
     category: "Belt",
     oldPrice: 15.0,
     newPrice: 17.0,
@@ -140,9 +140,9 @@ const fashionall: ProductItem[] = [
   {
     title: "Men's stylish printed shirt",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/32_1.jpg",
+    image:  "/assets/img/product-images/32_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/32_2.jpg",
+       "/assets/img/product-images/32_2.jpg",
     category: "men's wear",
     oldPrice: 59.0,
     newPrice: 87.0,
@@ -157,9 +157,9 @@ const fashionall: ProductItem[] = [
   {
     title: "Rose Gold Earring",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/53_1.jpg",
+    image:  "/assets/img/product-images/53_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/53_1.jpg",
+       "/assets/img/product-images/53_1.jpg",
     category: "jewellery",
     oldPrice: 60.0,
     newPrice: 80.0,
@@ -174,9 +174,9 @@ const fashionall: ProductItem[] = [
   {
     title: "Women's wallet Hand Purse",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/48_1.jpg",
+    image:  "/assets/img/product-images/48_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/48_1.jpg",
+       "/assets/img/product-images/48_1.jpg",
     category: "wallet",
     oldPrice: 50.0,
     newPrice: 70.0,
@@ -191,9 +191,9 @@ const fashionall: ProductItem[] = [
   {
     title: "Compact makeup kit",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/55_1.jpg",
+    image:  "/assets/img/product-images/55_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/55_1.jpg",
+       "/assets/img/product-images/55_1.jpg",
     category: "makeup kit",
     oldPrice: 78.0,
     newPrice: 85.0,

@@ -22,7 +22,7 @@ const DiscountContent = () => {
       rating: 3,
       comment:
         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...",
-      avatar: process.env.VITE_APP_URL + "/assets/img/avatar/placeholder.jpg",
+      avatar:  "/assets/img/avatar/placeholder.jpg",
     },
   ]);
 
@@ -53,7 +53,7 @@ const DiscountContent = () => {
             name: `${userData.firstName} ${userData.lastName}`,
             rating,
             comment,
-            avatar: userData.profilePhoto || (process.env.VITE_APP_URL + "/assets/img/avatar/placeholder.jpg"),
+            avatar: userData.profilePhoto || ( "/assets/img/avatar/placeholder.jpg"),
           },
         ]);
 
@@ -208,7 +208,7 @@ const DiscountContent = () => {
                     <span>
                       <img
                         src={
-                          process.env.VITE_APP_URL + "/assets/img/vendor/3.jpg"
+                           "/assets/img/vendor/3.jpg"
                         }
                         alt="vendor"
                       />
@@ -279,7 +279,7 @@ const DiscountContent = () => {
                             <img
                               src={
                                 data.avatar ||
-                                process.env.VITE_APP_URL +
+                                
                                   "/assets/img/avatar/placeholder.jpg"
                               }
                               alt="user"

@@ -30,7 +30,7 @@ const FashionTwoBanners = () => {
                       <span className="lbl">50% Off</span>
                       <img
                         src={
-                          process.env.VITE_APP_URL +
+                          
                           "/assets/img/banner/12.jpg"
                         }
                         alt="banner"
@@ -57,7 +57,7 @@ const FashionTwoBanners = () => {
                       <span className="lbl">50% Off</span>
                       <img
                         src={
-                          process.env.VITE_APP_URL +
+                          
                           "/assets/img/banner/13.jpg"
                         }
                         alt="banner"
@@ -89,7 +89,7 @@ const FashionTwoBanners = () => {
                       <span className="lbl">50% Off</span>
                       <img
                         src={
-                          process.env.VITE_APP_URL +
+                          
                           "/assets/img/banner/14.jpg"
                         }
                         alt="banner"

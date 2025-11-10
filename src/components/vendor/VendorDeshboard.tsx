@@ -180,7 +180,7 @@ const VendorDeshboard = () => {
                     <div className="detail">
                       <img
                         src={
-                          process.env.VITE_APP_URL +
+                          
                           "/assets/img/vendor/1.jpg"
                         }
                         alt="vendor"
@@ -321,7 +321,7 @@ const VendorDeshboard = () => {
                               <img
                                 className="prod-img"
                                 src={
-                                  process.env.VITE_APP_URL +
+                                  
                                   "/assets/img/product-images/1_1.jpg"
                                 }
                                 alt="product image"
@@ -350,7 +350,7 @@ const VendorDeshboard = () => {
                               <img
                                 className="prod-img"
                                 src={
-                                  process.env.VITE_APP_URL +
+                                  
                                   "/assets/img/product-images/2_1.jpg"
                                 }
                                 alt="product image"
@@ -379,7 +379,7 @@ const VendorDeshboard = () => {
                               <img
                                 className="prod-img"
                                 src={
-                                  process.env.VITE_APP_URL +
+                                  
                                   "/assets/img/product-images/3_1.jpg"
                                 }
                                 alt="product image"
@@ -408,7 +408,7 @@ const VendorDeshboard = () => {
                               <img
                                 className="prod-img"
                                 src={
-                                  process.env.VITE_APP_URL +
+                                  
                                   "/assets/img/product-images/4_1.jpg"
                                 }
                                 alt="product image"

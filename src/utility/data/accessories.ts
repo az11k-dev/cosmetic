@@ -4,9 +4,9 @@ const accessories: ProductItem[] = [
   {
     title: "Women's wallet Hand Purse",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/48_1.jpg",
+    image:  "/assets/img/product-images/48_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/48_1.jpg",
+       "/assets/img/product-images/48_1.jpg",
     category: "wallet",
     oldPrice: 50.0,
     newPrice: 70.0,
@@ -21,9 +21,9 @@ const accessories: ProductItem[] = [
   {
     title: "Men's Leather Belt",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/49_1.jpg",
+    image:  "/assets/img/product-images/49_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/49_1.jpg",
+       "/assets/img/product-images/49_1.jpg",
     category: "Belt",
     oldPrice: 15.0,
     newPrice: 17.0,
@@ -38,9 +38,9 @@ const accessories: ProductItem[] = [
   {
     title: "Long lasting perfume",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/50_1.jpg",
+    image:  "/assets/img/product-images/50_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/50_1.jpg",
+       "/assets/img/product-images/50_1.jpg",
     category: "perfume",
     oldPrice: 25.0,
     newPrice: 30.0,
@@ -55,9 +55,9 @@ const accessories: ProductItem[] = [
   {
     title: "anti dandruff shampoo",
     sale: "New",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/51_1.jpg",
+    image:  "/assets/img/product-images/51_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/51_1.jpg",
+       "/assets/img/product-images/51_1.jpg",
     category: "shampoo",
     oldPrice: 5.0,
     newPrice: 7.0,
@@ -72,9 +72,9 @@ const accessories: ProductItem[] = [
   {
     title: "Body Lotion for Dry Skin",
     sale: "New",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/52_1.jpg",
+    image:  "/assets/img/product-images/52_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/52_1.jpg",
+       "/assets/img/product-images/52_1.jpg",
     category: "Body Lotion",
     oldPrice: 2.0,
     newPrice: 3.0,
@@ -89,9 +89,9 @@ const accessories: ProductItem[] = [
   {
     title: "Rose Gold Earring",
     sale: "Sale",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/53_1.jpg",
+    image:  "/assets/img/product-images/53_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/53_1.jpg",
+       "/assets/img/product-images/53_1.jpg",
     category: "jewellery",
     oldPrice: 60.0,
     newPrice: 80.0,
@@ -106,9 +106,9 @@ const accessories: ProductItem[] = [
   {
     title: "Liquid Matte Lipstick",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/54_1.jpg",
+    image:  "/assets/img/product-images/54_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/54_1.jpg",
+       "/assets/img/product-images/54_1.jpg",
     category: "Lipstick",
     oldPrice: 20.0,
     newPrice: 30.0,
@@ -123,9 +123,9 @@ const accessories: ProductItem[] = [
   {
     title: "Compact makeup kit",
     sale: "",
-    image: process.env.VITE_APP_URL + "/assets/img/product-images/55_1.jpg",
+    image:  "/assets/img/product-images/55_1.jpg",
     imageTwo:
-      process.env.VITE_APP_URL + "/assets/img/product-images/55_1.jpg",
+       "/assets/img/product-images/55_1.jpg",
     category: "makeup kit",
     oldPrice: 78.0,
     newPrice: 85.0,

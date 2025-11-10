@@ -50,7 +50,7 @@ const ResetPassword = () => {
               <div className="gi-login-img">
                 <img
                   src={
-                    process.env.VITE_APP_URL + "/assets/img/common/login.png"
+                     "/assets/img/common/login.png"
                   }
                   alt="login"
                 />
