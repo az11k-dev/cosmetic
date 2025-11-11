@@ -3,8 +3,6 @@ import { LayoutRouteConfig, RouteItem } from "../types/route.types";
 
 // Layouts
 import MainLayout from "@/layouts/MainLayout";
-import MinimalLayout from "@/layouts/MinimalLayout";
-import ModernLayout from "@/layouts/ModernLayout";
 import NotFound from "@/pages/not-found";
 
 // Use lazy loading for pages
@@ -144,20 +142,8 @@ const VendorDashboard = lazy(
   () => import("@/pages/main/vendor-dashboard/page")
 );
 
-// const ProductFullWidth = lazy(
-//   () => import("@/pages/main/product-full-width/page")
-// );
-// const ProductLeftSidebar = lazy(
-//   () => import("@/pages/main/product-left-sidebar/page")
-// );
 
-// minimal
-const Fashion = lazy(() => import("@/pages/minimal/fashion/page"));
 
-const FashionShopLeftSidebarCol3 = lazy(() => import("@/pages/minimal/fashion-shop-left-sidebar-col-3/page"));
-
-// modern
-const FashionTwo = lazy(() => import("@/pages/modern/fashiontwo/page"));
 
 export const mainRoutes: LayoutRouteConfig = {
   layout: MainLayout,
@@ -757,43 +743,6 @@ export const mainRoutes: LayoutRouteConfig = {
     },
   ],
 };
-
-export const minimalRoutes: LayoutRouteConfig = {
-  layout: MinimalLayout,
-  routes: [
-    {
-      path: "/fashion",
-      element: <Fashion />,
-      meta: {
-        title: "Fashion",
-        requiresAuth: false,
-      },
-    },
-    {
-      path: "/fashion-shop-left-sidebar-col-3",
-      element: <FashionShopLeftSidebarCol3 />,
-      meta: {
-        title: "Fashion Shop Left Sidebar",
-        requiresAuth: false,
-      },
-    },
-  ],
-};
-
-export const modernRoutes: LayoutRouteConfig = {
-  layout: ModernLayout,
-  routes: [
-    {
-      path: "/fashiontwo",
-      element: <FashionTwo />,
-      meta: {
-        title: "Fashion Two",
-        requiresAuth: false,
-      },
-    },
-  ],
-};
-
 export const noLayoutRoutes: RouteItem[] = [
   {
     path: "/not-found",
@@ -805,4 +754,4 @@ export const noLayoutRoutes: RouteItem[] = [
   },
 ];
 
-export const allRoutes = [mainRoutes, minimalRoutes, modernRoutes];
+export const allRoutes = [ mainRoutes];

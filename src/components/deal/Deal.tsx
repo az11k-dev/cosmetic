@@ -107,5 +107,4 @@ const Deal = () => {
     </>
   );
 };
-
-export default Deal;
+ export default Deal;

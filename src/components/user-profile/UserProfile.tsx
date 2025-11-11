@@ -36,7 +36,7 @@ const UserProfile = () => {
   }
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>;z
   }
 
   const handleSubmit = (e: any) => {

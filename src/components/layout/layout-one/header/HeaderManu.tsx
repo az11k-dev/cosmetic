@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import home from "@/utility/header/home";
+
 import classic from "@/utility/header/classic";
 import banner from "@/utility/header/benner";
 import column from "@/utility/header/columns";
@@ -301,18 +301,6 @@ function HeaderManu() {
                   <div className="col-md-12 align-self-center">
                     <div className="gi-main-menu">
                       <ul>
-                        <li className="dropdown drop-list">
-                          <Link to="/" className="dropdown-arrow">
-                            Home<i className="fi-rr-angle-small-right"></i>
-                          </Link>
-                          <ul className="sub-menu">
-                            {home.map((data, index) => (
-                              <li key={index}>
-                                <Link to={data.href}>{data.name}</Link>
-                              </li>
-                            ))}
-                          </ul>
-                        </li>
                         <li className="dropdown drop-list position-static">
                           <Link to="#" className="dropdown-arrow">
                             Categories

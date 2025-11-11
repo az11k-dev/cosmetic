@@ -63,6 +63,8 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
                                             alt="Site Logo"
                                         />
                                     </Link>
+
+
                                 </div>
                             </div>
                             {/* <!-- Header Logo End -->
