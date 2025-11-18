@@ -16,7 +16,7 @@ const deal: Deal[] = [
     sku: 23122,
     id: 51,
     quantity: 1,
-    weight: "",
+    weight: "100ml",
     rating: 4,
     status: "Available",
   },
