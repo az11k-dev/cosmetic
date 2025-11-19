@@ -27,6 +27,36 @@ const ProductPage = ({
     const compareItems = useSelector((state: RootState) => state.compare.compare);
     const wishlistItems = useSelector((state: RootState) => state.wishlist.wishlist);
     const cartItems = useSelector((state: RootState) => state.cart.items);
+    const products = [
+        {
+            "rating": 3,
+            "title": "Honey Spiced Nuts",
+            "image": "/assets/img/product-images/8_1.jpg",
+            "oldPrice": 55,
+            "newPrice": 32
+        },
+        {
+            "rating": 5,
+            "title": "Dates Value Pouch",
+            "image": "/assets/img/product-images/2_1.jpg",
+            "oldPrice": 60,
+            "newPrice": 56
+        },
+        {
+            "rating": 2,
+            "title": "Graps Mix Snack",
+            "image": "/assets/img/product-images/5_1.jpg",
+            "oldPrice": 35,
+            "newPrice": 28
+        },
+        {
+            "rating": 5,
+            "title": "Roasted Almonds Pack",
+            "image": "/assets/img/product-images/9_1.jpg",
+            "oldPrice": 23,
+            "newPrice": 16
+        }
+    ]
 
 
     useEffect(() => {
@@ -115,7 +145,7 @@ const ProductPage = ({
             <Col lg={lg} md={12} className={`gi-pro-rightside gi-common-rightside ${order}`  }>
                 {/* <!-- Single product content Start --> */}
                 <div className="single-pro-block"  >
-                    <SingleProductContent data={data} handleClose={handleClose} show={show} />
+                    <SingleProductContent data={products} handleClose={handleClose} show={show} />
 
                 </div>
                 {/* <!--Single product content End -->

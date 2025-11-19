@@ -1,0 +1,12 @@
+{
+  "catFaceCare": "Уход за лицом",
+  "catMakeup": "Макияж",
+  "catHairCare": "Уход за волосами",
+  "catBodyCare": "Уход за телом",
+  "catPerfumes": "Парфюмерия",
+  "catNails": "Ногти",
+  "catTools": "Инструменты",
+  "catAccessories": "Аксессуары",
+  "catMenGrooming": "Уход для мужчин",
+  "itemCount": "{{count}} товаров"
+}

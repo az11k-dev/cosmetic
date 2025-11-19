@@ -31,7 +31,6 @@ const NewsletterModalOne = () => {
     values: FormValues,
     formikHelpers: FormikHelpers<FormValues>
   ) => {
-    console.log("submited newsletter", {...values})
     formikHelpers.setSubmitting(false);
   };
 

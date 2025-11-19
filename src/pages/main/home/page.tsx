@@ -15,14 +15,14 @@ const page = () => {
         <>
             {/*<NewsletterModal />*/}
             {/*<HeroSlider />*/}
-            <CategorySliderOne />
-            {/*<Deal />*/}
-           {/* <Banner />*/}
-           {/*<GroceryArrials />*/}
-           {/* <OfferBanners />*/}
-           {/* <Services />*/}
-           {/* <Trending />*/}
-           {/* <LatestBlog />*/}
+            {/*<CategorySliderOne />*/}
+            <Deal />
+            {/*<Banner />*/}
+           <GroceryArrials />
+            {/*<OfferBanners />*/}
+            {/*<Services />*/}
+            {/*<Trending />*/}
+            {/*<LatestBlog />*/}
         </>
     )
 }

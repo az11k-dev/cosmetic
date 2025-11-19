@@ -1,0 +1,16 @@
+{
+  "Sale": "Chegirma",
+  "New": "Yangi",
+  "addToCartSuccessMsg": "Mahsulot savatga muvaffaqiyatli qo'shildi!",
+  "addToWishlistSuccessMsg": "Mahsulot sevimlilar ro'yxatiga muvaffaqiyatli qo'shildi!",
+  "removeWishlistSuccessMsg": "Mahsulot sevimlilar ro'yxatidan o'chirildi!",
+  "addToCompareSuccessMsg": "Mahsulot taqqoslash ro'yxatiga muvaffaqiyatli qo'shildi!",
+  "removeCompareSuccessMsg": "Mahsulot taqqoslash ro'yxatidan o'chirildi!",
+  "wishlistTitle": "Sevimlilar",
+  "quickViewTitle": "Tez ko'rish",
+  "compareTitle": "Taqqoslash",
+  "addToCartTitle": "Savatga qo'shish",
+  "addToCartButton": "Savatga qo'shish",
+  "shortDescription": "Qisqa tavsif. Ushbu mahsulot terining sog'lig'ini yaxshilash uchun mo'ljallangan.",
+  "fullDescription": "Ushbu mahsulot haqida to'liq ma'lumot. U 1900-yillardan beri kosmetika sanoatida standart hisoblanadi."
+}

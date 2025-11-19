@@ -80,7 +80,7 @@ const SingleProductContent = ({show, handleClose, data}:(any)) => {
                                     <div className="single-product-scroll">
                                         <div className={`single-slide zoom-image-hover`}>
                                             <>
-                                                <ZoomImage src={data.image1} alt="" />
+                                                <ZoomImage src={data.image} alt="" />
                                             </>
                                         </div>
                                     </div>
@@ -89,7 +89,7 @@ const SingleProductContent = ({show, handleClose, data}:(any)) => {
                             <Col className="single-pro-desc m-t-991">
                                 <div className="single-pro-content">
                                     <h5 className="gi-pro-title"   >
-                                        {data.title1}
+                                        {data[0].title}
                                     </h5>
                                     <div className="gi-single-rating-wrap">
                                         <div className="gi-single-rating">
