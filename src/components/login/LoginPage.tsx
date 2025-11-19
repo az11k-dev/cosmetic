@@ -1,86 +1,75 @@
+// src/pages/LoginPage.tsx (Обновленный компонент БЕЗ Redux)
+
 import {Link, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import {Container, Form} from "react-bootstrap";
-import {useDispatch, useSelector} from "react-redux";
-import {login} from "@/store/reducers/registrationSlice"; // Assuming this handles setting user/auth state
-import {RootState} from "@/store";
-import {showErrorToast, showSuccessToast} from "@/utility/toast";
-import axios from "axios"; // 👈 Import axios for API calls
 
-const LOGIN_API_URL = "http://beauty.loc/api/login"; // 👈 Define your API URL
+import {showErrorToast, showSuccessToast} from "@/utility/toast";
+import axios from "axios";
+
+// 💡 ИМПОРТИРУЕМ НОВЫЙ ХУК useAuth
+import {useAuth} from "@/context/AuthContext"; // Предполагая, что он находится по этому пути
+
+const LOGIN_API_URL = "https://admin.beauty-point.uz/api/login";
 
 const LoginPage = () => {
-    // 💡 Changed from email to login, as the API expects a 'login' field (phone number)
     const [loginField, setLoginField] = useState("");
     const [password, setPassword] = useState("");
     const [validated, setValidated] = useState(false);
-    const [loading, setLoading] = useState(false); // 👈 Added loading state for API call
+    const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
-    // Use Redux state to check if the user is authenticated
-    const isAuthenticated = useSelector(
-        (state: RootState) => state.registration.isAuthenticated
-    );
+    // 💡 ЗАМЕНА Redux Hooks: используем хук useAuth
+    const {isAuthenticated, login} = useAuth(); // Получаем isAuthenticated и функцию login из контекста
 
-    // 👈 Removed the useEffect that fetched local registration data, as it's no longer needed.
-
+    // Эффект остается для перенаправления
     useEffect(() => {
         if (isAuthenticated) {
             navigate("/");
         }
     }, [isAuthenticated, navigate]);
 
-    const handleLogin = async (e: React.FormEvent) => { // 👈 Changed function to async
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        // --- Логика валидации Form, если нужно
         const form = e.currentTarget as HTMLFormElement;
-        setValidated(true); // Always set validated to show immediate feedback
-
-        // Perform basic client-side check if the form is valid (e.g., fields are filled)
         if (form.checkValidity() === false) {
             e.stopPropagation();
-            return; // Stop if client-side validation fails
+            setValidated(true);
+            return;
         }
+        // ---
 
-        // Set loading state before making the API call
         setLoading(true);
 
         try {
-            // 💡 API Call to the backend
             const response = await axios.post(LOGIN_API_URL, {
-                login: loginField, // Use loginField state
+                login: loginField,
                 password: password,
             });
 
-            // Assuming a successful response means authentication is successful
-            // The API response might contain a token or user data (response.data)
-            const userDataFromApi = response.data;
+            // Извлекаем "user" и "token" из "response.data.data"
+            const {user, token} = response.data.data;
 
-            // 💡 Dispatch the login action with the data received from the API
-            // You might need to update your Redux `login` action to handle the actual API response structure (e.g., token, user object).
-            dispatch(login(userDataFromApi));
+            login(token, user);
 
             showSuccessToast("Login Successful!");
-
-            // Optional: Store token or essential user info (like the token) in localStorage if needed for subsequent requests
-            // localStorage.setItem("authToken", userDataFromApi.token);
+            navigate("/");
 
         } catch (error) {
             console.error("Login Error:", error);
-            // 💡 Handle API errors (e.g., 401 Unauthorized, Network Error)
 
-            // Axios error handling: Check for the specific error response from the server
-            const errorMessage = axios.isAxiosError(error) && error.response
-                ? error.response.data.message || "Invalid login or password."
-                : "An unexpected error occurred. Please try again.";
+            const errorResponse = axios.isAxiosError(error) && error.response;
+            const apiErrorMessage = errorResponse?.data?.data?.message || errorResponse?.data?.message;
+            const errorMessage = apiErrorMessage || "An unexpected error occurred. Please try again.";
 
             showErrorToast(errorMessage);
 
         } finally {
-            setLoading(false); // Reset loading state
+            setLoading(false);
         }
     };
 
@@ -103,20 +92,19 @@ const LoginPage = () => {
                                         <Form
                                             noValidate
                                             validated={validated}
-                                            onSubmit={handleLogin} // 💡 Use onSubmit on Form and call handleLogin
+                                            onSubmit={handleLogin}
                                             action="#"
                                             method="post"
                                         >
                       <span className="gi-login-wrap">
-                        {/* 💡 Label changed from Email Address to Login/Phone Number */}
                           <label>Phone Number / Login*</label>
                         <Form.Group>
                           <Form.Control
                               type="text"
-                              name="login" // 💡 Changed name to 'login'
-                              value={loginField} // 💡 Use loginField state
-                              onChange={(e) => setLoginField(e.target.value)} // 💡 Use setLoginField
-                              placeholder="Enter your phone number..." // 💡 Updated placeholder
+                              name="login"
+                              value={loginField}
+                              onChange={(e) => setLoginField(e.target.value)}
+                              placeholder="Enter your phone number..."
                               required
                           />
                           <Form.Control.Feedback type="invalid">
@@ -158,12 +146,11 @@ const LoginPage = () => {
                           </Link>
                         </span>
                         <button
-                            // 💡 Removed onClick, Form onSubmit handles the submission
                             className="gi-btn-1 btn"
                             type="submit"
-                            disabled={loading} // 👈 Disable button while loading
+                            disabled={loading}
                         >
-                          {loading ? "Logging In..." : "Login"} {/* 👈 Loading text */}
+                          {loading ? "Logging In..." : "Login"}
                         </button>
                       </span>
                                         </Form>

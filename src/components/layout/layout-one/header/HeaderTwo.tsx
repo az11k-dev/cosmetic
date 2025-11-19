@@ -1,31 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, {useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import SidebarCart from "../../../model/SidebarCart";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store";
-import { logout, setUserData } from "@/store/reducers/registrationSlice";
-import { setSearchTerm } from "@/store/reducers/filterReducer";
-// 💡 Yangi import: Tarjima uchun
-import { useTranslation } from "react-i18next";
 
-function HeaderTwo({ cartItems, wishlistItems }: any) {
-    // 💡 useTranslation hook'ini ishlatish, nom maydoni (namespace) "headerTwo"
-    const { t } = useTranslation("headerTwo");
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/store";
+import {setSearchTerm} from "@/store/reducers/filterReducer";
+
+// 💡 ИМПОРТИРУЕМ useAuth ДЛЯ АУТЕНТИФИКАЦИИ
+import {useAuth} from "@/context/AuthContext";
+
+import {useTranslation} from "react-i18next";
+
+function HeaderTwo({cartItems, wishlistItems}: any) {
+    const {t} = useTranslation("headerTwo");
 
     const [isCartOpen, setIsCartOpen] = useState(false);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const isAuthenticated = useSelector(
-        (state: RootState) => state.registration.isAuthenticated
-    );
-    const { searchTerm } = useSelector((state: RootState) => state.filter);
-    const [searchInput, setSearchInput] = useState(searchTerm || "");
 
-    useEffect(() => {
-        const userdata = localStorage.getItem("login_user") ?? "";
-        const user = userdata !== "" ? JSON.parse(userdata) : null;
-        dispatch(setUserData({ isAuthenticated: userdata !== "", user }));
-    }, [dispatch]);
+    // --- Redux ОСТАВЛЕН только для Filter/Search ---
+    const dispatch = useDispatch();
+    const {searchTerm} = useSelector((state: RootState) => state.filter);
+    const [searchInput, setSearchInput] = useState(searchTerm || "");
+    // ------------------------------------------------
+
+    const navigate = useNavigate();
+
+    // 💡 ЗАМЕНА Redux Hooks: используем хук useAuth
+    const {isAuthenticated, logout: contextLogout} = useAuth(); // Переименовываем, чтобы избежать конфликта, если бы мы оставили Redux logout
+
+    // ❌ УДАЛЯЕМ: useEffect для загрузки login_user,
+    //            так как это теперь обрабатывается в AuthProvider.
+    // useEffect(() => { ... }, [dispatch]);
 
     const handleSearch = (event: any) => {
         setSearchInput(event.target.value);
@@ -45,9 +49,11 @@ function HeaderTwo({ cartItems, wishlistItems }: any) {
         setIsCartOpen(false);
     };
 
+    // 💡 ОБНОВЛЕННАЯ ФУНКЦИЯ LOGOUT
     const handleLogout = () => {
-        localStorage.removeItem("login_user");
-        dispatch(logout());
+        // 1. Context Logout: очищает контекст и localStorage
+        contextLogout();
+
         navigate("/");
     };
 
@@ -82,7 +88,6 @@ function HeaderTwo({ cartItems, wishlistItems }: any) {
                                     >
                                         <input
                                             className="form-control gi-search-bar"
-                                            // 💡 TARJIMA: placeholder matni
                                             placeholder={t("searchProducts")}
                                             type="text"
                                             value={searchInput}
@@ -97,25 +102,21 @@ function HeaderTwo({ cartItems, wishlistItems }: any) {
                             {/* */}
                             <div className="gi-header-action align-self-center">
                                 <div className="gi-header-bottons">
-                                    {/* */}
+                                    {/* Account Dropdown (использует isAuthenticated из Context) */}
                                     <div className="gi-acc-drop">
                                         <Link
                                             to="/"
                                             className="gi-header-btn gi-header-user dropdown-toggle gi-user-toggle gi-header-rtl-btn"
-                                            // 💡 TARJIMA: Title atributi
                                             title={t("account")}
                                         >
                                             <div className="header-icon">
                                                 <i className="fi-rr-user"></i>
                                             </div>
                                             <div className="gi-btn-desc">
-                                                {/* 💡 TARJIMA: Akkaunt nomi */}
                                                 <span className="gi-btn-title">{t("account")}</span>
                                                 <span className="gi-btn-stitle">
-                          {" "}
-                                                    {/* 💡 TARJIMA: Login/Logout holati */}
                                                     {isAuthenticated ? t("logout") : t("login")}
-                        </span>
+                                                </span>
                                             </div>
                                         </Link>
                                         <ul className="gi-dropdown-menu">
@@ -123,19 +124,17 @@ function HeaderTwo({ cartItems, wishlistItems }: any) {
                                                 <>
                                                     <li>
                                                         <Link className="dropdown-item" to="/user-profile">
-                                                            {/* 💡 TARJIMA: Mening profilim */}
                                                             {t("myProfile")}
                                                         </Link>
                                                     </li>
                                                     <li>
                                                         <Link className="dropdown-item" to="/orders">
-                                                            {/* 💡 TARJIMA: Buyurtmalar */}
                                                             {t("orders")}
                                                         </Link>
                                                     </li>
                                                     <li>
+                                                        {/* 💡 Используем handleLogout */}
                                                         <a className="dropdown-item" onClick={handleLogout}>
-                                                            {/* 💡 TARJIMA: Chiqish */}
                                                             {t("logout")}
                                                         </a>
                                                     </li>
@@ -144,19 +143,16 @@ function HeaderTwo({ cartItems, wishlistItems }: any) {
                                                 <>
                                                     <li>
                                                         <Link className="dropdown-item" to="/register">
-                                                            {/* 💡 TARJIMA: Ro'yxatdan o'tish */}
                                                             {t("register")}
                                                         </Link>
                                                     </li>
                                                     <li>
                                                         <Link className="dropdown-item" to="/checkout">
-                                                            {/* 💡 TARJIMA: To'lov */}
                                                             {t("checkout")}
                                                         </Link>
                                                     </li>
                                                     <li>
                                                         <Link className="dropdown-item" to="/login">
-                                                            {/* 💡 TARJIMA: Kirish */}
                                                             {t("login")}
                                                         </Link>
                                                     </li>
@@ -164,34 +160,30 @@ function HeaderTwo({ cartItems, wishlistItems }: any) {
                                             )}
                                         </ul>
                                     </div>
-                                    {/* */}
+                                    {/* Wishlist */}
                                     <Link
                                         to="/wishlist"
                                         className="gi-header-btn gi-wish-toggle gi-header-rtl-btn"
-                                        // 💡 TARJIMA: Title atributi
                                         title={t("wishlist")}
                                     >
                                         <div className="header-icon">
                                             <i className="fi-rr-heart"></i>
                                         </div>
                                         <div className="gi-btn-desc">
-                                            {/* 💡 TARJIMA: Sevimlilar nomi */}
                                             <span className="gi-btn-title">{t("wishlist")}</span>
                                             <span className="gi-btn-stitle">
                         <b className="gi-wishlist-count">
                           {wishlistItems.length}
                         </b>
-                                                {/* 💡 TARJIMA: elementlar soni matni */}
                                                 {t("items")}
                       </span>
                                         </div>
                                     </Link>
-                                    {/* */}
+                                    {/* Cart */}
                                     <Link
                                         onClick={openCart}
-                                        to={{ hash: "#" }}
+                                        to={{hash: "#"}}
                                         className="gi-header-btn gi-cart-toggle gi-header-rtl-btn"
-                                        // 💡 TARJIMA: Title atributi
                                         title={t("cart")}
                                     >
                                         <div className="header-icon">
@@ -199,23 +191,20 @@ function HeaderTwo({ cartItems, wishlistItems }: any) {
                                             <span className="main-label-note-new"></span>
                                         </div>
                                         <div className="gi-btn-desc">
-                                            {/* 💡 TARJIMA: Savat nomi */}
                                             <span className="gi-btn-title">{t("cart")}</span>
                                             <span className="gi-btn-stitle">
                         <b className="gi-cart-count">{cartItems.length}</b>
-                                                {/* 💡 TARJIMA: elementlar soni matni */}
                                                 {t("items")}
                       </span>
                                         </div>
                                     </Link>
-                                    {/* */}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <SidebarCart isCartOpen={isCartOpen} closeCart={closeCart} />
+            <SidebarCart isCartOpen={isCartOpen} closeCart={closeCart}/>
         </>
     );
 }

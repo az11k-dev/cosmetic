@@ -1,22 +1,49 @@
 import {useRef} from "react";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
-import {useDispatch} from "react-redux";
 import {Form} from "react-bootstrap";
 import * as formik from "formik";
 import * as yup from "yup";
-import {login} from "@/store/reducers/registrationSlice"; // Предположим, что это используется для локального входа после регистрации
 import {useNavigate, Link} from "react-router-dom";
-// Убраны: useCountries, useStates, useCities, City, Country, State
+// 💡 ИМПОРТИРУЕМ НОВЫЙ ХУК useAuth
+import {useAuth} from "@/context/AuthContext"; // Предполагая, что он находится по этому пути
 
-const API_URL = "http://beauty.loc/api/register"; // Константа для URL API
+const API_URL = "https://admin.beauty-point.uz/api/register";
+
+interface UserData {
+    username: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone_number: string;
+    id: number;
+}
+
+interface RegisterSuccessResponse {
+    status: true;
+    data: {
+        message: string;
+        user: UserData;
+        token: string;
+    };
+}
+
+interface RegisterErrorResponse {
+    status: false;
+    data: {
+        message: string;
+        errors?: Record<string, string[]>;
+    };
+}
 
 const RegisterPage = () => {
     const {Formik} = formik;
     const formikRef = useRef<any>(null);
     const navigate = useNavigate();
-    const dispatch = useDispatch(); // Оставим, если используется для сохранения состояния входа
 
-    // 1. Обновленная Yup Validation Schema (убраны поля адреса)
+    // 💡 ИСПОЛЬЗУЕМ useAuth ДЛЯ ПОЛУЧЕНИЯ ФУНКЦИИ LOGIN
+    const {login} = useAuth(); // Получаем функцию login из контекста
+
+    // 1. Yup Validation Schema (без изменений)
     const schema = yup.object().shape({
         firstName: yup.string().required("First name is required"),
         lastName: yup.string().required("Last name is required"),
@@ -24,11 +51,9 @@ const RegisterPage = () => {
             .string()
             .email("Invalid email address")
             .required("Email is required"),
-        // Обновил regex для номера телефона, чтобы он соответствовал формату +998901234567,
-        // но оставил твою исходную длину (14) с более гибким regex
         phoneNumber: yup
             .string()
-            .matches(/^[\d\s()+-]{5,20}$/, "Invalid phone number format") // Более общий regex для международного номера
+            .matches(/^[\d\s()+-]{5,20}$/, "Invalid phone number format")
             .required("Phone number is required"),
         password: yup
             .string()
@@ -40,7 +65,7 @@ const RegisterPage = () => {
             .oneOf([yup.ref("password")], "Passwords must match"),
     });
 
-    // 2. Обновленные начальные значения (убраны поля адреса)
+    // 2. Начальные значения (без изменений)
     const initialValues = {
         firstName: "",
         lastName: "",
@@ -48,14 +73,10 @@ const RegisterPage = () => {
         phoneNumber: "",
         password: "",
         confirmPassword: "",
-        // Убраны: address, country, state, city, postCode
     };
 
-    // 3. Убраны: formData, handleSelectChange, filteredCountryData, filteredStateData, filteredCityData
-
-    // 4. Обновленная функция отправки (теперь отправляет данные на API)
+    // 3. Обновленная функция отправки (теперь использует login из Context)
     const registerUser = async (values: typeof initialValues) => {
-        // Подготовка данных в формате, ожидаемом API
         const payload = {
             first_name: values.firstName,
             last_name: values.lastName,
@@ -70,32 +91,40 @@ const RegisterPage = () => {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    // Добавь здесь любые другие необходимые заголовки (например, Accept)
                 },
                 body: JSON.stringify(payload),
             });
 
-            const data = await response.json();
+            const data: RegisterSuccessResponse | RegisterErrorResponse = await response.json();
 
-            if (response.ok) {
-                console.log("Registration successful:", data);
-                // Логика после успешной регистрации:
-                // Например, сохранение токена и данных пользователя, затем навигация
-                // dispatch(login(data.user)); // Если API возвращает данные пользователя
-                navigate("/"); // Перенаправление на главную страницу
+            if (response.ok && data.status) {
+                // --- ЛОГИКА УСПЕШНОЙ РЕГИСТРАЦИИ ---
+                const {user, token, message} = (data as RegisterSuccessResponse).data;
+
+                console.log("Registration successful:", message);
+
+                login(token, user);
+
+                // 3. Перенаправление
+                navigate("/");
+                // --------------------------------------
+
             } else {
-                // Обработка ошибок API (например, неверный email, слабый пароль)
-                console.error("Registration failed:", data);
-                alert(`Registration Error: ${data.message || 'Check your data.'}`);
+                // --- ОБРАБОТКА ОШИБОК API ---
+                const errorData = data as RegisterErrorResponse;
+                const errorMessage = errorData.data.message || "Registration failed. Please check the form.";
+
+                console.error("Registration failed:", errorData);
+                alert(`Registration Error: ${errorMessage}`);
+
+                if (errorData.data.errors) {
+                    console.error("Validation Errors:", errorData.data.errors);
+                }
+                // -----------------------------
             }
         } catch (error) {
             console.error("Network or submission error:", error);
             alert("A network error occurred. Please try again.");
-        } finally {
-            // Опционально: сброс формы после попытки, независимо от успеха
-            // if (formikRef.current) {
-            //     formikRef.current.resetForm();
-            // }
         }
     };
 
@@ -209,7 +238,6 @@ const RegisterPage = () => {
                                                               type="text"
                                                               name="phoneNumber"
                                                               placeholder="Enter your phone number"
-                                                              // Убрал твой pattern="^\d{12,15}$" для более гибкого
                                                               required
                                                               value={values.phoneNumber}
                                                               onChange={handleChange}
@@ -234,7 +262,6 @@ const RegisterPage = () => {
                                                               type="password"
                                                               name="password"
                                                               placeholder="Enter your password"
-                                                              // Убрал твой pattern="^\d{6,12}$"
                                                               required
                                                               value={values.password}
                                                               onChange={handleChange}
@@ -259,7 +286,6 @@ const RegisterPage = () => {
                                                               type="password"
                                                               name="confirmPassword"
                                                               placeholder="Enter your Conform password"
-                                                              // Убрал твой pattern="^\d{6,12}$"
                                                               required
                                                               value={values.confirmPassword}
                                                               onChange={handleChange}
@@ -273,9 +299,8 @@ const RegisterPage = () => {
                                                                 )}
                                                         </Form.Group>
                                                   </span>
-                                                    {/* УДАЛЕНЫ поля: Address, Country, State, City, Post Code */}
 
-                                                    {/* reCAPTCHA (оставлен, если нужен для стилей/разметки) */}
+                                                    {/* reCAPTCHA */}
                                                     <span className="gi-register-wrap gi-recaptcha">
                                                         <span
                                                             className="g-recaptcha"
