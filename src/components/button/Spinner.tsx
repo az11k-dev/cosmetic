@@ -9,7 +9,7 @@ const Spinner = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          opacity: "0.7",
+          opacity: "0.7"
         }}
         className="sweet-loading"
       >

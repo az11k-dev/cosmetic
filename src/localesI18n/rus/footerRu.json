@@ -1,0 +1,21 @@
+{
+  "failedToLoadProducts": "Не удалось загрузить товары",
+  "companyDetail": "Grabit — крупнейший рынок косметических товаров и продуктов для красоты. Приобретайте все, что нужно, в нашем магазине.",
+  "categoryHeading": "Категория",
+  "companyHeading": "Компания",
+  "companyAboutUs": "О нас",
+  "companyDelivery": "Доставка",
+  "companyLegalNotice": "Правовое уведомление",
+  "companyTerms": "Условия и положения",
+  "companySecurePayment": "Безопасный платеж",
+  "companyContactUs": "Связаться с нами",
+  "accountHeading": "Аккаунт",
+  "accountSignIn": "Войти",
+  "accountViewCart": "Просмотр корзины",
+  "accountReturnPolicy": "Политика возврата",
+  "accountBecomeVendor": "Стать поставщиком",
+  "accountAffiliateProgram": "Партнерская программа",
+  "accountPayments": "Платежи",
+  "contactHeading": "Контакты",
+  "copyright": "Copyright © {{siteName}}. Все права защищены. Работает на базе {{siteName}}."
+}

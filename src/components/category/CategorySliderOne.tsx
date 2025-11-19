@@ -24,8 +24,8 @@ const CategorySliderOne = ({
 
   return (
     <section className={`gi-category body-bg ${className}`}>
-      <div className="container">
-        <Row className="m-b-minus-15px">
+      <div className="container" >
+        <Row className="m-b-minus-15px" >
           <Col xl={12}>
             <Swiper
               loop={true}

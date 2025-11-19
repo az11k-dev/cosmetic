@@ -1,0 +1,21 @@
+{
+  "failedToLoadProducts": "Mahsulotlarni yuklashda xatolik yuz berdi",
+  "companyDetail": "Grabit — bu kosmetika va go'zallik mahsulotlarining eng yirik bozori. Kundalik ehtiyojlaringizni bizning do'konimizdan xarid qiling.",
+  "categoryHeading": "Kategoriya",
+  "companyHeading": "Kompaniya",
+  "companyAboutUs": "Biz haqimizda",
+  "companyDelivery": "Yetkazib berish",
+  "companyLegalNotice": "Yuridik ma'lumot",
+  "companyTerms": "Shartlar va qoidalar",
+  "companySecurePayment": "Xavfsiz to'lov",
+  "companyContactUs": "Biz bilan bog'lanish",
+  "accountHeading": "Akkaunt",
+  "accountSignIn": "Kirish",
+  "accountViewCart": "Savatni ko'rish",
+  "accountReturnPolicy": "Qaytarish siyosati",
+  "accountBecomeVendor": "Sotuvchiga aylanish",
+  "accountAffiliateProgram": "Affiliate dasturi",
+  "accountPayments": "To'lovlar",
+  "contactHeading": "Aloqa",
+  "copyright": "Mualliflik huquqi © {{siteName}}. Barcha huquqlar himoyalangan. {{siteName}} tomonidan quvvatlangan."
+}

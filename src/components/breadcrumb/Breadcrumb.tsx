@@ -9,7 +9,7 @@ const Breadcrumb = ({ title }: any) => {
         <div className="container">
           <Row>
             <Col>
-              <Row className="gi_breadcrumb_inner">
+              <Row className="gi_breadcrumb_inner" >
                 <Col md={6} sm={12}>
                   <h2 className="gi-breadcrumb-title">{title}</h2>
                 </Col>

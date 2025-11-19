@@ -70,7 +70,7 @@ const categorysliderone: Category[] = [
     percentage: "",
     icon: "fi fi-tr-egg",
     image:  "/shop-left-sidebar-col-3.html",
-    name: "Eggs",
+    name: "Ekljsdklasfsffsdfsfsdfs",
     item: 154,
     num: 3,
   },

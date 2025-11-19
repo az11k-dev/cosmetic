@@ -1,17 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import ShopProductItem from "../product-item/ShopProductItem";
 import { Col, Row } from "react-bootstrap";
-import SidebarArea from "./sidebar-area/SidebarArea";
 import Spinner from "../button/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
 import {
-  setRange,
   setSearchTerm,
-  setSelectedCategory,
-  setSelectedColor,
-  setSelectedTags,
-  setSelectedWeight,
   setSortOption,
 } from "@/store/reducers/filterReducer";
 import Paginantion from "../paginantion/Paginantion";
@@ -33,8 +27,6 @@ const Shop = ({
     selectedCategory,
     selectedWeight,
     sortOption,
-    minPrice,
-    maxPrice,
     range,
     searchTerm,
     selectedColor,
@@ -62,13 +54,7 @@ const Shop = ({
     setCurrentPage(1);
   }, [dispatch]);
 
-  const handlePriceChange = useCallback(
-    (min: number, max: number) => {
-      dispatch(setRange({ min, max }));
-      setCurrentPage(1);
-    },
-    [dispatch]
-  );
+
 
   const handleSortChange = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -77,38 +63,6 @@ const Shop = ({
     },
     [dispatch]
   );
-
-  const handleCategoryChange = (category: any) => {
-    const updatedCategory = selectedCategory.includes(category)
-      ? selectedCategory.filter((cat) => cat !== category)
-      : [...selectedCategory, category];
-    dispatch(setSelectedCategory(updatedCategory));
-    setCurrentPage(1);
-  };
-
-  const handleWeightChange = (weight: any) => {
-    const updatedweight = selectedWeight.includes(weight)
-      ? selectedWeight.filter((wet) => wet !== weight)
-      : [weight];
-    dispatch(setSelectedWeight(updatedweight));
-    setCurrentPage(1);
-  };
-
-  const handleColorChange = (color: any) => {
-    const updatedcolor = selectedColor.includes(color)
-      ? selectedColor.filter((clr) => clr !== color)
-      : [...selectedColor, color];
-    dispatch(setSelectedColor(updatedcolor));
-    setCurrentPage(1);
-  };
-
-  const handleTagsChange = (tag: any) => {
-    const updatedtag = selectedTags.includes(tag)
-      ? selectedTags.filter((tg) => tg !== tag)
-      : [...selectedTags, tag];
-    dispatch(setSelectedTags(updatedtag));
-    setCurrentPage(1);
-  };
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -222,19 +176,7 @@ const Shop = ({
         </Col>
         {/* <!-- Sidebar Area Start --> */}
 
-        <SidebarArea
-          handleCategoryChange={handleCategoryChange}
-          handleWeightChange={handleWeightChange}
-          handleColorChange={handleColorChange}
-          handleTagsChange={handleTagsChange}
-          min={minPrice}
-          max={maxPrice}
-          handlePriceChange={handlePriceChange}
-          selectedWeight={selectedWeight}
-          selectedCategory={selectedCategory}
-          selectedColor={selectedColor}
-          selectedTags={selectedTags}
-        />
+
       </Row>
     </>
   );

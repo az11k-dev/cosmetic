@@ -26,7 +26,7 @@ const RegisterPage = () => {
       .required("Email is required"),
     phoneNumber: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
+      .matches(/^[0-14]{15}$/, "Phone number must be 14 digits")
       .required("Phone number is required"),
     password: yup
       .string()
@@ -207,7 +207,7 @@ const RegisterPage = () => {
                                 type="text"
                                 name="phoneNumber"
                                 placeholder="Enter your phone number"
-                                pattern="^\d{10,12}$"
+                                pattern="^\d{12,15}$"
                                 required
                                 value={values.phoneNumber}
                                 onChange={handleChange}

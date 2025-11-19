@@ -1,0 +1,28 @@
+{
+  "allCategories": "Barcha Kategoriyalar",
+  "tabFaceMakeup": "Yuz parvarishi & Makiyaj",
+  "tabHairBodyCare": "Soch & Tana parvarishi",
+  "tabPerfumeNails": "Parfyumeriya & Tirnoqlar",
+  "tabAccessoriesTools": "Aksessuarlar & Asboblar",
+
+  "colFaceCare": "Yuz parvarishi",
+  "colMakeup": "Makiyaj",
+  "colHairCare": "Soch parvarishi",
+  "colBodyCare": "Tana parvarishi",
+  "colPerfumes": "Parfyumeriya",
+  "colNails": "Tirnoqlar",
+  "colAccessories": "Aksessuarlar",
+  "colTools": "Asboblar",
+
+  "menuCategories": "Kategoriyalar",
+  "menuProducts": "Mahsulotlar",
+  "menuBlog": "Blog",
+  "menuPages": "Sahifalar",
+  "menuOffers": "Aksiyalar",
+  "prodFullWidth": "To'liq kenglikdagi mahsulot",
+  "prodAccordionFullWidth": "Akordeonli to'liq kenglik",
+  "megaClassic": "Klassik",
+  "megaBanner": "Banner",
+  "megaColumns": "Ustunlar",
+  "megaList": "Ro'yxat"
+}

@@ -1,5 +1,4 @@
-import { useCallback } from "react";
-import SidebarArea from "../shop-sidebar/sidebar-area/SidebarArea";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import StarRating from "../stars/StarRating";
 import DiscountContent from "./discount-content/DiscountContent";
@@ -10,7 +9,7 @@ import SingleProductContent from "./single-product-content/SingleProductContent"
 import Spinner from "../button/Spinner";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store";
-import { setRange } from "@/store/reducers/filterReducer";
+
 
 const ProductPage = ({
   order = "",
@@ -18,24 +17,12 @@ const ProductPage = ({
   lg = 12,
 }) => {
   const dispatch = useDispatch();
-  const {
-    selectedCategory,
-    selectedWeight,
-    minPrice,
-    maxPrice,
-    selectedColor,
-    selectedTags,
-  } = useSelector((state: RootState) => state.filter);
+
 
   const { data, error } = useSelector((state: RootState) => state.moreitems);
 
 
-  const handlePriceChange = useCallback(
-    (min: number, max: number) => {
-      dispatch(setRange({ min, max }));
-    },
-    [dispatch]
-  );
+
 
   if (error) return <div>Failed to load products</div>;
   if (!data)
@@ -126,16 +113,7 @@ const ProductPage = ({
       </Col>
       {/* <!-- Sidebar Area Start --> */}
 
-      <SidebarArea
-        handlePriceChange={handlePriceChange}
-        selectedCategory={selectedCategory}
-        selectedWeight={selectedWeight}
-        selectedColor={selectedColor}
-        selectedTags={selectedTags}
-        min={minPrice}
-        max={maxPrice}
-        none={none}
-      />
+
     </>
   );
 };

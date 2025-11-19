@@ -77,6 +77,8 @@ const QuickViewModal = ({ show, handleClose, data }: any) => {
                     </div>
                   </div>
                 </Col>
+
+
                 <Col md={7} sm={12}>
                   <div className="quickview-pro-content">
                     <h5 className="gi-quick-title">
@@ -104,10 +106,7 @@ const QuickViewModal = ({ show, handleClose, data }: any) => {
                         <div className="gi-pro-variation-content">
                           <SizeOptions
                             categories={[
-                              "clothes",
-                              "footwear",
                               "vegetables",
-                              "accessorise",
                             ]}
                             subCategory={data.category}
                           />

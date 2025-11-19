@@ -26,7 +26,7 @@ const VendorSettingEdit = () => {
       .required("Email is required"),
     phoneNumber: yup
       .string()
-      .matches(/^[0-9]{10}$/, "Phone number must be 10 digits")
+      .matches(/^[0-14]{15}$/, "Phone number must be 10 digits")
       .required("Phone number is required"),
     home_address: yup.string().required("Home Address is required"),
     office_address: yup.string().required("Office Address is required"),
@@ -217,7 +217,7 @@ const VendorSettingEdit = () => {
                               <Form.Control
                                 type="text"
                                 name="panNo"
-                                pattern="^\d{10,12}$"
+                                pattern="^\d{12,15}$"
                                 placeholder="Enter your PAN NO"
                                 value={values.panNo}
                                 onChange={handleChange}

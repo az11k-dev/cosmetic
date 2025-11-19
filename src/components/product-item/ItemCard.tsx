@@ -98,6 +98,11 @@ const ItemCard = ({ data }: { data: Item }) => {
   const handleClose = useCallback(() => setShow(false), []);
   const handleShow = useCallback(() => setShow(true), []);
 
+
+
+
+
+
   return (
     <>
       <div className="gi-product-content">
@@ -194,12 +199,13 @@ const ItemCard = ({ data }: { data: Item }) => {
             </div>
           </div>
           <div className="gi-pro-content">
-            <Link to="/shop-left-sidebar-col-3">
+            <Link to="/shop-left-sidebar-col-3"  >
               <h6 className="gi-pro-stitle">{data.category}</h6>
             </Link>
-            <h5 className="gi-pro-title">
+            <h5 className="gi-pro-title"   >
               <Link to="/product-left-sidebar">{data.title}</Link>
             </h5>
+
             <p className="gi-info">
               Contrary to popular belief, Lorem Ipsum is not simply random text.
               It has roots in a piece of classical Latin literature from 45 BC,
@@ -218,6 +224,7 @@ const ItemCard = ({ data }: { data: Item }) => {
           </div>
         </div>
         <QuickViewModal data={data} handleClose={handleClose} show={show} />
+
       </div>
     </>
   );

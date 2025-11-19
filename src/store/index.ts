@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { persistStore } from "redux-persist";
 import { combineReducers } from "redux";
+import { persistedI18nReducer } from "@/store/reducers/i18nSlice.ts";
 import { persistedSnackReducer } from "./reducers/snackSlice";
 import { persistedCartReducer } from "./reducers/cartSlice";
 import { persistedRegistrationReducer } from "./reducers/registrationSlice";
@@ -128,6 +129,7 @@ const rootReducer = combineReducers({
   termtwo: persistedTermtwoReducer,
   categorydeal: persistedCategorydealReducer,
   categoryslidertwo: persistedCategoryslidertwoReducer,
+    i18n: persistedI18nReducer,
 });
 
 // Configure store

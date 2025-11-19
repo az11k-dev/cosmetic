@@ -1,0 +1,28 @@
+{
+  "allCategories": "Все Категории",
+  "tabFaceMakeup": "Уход за лицом и Макияж",
+  "tabHairBodyCare": "Уход за волосами и телом",
+  "tabPerfumeNails": "Парфюмерия и Ногти",
+  "tabAccessoriesTools": "Аксессуары и Инструменты",
+
+  "colFaceCare": "Уход за лицом",
+  "colMakeup": "Макияж",
+  "colHairCare": "Уход за волосами",
+  "colBodyCare": "Уход за телом",
+  "colPerfumes": "Парфюмерия",
+  "colNails": "Ногти",
+  "colAccessories": "Аксессуары",
+  "colTools": "Инструменты",
+
+  "menuCategories": "Категории",
+  "menuProducts": "Товары",
+  "menuBlog": "Блог",
+  "menuPages": "Страницы",
+  "menuOffers": "Акции",
+  "prodFullWidth": "Товар на всю ширину",
+  "prodAccordionFullWidth": "Аккордеон на всю ширину",
+  "megaClassic": "Классика",
+  "megaBanner": "Баннер",
+  "megaColumns": "Колонки",
+  "megaList": "Список"
+}

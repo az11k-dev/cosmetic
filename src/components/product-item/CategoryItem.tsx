@@ -9,7 +9,7 @@ const CategoryItem = ({ data }: any) => {
         <Link to="/shop-left-sidebar-col-3">
           <h4 className="gi-cat-title">{data.name}</h4>
         </Link>
-        <p className="items">{data.item} Items</p>
+        <p className="items">{data.item}</p>
       </div>
     </div>
   );

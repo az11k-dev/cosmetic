@@ -203,13 +203,13 @@ const ProfileEdit = () => {
                           type="text"
                           name="phoneNumber"
                           placeholder="Enter your phone number"
-                          pattern="^\d{10,12}$"
+                              pattern="^\d{12,15}$"
                           required
                           value={formData.phoneNumber}
                           onChange={handleInputChange}
                         />
                         <Form.Control.Feedback type="invalid">
-                          Please Enter 10-12 digit number.
+                          Please Enter 12-15 digit number.
                         </Form.Control.Feedback>
                       </Form.Group>
                     </span>

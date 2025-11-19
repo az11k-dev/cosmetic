@@ -75,6 +75,24 @@ export interface Facts {
     id: number;
   }
 
+export interface ProductSidebar {
+    category1: string;
+    sale1: string;
+    image1: string;
+    imageTwo1: string;
+    oldPrice1: number;
+    newPrice1: number;
+    title1: string;
+    weight1?: string;
+    rating1: any;
+    status1: string;
+    location1: string;
+    brand1: string;
+    sku1: number;
+    quantity1: number;
+    id: number;
+}
+
   export interface Category {
     name: string;
     percentage: string;
