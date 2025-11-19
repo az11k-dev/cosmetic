@@ -11,7 +11,8 @@ import headerManuUzbData from "./localesI18n/uzb/headerManuUzb.json";
 import headerManuRuData from "./localesI18n/rus/headerManuRu.json";
 import footerUzbData from "./localesI18n/uzb/footerUzb.json";
 import footerRuData from "./localesI18n/rus/footerRu.json";
-
+import heroUzbData from "./localesI18n/uzb/heroSliderUzb.json";
+import heroRuData from "./localesI18n/rus/heroSliderRu.json";
 
 i18n
     .use(LanguageDetector)
@@ -26,12 +27,14 @@ i18n
                 headerTwo:headerTwoUzbData,
                 headerManu: headerManuUzbData,
                 footer: footerUzbData,
+                heroSlider:heroUzbData,
             },
             ru: {
                 headerOne: headerOneRuData,
                 headerTwo: headerTwoRuData,
                 headerManu: headerManuRuData,
                 footer: footerRuData,
+                heroSlider:heroRuData
             },
         },
 
@@ -39,12 +42,12 @@ i18n
         fallbackLng: "uz",
 
         // Asosiy Namespace va default namespace ni belgilash
-        ns: ["headerOne","headerTwo","headerManu","footer"],
+        ns: ["headerOne","headerTwo","headerManu","footer","heroSlider"],
         defaultNS: "headerOne", // Bu "headerOne" namespace ni ko'rsatadi
 
         // Avval saqlangan tilni ishlatish uchun detektor sozlamasi
         detection: {
-            order: ['localStorage', 'cookie', 'htmlTag'],
+            order: ['localStorage', 'cookie', 'htmlTag',],
             caches: ['localStorage'],
         },
 
