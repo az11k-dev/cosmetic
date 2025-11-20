@@ -18,7 +18,7 @@ const page = () => {
             {/*<CategorySliderOne />*/}
             <Deal />
             {/*<Banner />*/}
-           <GroceryArrials />
+           {/*<GroceryArrials />*/}
             {/*<OfferBanners />*/}
             {/*<Services />*/}
             {/*<Trending />*/}

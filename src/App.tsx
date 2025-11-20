@@ -10,7 +10,9 @@ import {useDispatch} from "react-redux";
 import {setSelectedCategory} from "./store/reducers/filterReducer";
 
 // 💡 ИМПОРТИРУЕМ НОВЫЙ ХУК useAuth
-import {useAuth} from "@/context/AuthContext"; // Предполагая, что он находится по этому пути
+import {useAuth} from "@/context/AuthContext";
+import ProductDetailPage from "@/components/ProductDetailPage.tsx";
+import ProductDetailsPage from "@/components/ProductDetailsPage.tsx"; // Предполагая, что он находится по этому пути
 
 const LoadingFallback = () => <Loader/>;
 
@@ -24,7 +26,6 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({element, meta}) => {
     const location = useLocation();
     const dispatch = useDispatch();
-
     // 💡 ИСПОЛЬЗУЕМ useAuth ВМЕСТО ЛОГИКИ С localStorage
     const {isAuthenticated} = useAuth();
     // ----------------------------------------------------
@@ -69,6 +70,13 @@ const App: React.FC = () => {
                             }
                         />
                     ))}
+                </Routes>
+                // Пример настройки маршрутов
+                <Routes>
+                    {/* ... другие маршруты ... */}
+                    {/* 💡 Этот маршрут принимает параметр id */}
+                    <Route path="/product-details/:id" element={<ProductDetailsPage />} />
+                    {/* ... */}
                 </Routes>
             </Suspense>
         </BrowserRouter>
