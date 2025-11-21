@@ -6,10 +6,10 @@ import storage from "redux-persist/lib/storage";
 interface UserState {
     id: number;
     username: string;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     email: string;
-    phoneNumber: string;
+    phone_number: string;
     // Можно добавить created_at/updated_at, если нужно
 }
 
@@ -40,11 +40,11 @@ const registrationSlice = createSlice({
             const userPayload: UserState = {
                 id: apiUser.id,
                 username: apiUser.username,
-                // ЭТО КЛЮЧЕВОЙ МОМЕНТ: Преобразование first_name -> firstName
-                firstName: apiUser.first_name,
-                lastName: apiUser.last_name,
+                // ЭТО КЛЮЧЕВОЙ МОМЕНТ: Преобразование first_name -> first_name
+                first_name: apiUser.first_name,
+                last_name: apiUser.last_name,
                 email: apiUser.email,
-                phoneNumber: apiUser.phone_number,
+                phone_number: apiUser.phone_number,
                 // ...
             };
 

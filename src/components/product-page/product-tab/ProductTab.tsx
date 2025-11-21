@@ -51,7 +51,7 @@ const ProductTab = () => {
         setReviews([
           ...reviews,
           {
-            name: `${userData.firstName} ${userData.lastName}`,
+            name: `${userData.first_name} ${userData.last_name}`,
             rating,
             comment,
             avatar:

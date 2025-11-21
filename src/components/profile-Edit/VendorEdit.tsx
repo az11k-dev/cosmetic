@@ -20,10 +20,10 @@ const VendorEdit = () => {
   const [isSwitchOn, setIsSwitchOn] = useState<boolean>(false);
   const [validated, setValidated] = useState(false);
   const [formData, setFormData] = useState<RegistrationData>({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
-    phoneNumber: "",
+    phone_number: "",
     address: "",
     city: "",
     postCode: "",
@@ -151,9 +151,9 @@ const VendorEdit = () => {
                       <Form.Group>
                         <Form.Control
                           type="text"
-                          name="firstName"
+                          name="first_name"
                           placeholder="Enter your first name"
-                          value={formData.firstName}
+                          value={formData.first_name}
                           onChange={handleInputChange}
                           required
                         />
@@ -167,10 +167,10 @@ const VendorEdit = () => {
                       <Form.Group>
                         <Form.Control
                           type="text"
-                          name="lastName"
+                          name="last_name"
                           placeholder="Enter your last name"
                           required
-                          value={formData.lastName}
+                          value={formData.last_name}
                           onChange={handleInputChange}
                         />
                         <Form.Control.Feedback type="invalid">
@@ -205,11 +205,11 @@ const VendorEdit = () => {
                       <Form.Group>
                         <Form.Control
                           type="text"
-                          name="phoneNumber"
+                          name="phone_number"
                           placeholder="Enter your phone number"
                           pattern="^\d{12,15}$"
                           required
-                          value={formData.phoneNumber}
+                          value={formData.phone_number}
                           onChange={handleInputChange}
                         />
                         <Form.Control.Feedback type="invalid">

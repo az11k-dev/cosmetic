@@ -44,8 +44,8 @@ const ProductOrderDetails = ({ id }: any) => {
 
   function isOrderValid(order: any): order is {
     address: {
-      firstName: string;
-      lastName: string;
+      first_name: string;
+      last_name: string;
       address: string;
       city: string;
       state: string;
@@ -58,8 +58,8 @@ const ProductOrderDetails = ({ id }: any) => {
       order !== null &&
       typeof order.address === "object" &&
       order.address !== null &&
-      typeof order.address.firstName === "string" &&
-      typeof order.address.lastName === "string" &&
+      typeof order.address.first_name === "string" &&
+      typeof order.address.last_name === "string" &&
       typeof order.address.address === "string" &&
       typeof order.address.city === "string" &&
       typeof order.address.state === "string" &&
@@ -91,7 +91,7 @@ const ProductOrderDetails = ({ id }: any) => {
                       <li>
                         <strong className="gi-check-subtitle">Name :</strong>{" "}
                         <span style={{ color: "#777" }}>
-                          {order?.address.firstName} {order?.address.lastName}{" "}
+                          {order?.address.first_name} {order?.address.last_name}{" "}
                         </span>
                       </li>
                       <li>

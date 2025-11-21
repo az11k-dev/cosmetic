@@ -79,7 +79,7 @@ const VendorProfile = () => {
                       />
                       <div className="v-detail">
                         <h5>
-                          {userData.firstName} {userData.lastName}
+                          {userData.first_name} {userData.last_name}
                         </h5>
                         <p>{userData.description}</p>
                       </div>
@@ -110,7 +110,7 @@ const VendorProfile = () => {
                         <ul>
                           <li>
                             <strong>Phone Nubmer : </strong>(123){" "}
-                            {userData.phoneNumber}
+                            {userData.phone_number}
                           </li>
                         </ul>
                       </div>

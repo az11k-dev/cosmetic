@@ -87,7 +87,7 @@ const VendorSetting = () => {
                         <ul>
                           <li>
                             <strong>Phone Nubmer 1 : </strong>(123){" "}
-                            {userData?.phoneNumber}
+                            {userData?.phone_number}
                           </li>
                         </ul>
                       </div>

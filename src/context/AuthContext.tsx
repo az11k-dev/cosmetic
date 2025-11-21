@@ -12,10 +12,10 @@ import React, {
 export interface UserState {
     id: number;
     username: string;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     email: string;
-    phoneNumber: string;
+    phone_number: string;
 }
 
 // Интерфейс для состояния аутентификации
@@ -128,10 +128,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         const userPayload: UserState = {
             id: apiUser.id,
             username: apiUser.username,
-            firstName: apiUser.first_name, // Ключевой момент: first_name -> firstName
-            lastName: apiUser.last_name,
+            first_name: apiUser.first_name, // Ключевой момент: first_name -> first_name
+            last_name: apiUser.last_name,
             email: apiUser.email,
-            phoneNumber: apiUser.phone_number,
+            phone_number: apiUser.phone_number,
         };
 
         const loginState: AuthState = {
