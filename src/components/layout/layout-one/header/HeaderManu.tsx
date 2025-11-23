@@ -1,16 +1,10 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import classic from "@/utility/header/classic";
-import banner from "@/utility/header/benner";
-import column from "@/utility/header/columns";
-import list from "@/utility/header/list";
 import blog from "@/utility/header/blog";
 import pages from "@/utility/header/pages";
 import productpage from "@/utility/header/productpage";
-import CurrentLocation from "./CurrentLocation";
 import AllCategories from "@/components/layout/layout-one/header/AllCategories.tsx";
-import Categories from "@/components/layout/layout-one/header/Categories.tsx";
 
 
 function HeaderManu() {
@@ -102,12 +96,6 @@ function HeaderManu() {
                                                         ))}
                                                     </ul>
                                                 </li>
-                                                <li className="non-drop">
-                                                    <Link to="/banner-left-sidebar-col-3">
-                                                        <i className="fi-rr-badge-percent"></i>
-                                                        {t("menuOffers")}
-                                                    </Link>
-                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -115,8 +103,22 @@ function HeaderManu() {
                             </div>
                         </div>
                         {/* */}
-
-                        <CurrentLocation/>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            marginTop: 'auto',
+                            gap: '5px',
+                            cursor: 'pointer',
+                        }}>
+                            <p>
+                                <img style={{width: '18px', height: '18px'}}
+                                     src="https://cdn-icons-png.flaticon.com/512/5952/5952689.png" alt="discount"/>
+                            </p>
+                            <p style={{fontSize: '15px', fontWeight: '500', color: '#4b5966'}}>
+                                {t("menuOffers")}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
