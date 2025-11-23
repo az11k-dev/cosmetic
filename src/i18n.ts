@@ -35,6 +35,14 @@ import trackUz from "./localesI18n/uzb/track.json";
 import trackRu from "./localesI18n/rus/track.json";
 import sidebarUz from "./localesI18n/uzb/sidebar.json";
 import sidebarRu from "./localesI18n/rus/sidebar.json";
+import tredingRU from "./localesI18n/rus/tredingRu.json";
+import tredingUzb from "./localesI18n/uzb/tredingUzb.json";
+import tredingAllRU from "./localesI18n/rus/treadingAllRu.json";
+import tredingAllUzb from "./localesI18n/uzb/treadingAllUzb.json";
+import faqAllRU from "./localesI18n/rus/faqAllRU.json";
+import faqAllUzb from "./localesI18n/uzb/faqAllUzb.json";
+import cartAllRuData from "./localesI18n/rus/cartAllRu.json";
+import cartAllUzbData from "./localesI18n/uzb/cartAllUzb.json";
 
 i18n
     .use(LanguageDetector)
@@ -60,7 +68,12 @@ i18n
                 offerBanners:offerUz,
                 services:servicesUz,
                 trackOrder:trackUz,
-                sidebarCart:sidebarUz
+                sidebarCart:sidebarUz,
+                treding: tredingUzb,
+                tredingAll: tredingAllUzb,
+                faqAll: faqAllUzb,
+                cartAll: cartAllUzbData,
+
             },
             ru: {
                 headerOne: headerOneRuData,
@@ -78,7 +91,11 @@ i18n
                 offerBanners:offerRu,
                 services:servicesRu,
                 trackOrder:trackRu,
-                sidebarCart:sidebarRu
+                sidebarCart:sidebarRu,
+                treding: tredingRU,
+                tredingAll: tredingAllRU,
+                faqAll: faqAllRU,
+                cartAll: cartAllRuData,
             },
         },
 
@@ -86,7 +103,7 @@ i18n
         fallbackLng: "uz",
 
         // Asosiy Namespace va default namespace ni belgilash
-        ns: ["headerOne","headerTwo","headerManu","footer","heroSlider","common","categoryNames","deal1","productCard","itemNames","banner","newArrivals","offerBanners","services","trackOrder","sidebarCart"],
+        ns: ["headerOne","headerTwo","headerManu","footer","heroSlider","common","categoryNames","deal1","productCard","itemNames","banner","newArrivals","offerBanners","services","trackOrder","sidebarCart","treding", "tredingAll", "faqAll" , "cartAll"],
         defaultNS: "headerOne", // Bu "headerOne" namespace ni ko'rsatadi
 
         // Avval saqlangan tilni ishlatish uchun detektor sozlamasi
