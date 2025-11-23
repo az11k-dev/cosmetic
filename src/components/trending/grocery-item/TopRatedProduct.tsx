@@ -4,8 +4,10 @@ import Slider from "react-slick";
 import TrendingItem from "../trendingItem/TrendingItem";
 import Spinner from "@/components/button/Spinner";
 import { useSliceData } from "@/hooks/useSliceData";
+import {useTranslation} from "react-i18next";
 
 const TopRatedProduct = () => {
+  const { t } = useTranslation('tredingAll');
   const settings = {
     dots: false,
     infinite: true,
@@ -82,7 +84,8 @@ const TopRatedProduct = () => {
           <div className="section-title">
             <div className="section-detail">
               <h2 className="gi-title">
-                Top <span>Rated</span>
+                {/* ✅ FAQQAT SHU YER TARJIMAGA O'TKAZILDI */}
+                {t('titles.trendingItemsTitle1')}
               </h2>
             </div>
           </div>

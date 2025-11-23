@@ -1,0 +1,34 @@
+{
+  "cartTitle": "Страница корзины",
+  "emptyCart": "Добавьте товар в корзину.",
+  "sidebar": {
+    "summaryTitle": "Итог",
+    "shippingTitle": "Расчет доставки",
+    "shippingEstimateHint": "Введите пункт назначения для расчета стоимости доставки",
+    "countryLabel": "Страна *",
+    "countryPlaceholder": "Страна",
+    "stateLabel": "Штат/Провинция",
+    "statePlaceholder": "Регион/Штат",
+    "cityLabel": "Город",
+    "cityPlaceholder": "Город",
+    "zipLabel": "Почтовый индекс",
+    "zipPlaceholder": "Почтовый индекс",
+    "subTotal": "Промежуточный итог",
+    "deliveryCharges": "Стоимость доставки",
+    "totalAmount": "Общая сумма",
+    "coupanPlaceholder": "Введите ваш код купона",
+    "applyBtn": "Применить"
+  },
+  "table": {
+    "productHeader": "Товар",
+    "priceHeader": "Цена",
+    "quantityHeader": "Количество",
+    "totalHeader": "Итог",
+    "actionHeader": "Действие",
+    "loading": "Загрузка..."
+  },
+  "actions": {
+    "continueShopping": "Продолжить покупки",
+    "checkOut": "Оформить заказ"
+  }
+}

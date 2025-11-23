@@ -1,0 +1,28 @@
+{
+  "titles": {
+    "faqTitle": "Tez-tez Beriladigan Savollar",
+    "faqSubtitle": "Mijozlarga xizmat ko'rsatish boshqaruvi."
+  },
+  "faq_list": {
+    "q1Title": "Ko'p sotuvchi xizmatlari nima?",
+    "q1Answer": "Bu bir platformada bir nechta sotuvchilar o'z mahsulotlarini sota oladigan xizmat.",
+    "q2Title": "Bir vaqtning o'zida bir nechta mahsulotni qanday sotib olish mumkin?",
+    "q2Answer": "Mahsulotlarni savatga qo'shing va yagona to'lov sahifasidan o'ting.",
+    "q3Title": "Mijozlar uchun pulni qaytarish siyosati.",
+    "q3Answer": "Pulni qaytarish siyosatimiz to'liq 'Shartlar va sharoitlar' sahifasida keltirilgan.",
+    "q4Title": "Mijozlar uchun almashtirish siyosati.",
+    "q4Answer": "Mahsulotlar faqat tovar nuqsonlari bo'lgan hollarda almashtiriladi.",
+    "q5Title": "Mahsulotlar mavjud bo'lgan yo'lni bering.",
+    "q5Answer": "Hozirda sovg'a berish aksiyalari mavjud emas, lekin ular tez-tez o'zgarib turadi.",
+    "q6Title": "Buyurtmani bekor qilish tartibi qanday?",
+    "q6Answer": "Buyurtmani u jo'natilishidan oldin bekor qilish uchun mijozlarga xizmat ko'rsatishga murojaat qiling.",
+    "q7Title": "Sizning mahsulotlaringiz haqiqiymi?",
+    "q7Answer": "Ha, biz faqat asl va yuqori sifatli mahsulotlar sotilishini kafolatlaymiz.",
+    "q8Title": "Chegirma kodlaridan qanday foydalanish mumkin?",
+    "q8Answer": "Chegirma kodini to'lovni tasdiqlash sahifasida 'Promokod' maydoniga kiriting.",
+    "q9Title": "Saytda hisob yaratish majburiymi?",
+    "q9Answer": "Siz hisob yaratmasdan ham xarid qilishingiz mumkin, ammo hisob qaydnomasida qo'shimcha imtiyozlar mavjud.",
+    "q10Title": "Buyurtmani qanday kuzatish mumkin?",
+    "q10Answer": "Buyurtmani kuzatish raqami sizning elektron pochtangizga yuboriladi."
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "cartTitle": "Savat sahifasi",
+  "emptyCart": "Savatga mahsulot qo'shing.",
+  "sidebar": {
+    "summaryTitle": "Xulosa",
+    "shippingTitle": "Taxminiy yetkazib berish",
+    "shippingEstimateHint": "Yuk tashish ta'minoti uchun manzilingizni kiriting",
+    "countryLabel": "Mamlakat *",
+    "countryPlaceholder": "Mamlakat",
+    "stateLabel": "Shtat/viloyat",
+    "statePlaceholder": "Shtat/viloyat",
+    "cityLabel": "Shahar",
+    "cityPlaceholder": "Shahar",
+    "zipLabel": "Pochta indeksi",
+    "zipPlaceholder": "Pochta indeksi",
+    "subTotal": "Sub-jami",
+    "deliveryCharges": "Yetkazib berish to'lovlari",
+    "coupanPlaceholder": "Kupon kodingizni kiriting",
+    "applyBtn": "Kuponni qo'llash",
+    "totalAmount": "Umumiy hisob"
+  },
+  "table": {
+    "productHeader": "Mahsulot",
+    "priceHeader": "Narxi",
+    "quantityHeader": "Miqdori",
+    "totalHeader": "Jami",
+    "actionHeader": "Harakat",
+    "loading": "Yuklanmoqda..."
+  },
+  "actions": {
+    "continueShopping": "Xarid qilishda davom eting",
+    "checkOut": "Ro'yxatdan o'chirilish"
+  }
+}
