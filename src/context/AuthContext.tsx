@@ -36,7 +36,8 @@ const initialState: AuthState = {
 type AuthAction =
     | { type: "LOGIN"; payload: AuthState } // Payload содержит token и user
     | { type: "LOGOUT" }
-    | { type: "SET_INITIAL_STATE"; payload: AuthState }; // Для загрузки из localStorage
+    | { type: "SET_INITIAL_STATE"; payload: AuthState } // Для загрузки из localStorage
+    | { type: "UPDATE_USER"; payload: Partial<UserState> };
 
 // Редьюсер для обработки экшенов
 const AuthReducer = (state: AuthState, action: AuthAction): AuthState => {
@@ -57,6 +58,20 @@ const AuthReducer = (state: AuthState, action: AuthAction): AuthState => {
         case "SET_INITIAL_STATE":
             // Установка состояния из localStorage при инициализации
             return action.payload;
+        case "UPDATE_USER":
+            if (!state.user) return state; // Нельзя обновить, если пользователя нет
+
+            // Объединяем текущие данные пользователя с новыми данными
+            const updatedUser = {
+                ...state.user,
+                ...action.payload,
+            };
+
+            return {
+                ...state,
+                user: updatedUser,
+            };
+
         default:
             return state;
     }
@@ -66,6 +81,7 @@ const AuthReducer = (state: AuthState, action: AuthAction): AuthState => {
 interface AuthContextType extends AuthState {
     login: (token: string, apiUser: any) => void;
     logout: () => void;
+    updateUser: (data: Partial<UserState>) => void;
 }
 
 // Создание контекста с дефолтными значениями
@@ -122,6 +138,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     }, [state.token, state.user]);
 
 
+    const handleUpdateUser = (data: Partial<UserState>) => {
+        // Данные, которые мы получаем здесь, уже должны быть в camelCase
+        dispatch({type: "UPDATE_USER", payload: data});
+    };
     // 📢 РУЧНАЯ ФУНКЦИЯ LOGIN (заменяет Redux Action/Reducer) 📢
     const handleLogin = (token: string, apiUser: any) => {
         // Преобразование snake_case полей из API в camelCase для стейта
@@ -155,6 +175,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         ...state,
         login: handleLogin,
         logout: handleLogout,
+        updateUser: handleUpdateUser,
     };
 
     return (

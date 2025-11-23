@@ -3,7 +3,9 @@ import {Link} from "react-router-dom";
 const CategoryItem = ({data}: any) => {
     return (
         <div className="gi-cat-icon">
-            <img src={data.img ? data.img : "https://cdn-icons-png.freepik.com/512/8058/8058572.png"} alt="img"/>
+            <img
+                src={data?.upload?.file_url ? data?.upload?.file_url : "https://cdn-icons-png.freepik.com/512/8058/8058572.png"}
+                alt="img"/>
             <div className="gi-cat-detail">
                 <Link to="/shop-left-sidebar-col-3">
                     <h4 className="gi-cat-title">{data.name}</h4>

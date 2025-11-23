@@ -1,297 +1,318 @@
-import React, { useEffect, useState } from "react";
-import { getRegistrationData, setRegistrationData } from "@/utility/storage/registration";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store";
-import { toggleSwitch } from "@/store/reducers/cartSlice";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/store";
+import {toggleSwitch} from "@/store/reducers/cartSlice";
 import VendorEdit from "./VendorEdit";
-import { Form } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { RegistrationData } from "@/types/data.types";
+import {Form} from "react-bootstrap";
+import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import {useAuth} from "@/context/AuthContext.tsx";
+
+// --- Типы данных ---
+
+// Интерфейс для данных профиля, которые мы получаем и отправляем
+interface ProfileData {
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone_number: string;
+}
+
+// Интерфейс для вложенной структуры ответа API
+interface ProfileApiResponseData {
+    id: number;
+    first_name: string;
+    last_name: string;
+    username: string;
+    telegram_user_id: string | null;
+    email: string;
+    phone_number: string;
+    email_verified_at: string | null;
+    created_at: string;
+    updated_at: string;
+}
+
+// Интерфейс для полной структуры ответа API
+interface ProfileApiResponse {
+    status: boolean;
+    data: {
+        status: boolean;
+        data: ProfileApiResponseData;
+    }
+}
+
 
 const ProfileEdit = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const isSwitchOnFromRedux = useSelector(
-    (state: RootState) => state.cart.isSwitchOn
-  );
-  const [isSwitchOn, setIsSwitchOn] = useState<boolean>(false);
-  const [validated, setValidated] = useState(false);
-  const [formData, setFormData] = useState<RegistrationData>({
-    first_name: "",
-    last_name: "",
-    email: "",
-    phone_number: "",
-    address: "",
-    city: "",
-    postCode: "",
-    country: "",
-    state: "",
-    profilePhoto: "",
-    description: "",
-  });
+    const API_PROFILE_URL = "https://admin.beauty-point.uz/api/profile";
+    const API_UPDATE_URL = "https://admin.beauty-point.uz/api/profile/update";
+    const {updateUser} = useAuth();
 
-  useEffect(() => {
-    const data = getRegistrationData();
-    if (data.length > 0) {
-      const user = data[data.length - 1];
-      setFormData(user);
-    }
-  }, []);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    setIsSwitchOn(isSwitchOnFromRedux);
-  }, [isSwitchOnFromRedux]);
+    const isSwitchOnFromRedux = useSelector(
+        (state: RootState) => state.cart.isSwitchOn
+    );
 
-  const handleSwitchToggle = () => {
-    dispatch(toggleSwitch());
-  };
+    const [isSwitchOn, setIsSwitchOn] = useState<boolean>(false);
+    const [validated, setValidated] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isLoading, setIsLoading] = useState(true); // Для отслеживания загрузки данных
+    const [apiError, setApiError] = useState<string | null>(null); // Для отображения ошибок при загрузке
 
-  const handleInputChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+    // Инициализация с пустыми строками
+    const [formData, setFormData] = useState<ProfileData>({
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone_number: "",
+    });
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
+    // **Функция для загрузки данных профиля**
+    const fetchProfileData = async () => {
+        setIsLoading(true);
+        setApiError(null);
+        const token = localStorage.getItem("authToken"); // **Замените на ваш токен**
+
+        try {
+            const response = await axios.get<ProfileApiResponse>(API_PROFILE_URL, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response.data.status && response.data.data.status) {
+                const profileData = response.data.data.data;
+                // Заполняем только те поля, которые мы используем в форме
+                setFormData({
+                    first_name: profileData.first_name,
+                    last_name: profileData.last_name,
+                    email: profileData.email,
+                    phone_number: profileData.phone_number,
+                });
+            } else {
+                // Обработка логической ошибки в ответе
+                setApiError("Не удалось получить данные профиля.");
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                console.error("Ошибка API при загрузке:", error.response.data);
+                setApiError("Ошибка загрузки профиля: " + (error.response.data.message || "Сетевая ошибка."));
+            } else {
+                console.error("Неизвестная ошибка при загрузке:", error);
+                setApiError("Произошла неизвестная ошибка при загрузке.");
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
+    // **Загрузка данных при монтировании компонента**
+    useEffect(() => {
+        fetchProfileData();
+    }, []);
+
+    // Остальная логика переключателя и обработчиков
+    useEffect(() => {
+        setIsSwitchOn(isSwitchOnFromRedux);
+    }, [isSwitchOnFromRedux]);
+
+    const handleSwitchToggle = () => {
+        dispatch(toggleSwitch());
+    };
+
+    const handleInputChange = (
+        e: React.ChangeEvent<
+            HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+        >
+    ) => {
+        const {name, value} = e.target;
         setFormData((prevData) => ({
-          ...prevData,
-          profilePhoto: reader.result as string,
+            ...prevData,
+            [name]: value,
         }));
-      };
-      reader.readAsDataURL(file);
+    };
+
+    // Функция для отправки обновлений (осталась из предыдущего ответа)
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const form = e.currentTarget;
+        if (form.checkValidity() === false) {
+            e.stopPropagation();
+            setValidated(true);
+            return;
+        }
+
+        setValidated(true);
+        setIsSubmitting(true);
+        setApiError(null);
+
+        const token = localStorage.getItem("authToken");
+
+        try {
+            const response = await axios.post(API_UPDATE_URL, formData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response.status === 200 || response.status === 201) {
+                updateUser(formData);
+                navigate("/user-profile");
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error) && error.response) {
+                console.error("Ошибка API при обновлении:", error.response.data);
+                alert("Ошибка обновления: " + (error.response.data.message || "Произошла ошибка."));
+            } else {
+                console.error("Неизвестная ошибка:", error);
+                alert("Произошла неизвестная ошибка.");
+            }
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+
+    if (isSwitchOn) {
+        return <VendorEdit/>;
     }
-  };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.stopPropagation();
-      setValidated(true);
-      return;
+    // Отображение статусов загрузки и ошибки
+    if (isLoading) {
+        return (
+            <div className="gi-register padding-tb-40">
+                <div className="container">
+                    <p>Загрузка данных профиля...</p>
+                </div>
+            </div>
+        );
     }
 
-    // Update the registration data in local storage
-    const updatedData = [...getRegistrationData()];
-    updatedData[updatedData.length - 1] = formData;
-    setRegistrationData(updatedData);
+    if (apiError) {
+        return (
+            <div className="gi-register padding-tb-40">
+                <div className="container">
+                    <p style={{color: 'red'}}>Ошибка: {apiError}. Пожалуйста, попробуйте позже.</p>
+                </div>
+            </div>
+        );
+    }
 
-    // Redirect to the user profile page after editing
-    navigate("/user-profile");
-  };
-
-  if (isSwitchOn) {
-    return <VendorEdit />;
-  }
-
-  return (
-    <>
-      <section className="gi-register padding-tb-40">
-        <div className="container">
-          <div className="section-title-2">
-            <h2 className="gi-title">
-              Edit Profile<span></span>
-            </h2>
-            <p>Best place to buy and sell digital products.</p>
-          </div>
-          <div className="row">
-            <div className="gi-register-wrapper">
-              <div className="gi-register-container">
-                <div className="gi-register-form">
-                  <span
-                    style={{
-                      display: "flex",
-                      justifyContent: "end",
-                      marginTop: "10px",
-                    }}
-                  >
-                    {isSwitchOn ? "Switch is Vendor" : "Switch"}
-                  </span>
-                  <span
-                    style={{
-                      display: "flex",
-                      justifyContent: "end",
-                      marginTop: "10px",
-                    }}
-                    className="switch"
-                  >
-                    <input
-                      onChange={handleSwitchToggle}
-                      checked={isSwitchOn}
-                      id="switch-rounded"
-                      type="checkbox"
-                    />
-                    <label htmlFor="switch-rounded"></label>
-                  </span>
-                  <Form
-                    noValidate
-                    validated={validated}
-                    className="gi-blog-form"
-                    action="#"
-                    method="post"
-                    onSubmit={handleSubmit}
-                  >
+    return (
+        <>
+            <section className="gi-register padding-tb-40">
+                <div className="container">
+                    <div className="section-title-2">
+                        <h2 className="gi-title">
+                            Edit Profile<span></span>
+                        </h2>
+                        <p>Best place to buy and sell digital products.</p>
+                    </div>
+                    <div className="row">
+                        <div className="gi-register-wrapper">
+                            <div className="gi-register-container">
+                                <div className="gi-register-form">
+                                    <Form
+                                        noValidate
+                                        validated={validated}
+                                        className="gi-blog-form"
+                                        action="#"
+                                        method="post"
+                                        onSubmit={handleSubmit}
+                                    >
                     <span className="gi-register-wrap gi-register-half">
                       <label>First Name*</label>
                       <Form.Group>
                         <Form.Control
-                          type="text"
-                          name="first_name"
-                          placeholder="Enter your first name"
-                          value={formData.first_name}
-                          onChange={handleInputChange}
-                          required
+                            type="text"
+                            name="first_name"
+                            placeholder="Enter your first name"
+                            value={formData.first_name}
+                            onChange={handleInputChange}
+                            required
                         />
                         <Form.Control.Feedback type="invalid">
                           Please Enter First Name.
                         </Form.Control.Feedback>
                       </Form.Group>
                     </span>
-                    <span className="gi-register-wrap gi-register-half">
+                                        <span className="gi-register-wrap gi-register-half">
                       <label>Last Name*</label>
                       <Form.Group>
                         <Form.Control
-                          type="text"
-                          name="last_name"
-                          placeholder="Enter your last name"
-                          required
-                          value={formData.last_name}
-                          onChange={handleInputChange}
+                            type="text"
+                            name="last_name"
+                            placeholder="Enter your last name"
+                            required
+                            value={formData.last_name}
+                            onChange={handleInputChange}
                         />
                         <Form.Control.Feedback type="invalid">
                           Please Enter Last Name.
                         </Form.Control.Feedback>
                       </Form.Group>
                     </span>
-                    <span
-                      style={{ marginTop: "10px" }}
-                      className="gi-register-wrap gi-register-half"
-                    >
+                                        <span
+                                            style={{marginTop: "10px"}}
+                                            className="gi-register-wrap gi-register-half"
+                                        >
                       <label>Email*</label>
                       <Form.Group>
                         <Form.Control
-                          type="email"
-                          name="email"
-                          placeholder="Enter your email add..."
-                          required
-                          value={formData.email}
-                          onChange={handleInputChange}
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email add..."
+                            required
+                            value={formData.email}
+                            onChange={handleInputChange}
                         />
                         <Form.Control.Feedback type="invalid">
-                          Please Enter correct username.
+                          Please Enter correct email.
                         </Form.Control.Feedback>
                       </Form.Group>
                     </span>
-                    <span
-                      style={{ marginTop: "10px" }}
-                      className="gi-register-wrap gi-register-half"
-                    >
+                                        <span
+                                            style={{marginTop: "10px"}}
+                                            className="gi-register-wrap gi-register-half"
+                                        >
                       <label>Phone Number*</label>
                       <Form.Group>
                         <Form.Control
-                          type="text"
-                          name="phone_number"
-                          placeholder="Enter your phone number"
-                              pattern="^\d{12,15}$"
-                          required
-                          value={formData.phone_number}
-                          onChange={handleInputChange}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please Enter 12-15 digit number.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </span>
-                    <span
-                      style={{ marginTop: "10px" }}
-                      className="gi-register-wrap"
-                    >
-                      <label>Address</label>
-                      <Form.Group>
-                        <Form.Control
-                          type="text"
-                          name="address"
-                          placeholder="Address Line 1"
-                          value={formData.address}
-                          onChange={handleInputChange}
-                          required
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          Please Enter Address.
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </span>
-                    <span
-                      style={{ marginTop: "10px" }}
-                      className="gi-register-wrap"
-                    >
-                      <div className="gi-leave-form">
-                        <Form.Group>
-                          <label>About Me</label>
-                          <Form.Control
-                            as="textarea"
-                            rows={3}
-                            name="description"
-                            placeholder="Message"
+                            type="text"
+                            name="phone_number"
+                            placeholder="Enter your phone number"
+                            pattern="^\+?\d{9,15}$"
                             required
-                            value={formData.description}
+                            value={formData.phone_number}
                             onChange={handleInputChange}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            This field is required
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          Please Enter a valid phone number (9-15 digits, optionally with +).
+                        </Form.Control.Feedback>
+                      </Form.Group>
                     </span>
 
-                    <span
-                      style={{ paddingTop: "10px", marginTop: "10px" }}
-                      className="gi-register-wrap"
-                    >
-                      <label>Profile Photo</label>
-                      <input
-                        style={{ paddingTop: "10px" }}
-                        type="file"
-                        id="profilePhoto"
-                        name="profilePhoto"
-                        onChange={handleFileChange}
-                      />
-                      {formData.profilePhoto && (
-                        <img
-                          src={formData.profilePhoto}
-                          alt="Profile"
-                          width="100"
-                        />
-                      )}
-                    </span>
-                    <span
-                      style={{ justifyContent: "end", marginTop: "10px" }}
-                      className="gi-register-wrap gi-register-btn"
-                    >
-                      <button className="gi-btn-1" type="submit">
-                        Save
+                                        <span
+                                            style={{justifyContent: "end", marginTop: "10px"}}
+                                            className="gi-register-wrap gi-register-btn"
+                                        >
+                      <button className="gi-btn-1" type="submit" disabled={isSubmitting}>
+                        {isSubmitting ? "Saving..." : "Save"}
                       </button>
                     </span>
-                  </Form>
+                                    </Form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
-  );
+            </section>
+        </>
+    );
 };
 
 export default ProfileEdit;
