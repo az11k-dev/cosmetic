@@ -1,7 +1,6 @@
 {
   "allCategories": "Все категории",
 
-
   "tabFaceMakeup": "Уход за лицом и Макияж",
   "tabHairBodyCare": "Уход за волосами и телом",
   "tabPerfumeNails": "Парфюмерия и Ногти",
@@ -18,6 +17,7 @@
   "colTools": "Инструменты",
 
 
+  "menuTitle": "Моё Меню",
   "menuHome": "Главная",
   "menuShops": "Магазины",
   "menuCategories": "Категории",
@@ -27,6 +27,12 @@
   "menuOffers": "Предложения",
 
 
+  "prodPage": "Страница товара",
+  "prodLeftSidebar": "Товар (левый сайдбар)",
+  "prodRightSidebar": "Товар (правый сайдбар)",
+  "prodAccordion": "Аккордеон товара",
+  "prodAccLeftSidebar": "Левый сайдбар",
+  "prodAccRightSidebar": "Правый сайдбар",
   "prodFullWidth": "Полная Ширина",
   "prodAccordionFullWidth": "Аккордеон (Полная Ширина)",
 
@@ -34,5 +40,11 @@
   "megaClassic": "Классический Макет",
   "megaBanner": "Макет с Баннером",
   "megaColumns": "Макет Колонки",
-  "megaList": "Макет Списка"
+  "megaList": "Макет Списка",
+
+
+  "varClassic": "Классический Вариант",
+  "varBanner": "Вариант с Баннером",
+  "varColumns": "Вариант с Колонками",
+  "varList": "Вариант Списка"
 }

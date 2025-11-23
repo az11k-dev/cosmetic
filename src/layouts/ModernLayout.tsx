@@ -1,4 +1,4 @@
-import LayoutThree from "@/components/layout/layout-three";
+import LayoutThree from "@/components/layout/layout-one";
 import { GlobalLoader } from "@/components/loader/GlobalLoader";
 
 const ModernLayout = () => {

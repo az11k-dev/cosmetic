@@ -1,46 +1,62 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-// 💡 Redux/i18next uchun qo'shilgan importlar
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux"; // useSelector hozirgi tilni o'qish uchun foydali bo'lishi mumkin
-import { setLanguage } from "@/store/reducers/i18nSlice.ts"; // Redux action'imiz
-// import { RootState } from "../store";
-
-// import SidebarCart from "@/components/model/SidebarCart";
+import SidebarCart from "@/components/model/SidebarCart";
 import MobileManuSidebar from "@/components/model/MobileManuSidebar";
 import Dropdown from "react-bootstrap/Dropdown";
+import { useTranslation } from "react-i18next"; // t funksiyasini olamiz!
 
-function HeaderOne({ cartItems, wishlistItems }: any) {
-    // 💡 1. i18next hook'ini ishlatish
-    const { t, i18n } = useTranslation('headerOne');
+// === TYPESCRIPT INTERFEYSLARI ===
+interface Item {
+    id: string | number;
+}
 
-    // 💡 2. Redux dispatch'ni ishlatish
-    const dispatch = useDispatch();
-    // Tilni Redux state'dan o'qish (agar kerak bo'lsa)
-    // const currentReduxLang = useSelector((state: RootState) => state.i18n.currentLanguage);
+interface HeaderOneProps {
+    cartItems: Item[];
+    wishlistItems: Item[];
+}
+// ================================
 
+function HeaderOne({ cartItems, wishlistItems }: HeaderOneProps) {
+    // 1. t (tarjima) va i18n (tilni boshqarish) funksiyalarini olamiz
+    const { t, i18n } = useTranslation("headerOne");
 
+    // State'lar
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [activeMainMenu, setActiveMainMenu] = useState<string | null>(null);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-    // ... (Boshqa funksiyalar joyida qoladi) ...
-
-    const openCart = () => {
-        setIsCartOpen(true);
+    // ... (Qolgan funksiyalar) ...
+    const openCart = () => setIsCartOpen(true);
+    const closeCart = () => setIsCartOpen(false);
+    const toggleMainMenu = (menuKey: string) => {
+        setActiveMainMenu((prevMenu) => (prevMenu === menuKey ? null : menuKey));
     };
+    const openMobileManu = () => setIsMobileMenuOpen((prev) => !prev);
+    const closeMobileManu = () => setIsMobileMenuOpen(false);
 
-    // ... (Boshqa funksiyalar joyida qoladi) ...
-
-
-    // 💡 3. Tilni o'zgartirish funksiyasini yangilash
+    // Tilni o'zgartirish funksiyasi
     const changeLanguage = (lng: string) => {
-        // A. i18next'ni yangilash (sahifa matnlarini o'zgartiradi)
         i18n.changeLanguage(lng);
-
-        // B. Redux state'ni yangilash (tilni localStorage da saqlaydi)
-        dispatch(setLanguage(lng));
     };
+
+    // Til kodiga mos keluvchi matnni qaytarish (endilikda tarjima kaliti orqali)
+    const getCurrentLanguageName = (lngCode: string) => {
+        if (lngCode.startsWith('uz')) return t('common.uzbek_language');
+        if (lngCode.startsWith('ru')) return t('common.russian_language');
+        // Agar til sozlamalarda topilmasa
+        return t('common.select_language');
+    };
+
+    // Til tanlash uchun massiv (Faqat 'uz' va 'ru')
+    const availableLanguages = [
+        { code: 'uz', nameKey: 'common.uzbek_language' },
+        { code: 'ru', nameKey: 'common.russian_language' },
+    ];
+    const availableLanguages2 = [
+        { code2: 'uz', nameKey: 'common.uzbek_language' },
+        { code2: 'ru', nameKey: 'common.russian_language' },
+    ];
+
 
 
     return (
@@ -52,69 +68,160 @@ function HeaderOne({ cartItems, wishlistItems }: any) {
                         {/* */}
                         <div className="col text-center header-top-center">
                             <div className="header-top-message">
-                                {/* 💡 TARJIMA 1: Matnni t() funksiyasi bilan almashtiramiz */}
-                                {t('fastShopping')}
+                                {/* Matnni tarjima qilish */}
+                                {t('header.slogan')}
                             </div>
                         </div>
                         {/* */}
                         <div className="col header-top-right d-none d-lg-block">
                             <div className="header-top-right-inner d-flex justify-content-end">
                                 <Link className="gi-help" to="/faq">
-                                    {/* 💡 TARJIMA 2: Help? */}
-                                    {t('help')}
+                                    {/* Matnni tarjima qilish */}
+                                    {t('header.help')}
                                 </Link>
                                 <Link className="gi-help" to="/track-order">
-                                    {/* 💡 TARJIMA 3: Track Order? */}
-                                    {t('trackOrder')}
+                                    {/* Matnni tarjima qilish */}
+                                    {t('header.track_order')}
                                 </Link>
                                 {/* */}
+                                {/*<Dropdown className="header-top-lan-curr header-top-lan">*/}
+                                {/*    <Dropdown.Toggle variant="" className="dropdown-toggle" id="dropdown-basic">*/}
+                                {/*        /!* Hozirgi aktiv til nomini tarjima orqali ko'rsatish *!/*/}
+                                {/*        {getCurrentLanguageName(i18n.language)}*/}
+                                {/*    </Dropdown.Toggle>*/}
+                                {/*    <Dropdown.Menu as="ul">*/}
+                                {/*        {availableLanguages.map((lang) => (*/}
+                                {/*            <Dropdown.Item*/}
+                                {/*                as="li"*/}
+                                {/*                key={lang.code}*/}
+                                {/*                onClick={() => changeLanguage(lang.code)}*/}
+                                {/*                className={i18n.language.startsWith(lang.code) ? 'active' : ''}*/}
+                                {/*            >*/}
+
+
+                                {/*                /!* Dropdown menyusidagi tillarning nomini tarjima orqali ko'rsatish *!/*/}
+                                {/*                {t(lang.nameKey)}*/}
+                                {/*            </Dropdown.Item>*/}
+                                {/*        ))}*/}
+                                {/*    </Dropdown.Menu>*/}
+
+                                {/*</Dropdown>*/}
                                 <Dropdown className="header-top-lan-curr header-top-lan">
-                                    <Dropdown.Toggle
-                                        variant=""
-                                        className="dropdown-toggle"
-                                        id="dropdown-basic"
-                                    >
-                                        {/* 💡 Matnni dinamik ko'rsatish: i18n.language dan foydalanish */}
-                                        {i18n.language === 'uz' ? t('languageUzbek') : t('languageRussian')}
-                                        <i
-                                            className="fi-rr-angle-small-down"
-                                            aria-hidden="true"
-                                        ></i>
+                                    <Dropdown.Toggle variant="" className="dropdown-toggle" id="dropdown-basic">
+                                        {/* Hozirgi aktiv til nomini tarjima orqali ko'rsatish */}
+                                        {getCurrentLanguageName(i18n.language)}
                                     </Dropdown.Toggle>
-
                                     <Dropdown.Menu as="ul">
-                                        {/* 💡 O'zbek tili varianti (uz) */}
-                                        <Dropdown.Item
-                                            as="li"
-                                            onClick={() => changeLanguage('uz')} // 💡 Tilni o'zgartirish
-                                            className={i18n.language === 'uz' ? 'active' : ''}
-                                        >
-                                            {t('languageUzbek')}
-                                        </Dropdown.Item>
-                                        {/* 💡 Rus tili varianti (ru) */}
-                                        <Dropdown.Item
-                                            as="li"
-                                            onClick={() => changeLanguage('ru')} // 💡 Tilni o'zgartirish
-                                            className={i18n.language === 'ru' ? 'active' : ''}
-                                        >
-                                            {t('languageRussian')}
-                                        </Dropdown.Item>
+                                        {availableLanguages.map((lang) => (
+                                            <Dropdown.Item
+                                                as="li"
+                                                key={lang.code}
+                                                onClick={() => changeLanguage(lang.code)}
+                                                className={i18n.language.startsWith(lang.code) ? 'active' : ''}
+                                            >
+
+
+                                                {/* Dropdown menyusidagi tillarning nomini tarjima orqali ko'rsatish */}
+                                                {t(lang.nameKey)}
+                                            </Dropdown.Item>
+                                        ))}
                                     </Dropdown.Menu>
+
                                 </Dropdown>
-
                                 {/* */}
-
                             </div>
                         </div>
-                        {/* ... (Komponentning qolgan qismi o'zgarishsiz qoladi) ... */}
+                        {/* */}
+                        <div className="col header-top-res d-lg-none">
+                            <div className="gi-header-bottons">
+                                <div className="right-icons">
+                                    {/* */}
+                                    <div className="header-top-right-inner d-flex justify-content-end">
+                                        <Dropdown className="header-top-lan-curr header-top-lan">
+                                            <Dropdown.Toggle variant="" className="dropdown-toggle" id="dropdown-basic">
+                                                {/* Hozirgi aktiv til nomini tarjima orqali ko'rsatish */}
+                                                {getCurrentLanguageName(i18n.language)}
+                                                <i
+                                                    className="fi-rr-angle-small-down"
+                                                    aria-hidden="true"
+                                                ></i>
+                                            </Dropdown.Toggle>
+                                            <Dropdown.Menu as="ul">
+                                                {availableLanguages.map((lang) => (
+                                                    <Dropdown.Item
+                                                        as="li"
+                                                        key={lang.code}
+                                                        onClick={() => changeLanguage(lang.code)}
+                                                        className={i18n.language.startsWith(lang.code) ? 'active' : ''}
+                                                    >
+                                                        {/* Dropdown menyusidagi tillarning nomini tarjima orqali ko'rsatish */}
+                                                        {t(lang.nameKey)}
+                                                    </Dropdown.Item>
+                                                ))}
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+                                        {/* */}
+                                    </div>
+
+                                    <Link
+                                        to="/login"
+                                        className="gi-header-btn gi-header-user gi-header-rtl-btn"
+                                        title={t('header.login')} // title atributini ham tarjima qilamiz
+                                    >
+                                        <div className="header-icon">
+                                            <i className="fi-rr-user"></i>
+                                        </div>
+                                    </Link>
+                                    {/* */}
+                                    <Link
+                                        to="/wishlist"
+                                        className="gi-header-btn gi-wish-toggle gi-header-rtl-btn"
+                                        title={t('header.wishlist')} // title atributini ham tarjima qilamiz
+                                    >
+                                        <div className="header-icon">
+                                            <i className="fi-rr-heart"></i>
+                                        </div>
+                                        <span className="gi-header-count gi-wishlist-count">
+                                            {wishlistItems.length}
+                                        </span>
+                                    </Link>
+                                    {/* */}
+                                    <Link
+                                        to="#"
+                                        className="gi-header-btn gi-cart-toggle gi-header-rtl-btn"
+                                        onClick={openCart}
+                                        title={t('header.shopping_bag')} // title atributini ham tarjima qilamiz
+                                    >
+                                        <div className="header-icon">
+                                            <i className="fi-rr-shopping-bag"></i>
+                                            <span className="main-label-note-new"></span>
+                                        </div>
+                                        <span className="gi-header-count gi-cart-count">
+                                            {cartItems.length}
+                                        </span>
+                                    </Link>
+                                    {/* */}
+                                    <Link
+                                        onClick={openMobileManu}
+                                        to="#"
+                                        className="gi-header-btn gi-site-menu-icon d-lg-none"
+                                    >
+                                        <i className="fi-rr-menu-burger"></i>
+                                    </Link>
+
+                                    {/* */}
+                                </div>
+                            </div>
+                        </div>
+                        {/* */}
                     </div>
                 </div>
             </div>
-            {/*<SidebarCart isCartOpen={isCartOpen} closeCart={closeCart} />*/}
+            <SidebarCart isCartOpen={isCartOpen} closeCart={closeCart} />
             <MobileManuSidebar
                 isMobileMenuOpen={isMobileMenuOpen}
-                // closeMobileManu={closeMobileManu}
-                // toggleMainMenu={toggleMainMenu}
+                closeMobileManu={closeMobileManu}
+                toggleMainMenu={toggleMainMenu as (key: string) => void}
                 activeMainMenu={activeMainMenu}
             />
         </>

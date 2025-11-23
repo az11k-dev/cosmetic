@@ -53,10 +53,7 @@ const SidebarCart = ({ closeCart, isCartOpen }: any) => {
                     onClick={closeCart}
                 ></div>
             )}
-            <div
-                id="gi-side-cart"
-                className={`gi-side-cart ${isCartOpen ? "gi-open-cart" : ""}`}
-            >
+            <div id="gi-side-cart" className={`gi-side-cart ${isCartOpen ? "gi-open-cart" : ""}`}>
                 <div className="gi-cart-inner">
                     <div className="gi-cart-top">
                         <div className="gi-cart-title">

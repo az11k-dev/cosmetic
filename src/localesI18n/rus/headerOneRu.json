@@ -1,7 +1,15 @@
 {
-  "fastShopping": "Самое быстрое место для онлайн-покупок",
-  "help": "Помощь?",
-  "trackOrder": "Отследить заказ?",
-  "languageUzbek": "Узбекский",
-  "languageRussian": "Русский"
+  "header": {
+    "slogan": "Самое быстрое место для онлайн-покупок в мире",
+    "help": "Помощь?",
+    "track_order": "Отследить заказ?",
+    "login": "Войти",
+    "wishlist": "Список желаний",
+    "shopping_bag": "Корзина"
+  },
+  "common": {
+    "uzbek_language": "Узбекский",
+    "russian_language": "Русский",
+    "select_language": "Выбрать язык"
+  }
 }

@@ -1,4 +1,4 @@
-import LayoutTwo from "@/components/layout/layout-two";
+import LayoutTwo from "@/components/layout/layout-one";
 import { GlobalLoader } from "@/components/loader/GlobalLoader";
 
 const MinimalLayout = () => {

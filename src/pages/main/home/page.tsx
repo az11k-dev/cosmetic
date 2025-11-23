@@ -16,7 +16,7 @@ const page = () => {
             {/*<NewsletterModal />*/}
             {/*<HeroSlider />*/}
             <CategorySliderOne/>
-            {/*<Deal />*/}
+            <Deal />
             {/*<Banner />*/}
            {/*<GroceryArrials />*/}
             {/*<OfferBanners />*/}

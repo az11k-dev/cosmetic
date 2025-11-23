@@ -1,8 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-
-// 2-Qadamda yaratilgan fayllarni import qilish
 import headerOneUzbData from "./localesI18n/uzb/headerOneUzb.json";
 import headerOneRuData from "./localesI18n/rus/headerOneRu.json";
 import headerTwoUzbData from "./localesI18n/uzb/headerTwoUzb.json";
@@ -43,15 +41,14 @@ import faqAllRU from "./localesI18n/rus/faqAllRU.json";
 import faqAllUzb from "./localesI18n/uzb/faqAllUzb.json";
 import cartAllRuData from "./localesI18n/rus/cartAllRu.json";
 import cartAllUzbData from "./localesI18n/uzb/cartAllUzb.json";
+import manuRuData from "./localesI18n/rus/manuMobile.json";
+import manuUzbData from "./localesI18n/uzb/manuMobile.json"
 
 i18n
     .use(LanguageDetector)
     .use(initReactI18next)
     .init({
-        // 💡 FAQAT UZB VA RUS TILLARI
         resources: {
-            // Til kodi (uz) : { Namespace nomi: Fayl tarkibi }
-            // 💡 TUZATILDI: Nom maydoni "headerOne" deb bir xil nomlanadi
             uz: {
                 headerOne: headerOneUzbData,
                 headerTwo:headerTwoUzbData,
@@ -73,7 +70,7 @@ i18n
                 tredingAll: tredingAllUzb,
                 faqAll: faqAllUzb,
                 cartAll: cartAllUzbData,
-
+                manuMobile:manuUzbData
             },
             ru: {
                 headerOne: headerOneRuData,
@@ -96,17 +93,17 @@ i18n
                 tredingAll: tredingAllRU,
                 faqAll: faqAllRU,
                 cartAll: cartAllRuData,
+                manuMobile:manuRuData
             },
         },
 
-        // 💡 Agar til topilmasa yoki mavjud bo'lmasa, har doim "uz" ishlatiladi.
         fallbackLng: "uz",
 
-        // Asosiy Namespace va default namespace ni belgilash
-        ns: ["headerOne","headerTwo","headerManu","footer","heroSlider","common","categoryNames","deal1","productCard","itemNames","banner","newArrivals","offerBanners","services","trackOrder","sidebarCart","treding", "tredingAll", "faqAll" , "cartAll"],
-        defaultNS: "headerOne", // Bu "headerOne" namespace ni ko'rsatadi
 
-        // Avval saqlangan tilni ishlatish uchun detektor sozlamasi
+        ns: ["headerOne","headerTwo","headerManu","footer","heroSlider","common","categoryNames","deal1","productCard","itemNames","banner","newArrivals","offerBanners","services","trackOrder","sidebarCart","treding", "tredingAll", "faqAll" , "cartAll","manuMobile"],
+        defaultNS: "headerOne",
+
+
         detection: {
             order: ['localStorage', 'cookie', 'htmlTag',],
             caches: ['localStorage'],

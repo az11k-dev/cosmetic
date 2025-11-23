@@ -1,7 +1,15 @@
 {
-  "fastShopping": "Dunyoning eng tez onlayn xarid manzili",
-  "help": "Yordam?",
-  "trackOrder": "Buyurtmani kuzatish?",
-  "languageUzbek": "O‘zbek tili",
-  "languageRussian": "Rus tili"
+  "header": {
+    "slogan": "Dunyoning eng tezkor onlayn xarid qilish manzili",
+    "help": "Yordam?",
+    "track_order": "Buyurtmani kuzatish?",
+    "login": "Kirish",
+    "wishlist": "Sevimlilar roʻyxati",
+    "shopping_bag": "Xarid sumkasi"
+  },
+  "common": {
+    "uzbek_language": "O‘zbekcha",
+    "russian_language": "Russcha",
+    "select_language": "Tilni tanlang"
+  }
 }
