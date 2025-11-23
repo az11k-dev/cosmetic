@@ -1,0 +1,10 @@
+{
+  "myCartTitle": "Моя корзина",
+  "cartEmptyMessage": "Ваша корзина пуста.",
+  "removeSymbol": "×",
+  "subTotal": "Промежуточный итог",
+  "vat": "НДС",
+  "total": "Итого",
+  "viewCartButton": "Посмотреть корзину",
+  "checkoutButton": "Оформить заказ"
+}

@@ -1,0 +1,18 @@
+{
+  "loginRequiredMessage": "Пожалуйста, чтобы просмотреть эту страницу, ",
+  "loginLink": "войдите",
+  "registerLink": "зарегистрируйтесь",
+  "or": "или",
+  "toViewThisPage": ".",
+
+  "trackOrderTitle": "Отслеживание Заказа",
+  "trackOrderSubtitle": "Мы доставляем счастье и необходимое быстрее, чем вы думаете.",
+  "order": "Заказ",
+  "brandName": "Grasshoppers",
+  "expectedDate": "Ожидаемая дата",
+  "orderConfirmed": "Заказ подтвержден",
+  "processingOrder": "Обработка заказа",
+  "qualityCheck": "Проверка качества",
+  "productDispatched": "Товар отправлен",
+  "productDelivered": "Товар доставлен"
+}

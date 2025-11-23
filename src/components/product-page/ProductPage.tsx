@@ -1,3 +1,5 @@
+// src/components/product-page/ProductPage.tsx
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import StarRating from "../stars/StarRating";
 import ProductTab from "./product-tab/ProductTab";
@@ -13,211 +15,73 @@ import {Item} from "@/types/data.types.ts";
 import {showSuccessToast} from "@/utility/toast.ts";
 import {addWishlist, removeWishlist} from "@/store/reducers/wishlistSlice.ts";
 import {addCompare, removeCompareItem} from "@/store/reducers/compareSlice.ts";
+import { useLocation, useParams } from "react-router-dom"; // ⭐ useLocation va useParams qo'shildi!
+
 const ProductPage = ({
                          order = "",
-                         none = "none",
                          lg = 12,
                      }) => {
 
+    // 💡 1. useLocation yordamida uzatilgan ma'lumotni qabul qilish
+    const location = useLocation();
+    const productDataFromState = location.state?.productData as Item | undefined;
 
+    // Agar to'g'ridan-to'g'ri URL orqali kirilsa, ID ni olamiz
+    const { id } = useParams<{ id: string }>();
 
-    const { data, error } = useSliceData('moreitems');
     const [show, setShow] = useState(false);
     const dispatch = useDispatch();
-    const compareItems = useSelector((state: RootState) => state.compare.compare);
-    const wishlistItems = useSelector((state: RootState) => state.wishlist.wishlist);
-    const cartItems = useSelector((state: RootState) => state.cart.items);
-    const products = [
-        {
-            "rating": 3,
-            "title": "Honey Spiced Nuts",
-            "image": "/assets/img/product-images/8_1.jpg",
-            "oldPrice": 55,
-            "newPrice": 32
-        },
-        {
-            "rating": 5,
-            "title": "Dates Value Pouch",
-            "image": "/assets/img/product-images/2_1.jpg",
-            "oldPrice": 60,
-            "newPrice": 56
-        },
-        {
-            "rating": 2,
-            "title": "Graps Mix Snack",
-            "image": "/assets/img/product-images/5_1.jpg",
-            "oldPrice": 35,
-            "newPrice": 28
-        },
-        {
-            "rating": 5,
-            "title": "Roasted Almonds Pack",
-            "image": "/assets/img/product-images/9_1.jpg",
-            "oldPrice": 23,
-            "newPrice": 16
-        }
-    ]
+    // ... (qolgan Redux selectorlari qoladi)
 
+    // 💡 2. Asosiy mahsulot ma'lumotini aniqlash
+    const productData: Item | undefined = productDataFromState;
 
-    useEffect(() => {
-        const itemsFromLocalStorage =
-            typeof window !== "undefined"
-                ? JSON.parse(localStorage.getItem("products") || "[]")
-                : [];
-        if (itemsFromLocalStorage.length) {
-            dispatch(setItems(itemsFromLocalStorage));
-        }
-    }, [dispatch]);
-    const handleCart = useCallback((data: Item) => {
-        const isItemInCart = cartItems.some((item: Item) => item.id === data.id);
+    // Boshqa (related) mahsulotlar uchun ma'lumot
+    const { data: relatedItems, error } = useSliceData('moreitems');
 
-        if (!isItemInCart) {
-            dispatch(addItem({ ...data, quantity: 1 }));
-            showSuccessToast("Add product in Cart Successfully!");
-        } else {
-            const updatedCartItems = cartItems.map((item: Item) =>
-                item.id === data.id
-                    ? {
-                        ...item,
-                        quantity: item.quantity + 1,
-                        price: item.newPrice + data.newPrice,
-                    } // Increment quantity and update price
-                    : item
-            );
-            dispatch(updateItemQuantity(updatedCartItems));
-            showSuccessToast("Add product in Cart Successfully!");
-        }
-    }, [cartItems, dispatch]);
-    const isInWishlist = useMemo(() =>
-            wishlistItems.some((item: Item) => item.id === data.id),
-        [wishlistItems, data.id]
-    );
+    // ... (qolgan useEffects, handleCart, handleWishlist, handleCompareItem, handleClose, handleShow qoladi)
 
-    const handleWishlist = useCallback((data: Item) => {
-        if (!isInWishlist) {
-            dispatch(addWishlist(data));
-            showSuccessToast("Add product in Wishlist Successfully!", {
-                icon: false,
-            });
-        } else {
-            dispatch(removeWishlist(data.id));
-            showSuccessToast("Remove product on Wishlist Successfully!", {
-                icon: false,
-            });
-        }
-    }, [isInWishlist, dispatch]);
+    // --- Tekshirish va Yuklanish holati ---
+    if (!productData) {
+        // Agar ma'lumot topilmasa, Redux / API dan ID orqali qidirish logikasi shu yerga yozilishi kerak.
+        // Hozircha oddiy xabar chiqariladi.
+        if (error) return <div>Mahsulotlarni yuklashda xatolik yuz berdi.</div>;
+        if (!relatedItems) return <Spinner />;
 
-    const isInCompare = useMemo(() =>
-            compareItems.some((item: Item) => item.id === data.id),
-        [compareItems, data.id]
-    );
+        return <div>⚠️ Mahsulot ma'lumotlari mavjud emas. ID: {id}</div>;
+    }
 
-
-    const handleCompareItem = useCallback((data: Item) => {
-        if (!isInCompare) {
-            dispatch(addCompare(data));
-            showSuccessToast(`Add product in Compare list Successfully!`, {
-                icon: false,
-            });
-        } else {
-            dispatch(removeCompareItem(data.id));
-            showSuccessToast("Remove product on Compare list Successfully!", {
-                icon: false,
-            });
-        }
-    }, [isInCompare, dispatch]);
-
-    const handleClose = useCallback(() => setShow(false), []);
-    const handleShow = useCallback(() => setShow(true), []);
-
-    if (error) return <div>Failed to load products</div>;
-    if (!data)
-        return (
-            <div>
-                <Spinner />
-            </div>
-        );
-
-
+    // Agar ma'lumot uzatilgan bo'lsa, davom etamiz.
 
     return (
         <>
             <Col lg={lg} md={12} className={`gi-pro-rightside gi-common-rightside ${order}`  }>
-                {/* <!-- Single product content Start --> */}
+                {/* */}
                 <div className="single-pro-block"  >
-                    <SingleProductContent data={products} handleClose={handleClose} show={show} />
-
+                    {/* 💡 3. SingleProductContent ga topilgan ma'lumotni uzatish */}
+                    <SingleProductContent
+                        data={productData}
+                        handleClose={handleClose}
+                        show={show}
+                    />
                 </div>
-                {/* <!--Single product content End -->
-                    <!-- Add More and get discount content Start --> */}
+                {/* */}
+
                 <div className="single-add-more m-tb-40" >
                     <Swiper
-                        loop={true}
-                        autoplay={{ delay: 1000 }}
-                        slidesPerView={3}
-                        spaceBetween={20}
-                        breakpoints={{
-                            0: {
-                                slidesPerView: 1,
-                                spaceBetween: 20,
-                            },
-                            320: {
-                                slidesPerView: 1,
-                                spaceBetween: 20,
-                            },
-                            425: {
-                                slidesPerView: 1,
-                                spaceBetween: 20,
-                            },
-                            640: {
-                                slidesPerView: 2,
-                                spaceBetween: 20,
-                            },
-                            768: {
-                                slidesPerView: 2,
-                                spaceBetween: 20,
-                            },
-                            1024: {
-                                slidesPerView: 2,
-                                spaceBetween: 20,
-                            },
-                            1025: {
-                                slidesPerView: 3,
-                                spaceBetween: 20,
-                            },
-                        }}
-                        style={{ overflow: "hidden" }}
+                        // ... (Swiper sozlamalari)
                         className="gi-add-more-slider owl-carousel"
                     >
-                        {data && data.length > 0 ? data.map((data: any, index: number) => (
+                        {relatedItems && relatedItems.length > 0 ? relatedItems.map((item: any, index: number) => (
                             <SwiperSlide key={index} className="add-more-item">
-                                <a href="" className="gi-btn-2">
-                                    +
-                                </a>
-                                <div className="add-more-img">
-                                    <img src={data.image} alt="product" />
-                                </div>
-                                <div className="add-more-info">
-                                    <h5>{data.title}</h5>
-                                    <span className="gi-pro-rating">
-                    <StarRating rating={data.rating} />
-                  </span>
-                                    <span className="gi-price">
-                    <span className="new-price">${data.newPrice}</span>
-                    <span className="old-price">${data.oldPrice}</span>
-                  </span>
-                                </div>
+                                {/* ... (SwiperSlide ichidagi elementlar) */}
                             </SwiperSlide>
                         )): <></>}
                     </Swiper>
                 </div>
-
-                {/* <!-- Single product tab start --> */}
+                {/* */}
                 <ProductTab />
-                {/* <!-- product details description area end --> */}
             </Col>
-
-
         </>
     );
 };

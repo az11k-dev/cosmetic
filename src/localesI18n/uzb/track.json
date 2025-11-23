@@ -1,0 +1,18 @@
+{
+  "loginRequiredMessage": "Iltimos, ushbu sahifani ko'rish uchun ",
+  "loginLink": "kirish",
+  "registerLink": "ro'yxatdan o'tish",
+  "or": "yoki",
+  "toViewThisPage": ".",
+
+  "trackOrderTitle": "Buyurtmani Kuzatish",
+  "trackOrderSubtitle": "Baxt va ehtiyojlarni siz o'ylaganingizdan tezroq yetkazamiz.",
+  "order": "Buyurtma",
+  "brandName": "Grasshoppers",
+  "expectedDate": "Kutilayotgan sana",
+  "orderConfirmed": "Buyurtma tasdiqlandi",
+  "processingOrder": "Buyurtma tayyorlanmoqda",
+  "qualityCheck": "Sifat nazorati",
+  "productDispatched": "Mahsulot jo'natildi",
+  "productDelivered": "Mahsulot yetkazildi"
+}

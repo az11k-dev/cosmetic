@@ -31,6 +31,10 @@ import offerUz from "./localesI18n/uzb/offer.json";
 import offerRu from "./localesI18n/rus/offer.json";
 import servicesUz from "./localesI18n/uzb/services.json";
 import servicesRu from "./localesI18n/rus/services.json";
+import trackUz from "./localesI18n/uzb/track.json";
+import trackRu from "./localesI18n/rus/track.json";
+import sidebarUz from "./localesI18n/uzb/sidebar.json";
+import sidebarRu from "./localesI18n/rus/sidebar.json";
 
 i18n
     .use(LanguageDetector)
@@ -55,6 +59,8 @@ i18n
                 newArrivals:arrialsUz,
                 offerBanners:offerUz,
                 services:servicesUz,
+                trackOrder:trackUz,
+                sidebarCart:sidebarUz
             },
             ru: {
                 headerOne: headerOneRuData,
@@ -70,7 +76,9 @@ i18n
                 banner:bannerRu,
                 newArrivals:arrialsRu,
                 offerBanners:offerRu,
-                services:servicesRu
+                services:servicesRu,
+                trackOrder:trackRu,
+                sidebarCart:sidebarRu
             },
         },
 
@@ -78,7 +86,7 @@ i18n
         fallbackLng: "uz",
 
         // Asosiy Namespace va default namespace ni belgilash
-        ns: ["headerOne","headerTwo","headerManu","footer","heroSlider","common","categoryNames","deal1","productCard","itemNames","banner","newArrivals","offerBanners","services"],
+        ns: ["headerOne","headerTwo","headerManu","footer","heroSlider","common","categoryNames","deal1","productCard","itemNames","banner","newArrivals","offerBanners","services","trackOrder","sidebarCart"],
         defaultNS: "headerOne", // Bu "headerOne" namespace ni ko'rsatadi
 
         // Avval saqlangan tilni ishlatish uchun detektor sozlamasi

@@ -10,17 +10,12 @@ const page = () => {
 
     return (
         <>
-
-
             <Breadcrumb title={"Product Page"} />
             <section className="gi-single-product padding-tb-40">
                 <div className="container" >
-
                         <Row  >
                             <ProductPage/>
                         </Row>
-
-
                 </div>
             </section>
             <RelatedProduct />
