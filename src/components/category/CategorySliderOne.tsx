@@ -113,7 +113,6 @@ const CategorySliderOne = ({
                                 const formattedItem = {
                                     ...item,
                                     name: item.name?.[currentLang] || item.name?.uz || 'Not found',
-                                    item: '10',
                                     num: index + 1,
                                 };
 
