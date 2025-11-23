@@ -1,16 +1,12 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next"; // i18next importi qo'shilgan
-
-// Utility importlari joyida qoladi
+import React, {useState} from "react";
+import {Link} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 import classic from "@/utility/header/classic";
 import banner from "@/utility/header/benner";
 import column from "@/utility/header/columns";
 import list from "@/utility/header/list";
 import blog from "@/utility/header/blog";
 import pages from "@/utility/header/pages";
-// 💡 Utility nomlari o'zgarishi kerak (oldin fruits, bakery edi),
-// lekin hozircha ularning map'ini shunday qoldiramiz.
 import fruits from "@/utility/header/fruits";
 import bakery from "@/utility/header/bakery";
 import snacks from "@/utility/header/snacks";
@@ -19,12 +15,12 @@ import juice from "@/utility/header/juice";
 import softdrink from "@/utility/header/softdrink";
 import productpage from "@/utility/header/productpage";
 import CurrentLocation from "./CurrentLocation";
-import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import { Fade } from "react-awesome-reveal";
+import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
+import {Fade} from "react-awesome-reveal";
 
 
 function HeaderManu() {
-    const { t } = useTranslation("headerManu"); // Namespace 'headerMenu'
+    const {t} = useTranslation("headerManu"); // Namespace 'headerMenu'
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const handleProductClick = (index: number) => {
@@ -462,7 +458,7 @@ function HeaderManu() {
                         </div>
                         {/* */}
 
-                        <CurrentLocation />
+                        <CurrentLocation/>
                     </div>
                 </div>
             </div>

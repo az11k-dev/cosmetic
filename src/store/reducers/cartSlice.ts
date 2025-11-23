@@ -136,8 +136,8 @@ const defaultOrders: object[] = [
     ],
     address: {
       id: "1724395538835",
-      firstName: "John",
-      lastName: "Smith",
+      first_name: "John",
+      last_name: "Smith",
       address: "    My Street, Big town BG23 4YZ",
       city: "Shaghat",
       postalCode: "395004",
@@ -215,8 +215,8 @@ const defaultOrders: object[] = [
     ],
     address: {
       id: "1724395538835",
-      firstName: "John",
-      lastName: "Smith",
+      first_name: "John",
+      last_name: "Smith",
       address: "    My Street, Big town BG23 4YZ",
       city: "Shaghat",
       postalCode: "395004",
@@ -297,8 +297,8 @@ const defaultOrders: object[] = [
     ],
     address: {
       id: "1724395538835",
-      firstName: "John",
-      lastName: "Smith",
+      first_name: "John",
+      last_name: "Smith",
       address: "    My Street, Big town BG23 4YZ",
       city: "Shaghat",
       postalCode: "395004",

@@ -48,8 +48,8 @@ const CheckOut = () => {
 
   const [formData, setFormData]: any = useState({
     id: "",
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     address: "",
     city: "",
     postalCode: "",
@@ -154,8 +154,8 @@ const CheckOut = () => {
 
     setFormData({
       id: "",
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
       address: "",
       city: "",
       postalCode: "",
@@ -164,8 +164,8 @@ const CheckOut = () => {
     });
 
     const requiredFields = [
-      "firstName",
-      "lastName",
+      "first_name",
+      "last_name",
       "address",
       "country",
       "state",
@@ -808,10 +808,10 @@ const CheckOut = () => {
                                     <Form.Group>
                                       <Form.Control
                                         type="text"
-                                        name="firstName"
+                                        name="first_name"
                                         placeholder="Enter your first name"
                                         required
-                                        value={formData.firstName}
+                                        value={formData.first_name}
                                         onChange={handleInputChange}
                                       />
                                       <Form.Control.Feedback type="invalid">
@@ -827,10 +827,10 @@ const CheckOut = () => {
                                     <Form.Group>
                                       <Form.Control
                                         type="text"
-                                        name="lastName"
+                                        name="last_name"
                                         placeholder="Enter your last name"
                                         required
-                                        value={formData.lastName}
+                                        value={formData.last_name}
                                         onChange={handleInputChange}
                                       />
                                       <Form.Control.Feedback type="invalid">
@@ -1075,8 +1075,8 @@ const CheckOut = () => {
                                                             color: "#777",
                                                           }}
                                                         >
-                                                          {address.firstName}{" "}
-                                                          {address.lastName}{" "}
+                                                          {address.first_name}{" "}
+                                                          {address.last_name}{" "}
                                                         </span>
                                                       </li>
                                                       <li>

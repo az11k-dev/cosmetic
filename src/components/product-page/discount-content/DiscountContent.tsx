@@ -50,7 +50,7 @@ const DiscountContent = () => {
         setReviews([
           ...reviews,
           {
-            name: `${userData.firstName} ${userData.lastName}`,
+            name: `${userData.first_name} ${userData.last_name}`,
             rating,
             comment,
             avatar: userData.profilePhoto || ( "/assets/img/avatar/placeholder.jpg"),

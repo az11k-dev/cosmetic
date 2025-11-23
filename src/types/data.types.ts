@@ -403,10 +403,10 @@ export interface ProductSidebar {
   }
   
   export interface RegistrationData {
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     email: string;
-    phoneNumber: string;
+    phone_number: string;
     address: string;
     city: string;
     postCode: string;
@@ -420,7 +420,7 @@ export interface ProductSidebar {
 
   export interface VendorData {
     email: string;
-    phoneNumber: string;
+    phone_number: string;
     home_address: string;
     office_address: string;
     profilePhoto?: string;
@@ -444,8 +444,8 @@ export interface ProductSidebar {
 
   export interface Address {
     id: string;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     address: string;
     city: string;
     postalCode: string;

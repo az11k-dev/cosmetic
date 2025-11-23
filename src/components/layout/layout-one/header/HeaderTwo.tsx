@@ -1,14 +1,10 @@
 import React, {useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import SidebarCart from "../../../model/SidebarCart";
-
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/store";
 import {setSearchTerm} from "@/store/reducers/filterReducer";
-
-// 💡 ИМПОРТИРУЕМ useAuth ДЛЯ АУТЕНТИФИКАЦИИ
 import {useAuth} from "@/context/AuthContext";
-
 import {useTranslation} from "react-i18next";
 
 function HeaderTwo({cartItems, wishlistItems}: any) {

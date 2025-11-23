@@ -24,7 +24,7 @@ const VendorSettingEdit = () => {
       .string()
       .email("Invalid email address")
       .required("Email is required"),
-    phoneNumber: yup
+    phone_number: yup
       .string()
       .matches(/^[0-14]{15}$/, "Phone number must be 10 digits")
       .required("Phone number is required"),
@@ -56,7 +56,7 @@ const VendorSettingEdit = () => {
       const vendorData = JSON.parse(localStorage.getItem("vendor") || "{}");
       const userVendorData = vendorData[userData.uid] || {
         email: "",
-        phoneNumber: "",
+        phone_number: "",
         home_address: "",
         office_address: "",
         profilePhoto: "",
@@ -155,18 +155,18 @@ const VendorSettingEdit = () => {
                               <Form.Label>Phone Number*</Form.Label>
                               <Form.Control
                                 type="text"
-                                name="phoneNumber"
+                                name="phone_number"
                                 placeholder="Enter your phone number"
                                 pattern="^\d{10,12}$"
                                 required
-                                value={values.phoneNumber}
+                                value={values.phone_number}
                                 onChange={handleChange}
-                                isInvalid={!!errors.phoneNumber}
+                                isInvalid={!!errors.phone_number}
                               />
-                              {errors.phoneNumber &&
-                                typeof errors.phoneNumber === "string" && (
+                              {errors.phone_number &&
+                                typeof errors.phone_number === "string" && (
                                   <Form.Control.Feedback type="invalid">
-                                    {errors.phoneNumber}
+                                    {errors.phone_number}
                                   </Form.Control.Feedback>
                                 )}
                             </Form.Group>

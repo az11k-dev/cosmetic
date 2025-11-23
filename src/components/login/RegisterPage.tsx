@@ -45,13 +45,13 @@ const RegisterPage = () => {
 
     // 1. Yup Validation Schema (без изменений)
     const schema = yup.object().shape({
-        firstName: yup.string().required("First name is required"),
-        lastName: yup.string().required("Last name is required"),
+        first_name: yup.string().required("First name is required"),
+        last_name: yup.string().required("Last name is required"),
         email: yup
             .string()
             .email("Invalid email address")
             .required("Email is required"),
-        phoneNumber: yup
+        phone_number: yup
             .string()
             .matches(/^[\d\s()+-]{5,20}$/, "Invalid phone number format")
             .required("Phone number is required"),
@@ -67,10 +67,10 @@ const RegisterPage = () => {
 
     // 2. Начальные значения (без изменений)
     const initialValues = {
-        firstName: "",
-        lastName: "",
+        first_name: "",
+        last_name: "",
         email: "",
-        phoneNumber: "",
+        phone_number: "",
         password: "",
         confirmPassword: "",
     };
@@ -78,10 +78,10 @@ const RegisterPage = () => {
     // 3. Обновленная функция отправки (теперь использует login из Context)
     const registerUser = async (values: typeof initialValues) => {
         const payload = {
-            first_name: values.firstName,
-            last_name: values.lastName,
+            first_name: values.first_name,
+            last_name: values.last_name,
             email: values.email,
-            phone_number: values.phoneNumber,
+            phone_number: values.phone_number,
             password: values.password,
             password_confirmation: values.confirmPassword,
         };
@@ -163,21 +163,21 @@ const RegisterPage = () => {
                                                 <Form noValidate onSubmit={handleSubmit}>
                                                     {/* First Name */}
                                                     <span className="gi-register-wrap gi-register-half">
-                                                        <label htmlFor="firstname">First Name*</label>
+                                                        <label htmlFor="first_name">First Name*</label>
                                                         <Form.Group>
                                                           <Form.Control
                                                               type="text"
-                                                              name="firstName"
+                                                              name="first_name"
                                                               placeholder="Enter your first name"
-                                                              value={values.firstName}
+                                                              value={values.first_name}
                                                               onChange={handleChange}
-                                                              isInvalid={!!errors.firstName}
+                                                              isInvalid={!!errors.first_name}
                                                               required
                                                           />
-                                                            {errors.firstName &&
-                                                                typeof errors.firstName === "string" && (
+                                                            {errors.first_name &&
+                                                                typeof errors.first_name === "string" && (
                                                                     <Form.Control.Feedback type="invalid">
-                                                                        {errors.firstName}
+                                                                        {errors.first_name}
                                                                     </Form.Control.Feedback>
                                                                 )}
                                                         </Form.Group>
@@ -188,17 +188,17 @@ const RegisterPage = () => {
                                                         <Form.Group>
                                                           <Form.Control
                                                               type="text"
-                                                              name="lastName"
+                                                              name="last_name"
                                                               placeholder="Enter your last name"
                                                               required
-                                                              value={values.lastName}
+                                                              value={values.last_name}
                                                               onChange={handleChange}
-                                                              isInvalid={!!errors.lastName}
+                                                              isInvalid={!!errors.last_name}
                                                           />
-                                                            {errors.lastName &&
-                                                                typeof errors.lastName === "string" && (
+                                                            {errors.last_name &&
+                                                                typeof errors.last_name === "string" && (
                                                                     <Form.Control.Feedback type="invalid">
-                                                                        {errors.lastName}
+                                                                        {errors.last_name}
                                                                     </Form.Control.Feedback>
                                                                 )}
                                                         </Form.Group>
@@ -236,17 +236,17 @@ const RegisterPage = () => {
                                                         <Form.Group>
                                                           <Form.Control
                                                               type="text"
-                                                              name="phoneNumber"
+                                                              name="phone_number"
                                                               placeholder="Enter your phone number"
                                                               required
-                                                              value={values.phoneNumber}
+                                                              value={values.phone_number}
                                                               onChange={handleChange}
-                                                              isInvalid={!!errors.phoneNumber}
+                                                              isInvalid={!!errors.phone_number}
                                                           />
-                                                            {errors.phoneNumber &&
-                                                                typeof errors.phoneNumber === "string" && (
+                                                            {errors.phone_number &&
+                                                                typeof errors.phone_number === "string" && (
                                                                     <Form.Control.Feedback type="invalid">
-                                                                        {errors.phoneNumber}
+                                                                        {errors.phone_number}
                                                                     </Form.Control.Feedback>
                                                                 )}
                                                         </Form.Group>
