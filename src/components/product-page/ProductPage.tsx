@@ -77,6 +77,10 @@ const ProductPage = ({
         dispatch(setSelectedTags(updatedtag));
     };
 
+
+
+
+
     return (
         <>
             <Col
