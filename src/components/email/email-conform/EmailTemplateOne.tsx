@@ -366,7 +366,7 @@ const EmailTemplateOne = (): any => {
                                                                     step away
                                                                     from
                                                                     ultimate
-                                                                    Grabit Store
+                                                                    Beauty Point Store
                                                                   </strong>
                                                                 </h1>
                                                               </td>
@@ -914,7 +914,7 @@ const EmailTemplateOne = (): any => {
                                                                       >
                                                                         © 2024{" "}
                                                                         <strong>
-                                                                          Grabit
+                                                                          Beauty Point
                                                                         </strong>{" "}
                                                                         | 123
                                                                         Main St.

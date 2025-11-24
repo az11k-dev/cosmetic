@@ -261,7 +261,7 @@ const EmailTemplateTwo = () => {
                                                               >
                                                                 <strong>
                                                                   Welcome To
-                                                                  Grabit
+                                                                  Beauty Point
                                                                 </strong>
                                                               </h1>
                                                             </td>
@@ -883,7 +883,7 @@ const EmailTemplateTwo = () => {
                                                                 }}
                                                               >
                                                                 Join a growing
-                                                                eCommerce Grabit
+                                                                eCommerce Beauty Point
                                                                 brand with
                                                                 ultimate product
                                                               </h1>
@@ -1386,7 +1386,7 @@ const EmailTemplateTwo = () => {
                                                                         ©
                                                                         2024-2030{" "}
                                                                         <strong>
-                                                                          Grabit
+                                                                          Beauty Point
                                                                         </strong>
                                                                         , All
                                                                         rights

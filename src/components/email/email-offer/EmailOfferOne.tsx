@@ -534,7 +534,7 @@ const EmailConformOne = () => {
                                 margin: "0",
                               }}
                             >
-                              Copyright&nbsp; © Grabit 2024-2030. All rights
+                              Copyright&nbsp; © Beauty Point 2024-2030. All rights
                               reserved.
                             </p>
                           </div>

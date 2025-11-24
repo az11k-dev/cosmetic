@@ -3,10 +3,10 @@ import { Policy } from "@/types/data.types";
   
   const policy: Policy[] = [
     {
-      questions: "Welcome to Grabit Store.",
+      questions: "Welcome to Beauty Point Store.",
     },
     {
-      questions: "Grabit Websites",
+      questions: "Beauty Point Websites",
     },
     {
       questions: "How browsing and vendor works?",
