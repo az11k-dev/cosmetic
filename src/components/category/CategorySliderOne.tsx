@@ -7,6 +7,7 @@ import {useEffect, useState} from "react"; // Import React Hooks
 
 // URL Vashego API (Ne izmenyayte)
 const API_URL = "https://admin.beauty-point.uz/api/categories";
+const lang = localStorage.getItem("i18nextLng");
 
 const CategorySliderOne = ({
                                className = "padding-tb-40",
@@ -17,7 +18,7 @@ const CategorySliderOne = ({
     const [error, setError] = useState(null);
 
     // Opredelyayem yazyk dlya otobrazheniya (Mozhet byt' dinamicheskim)
-    const currentLang = 'ru';
+    const lang = localStorage.getItem("i18nextLng") || "ru";
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -112,9 +113,10 @@ const CategorySliderOne = ({
                                 // Preobrazovaniye dannykh pod format CategoryItem
                                 const formattedItem = {
                                     ...item,
-                                    name: item.name?.[currentLang] || item.name?.uz || 'Not found',
+                                    name: lang === "ru" ? item?.name?.ru : item?.name?.uz,
                                     num: index + 1,
                                 };
+                                console.log(item)
 
                                 return (
                                     <SwiperSlide

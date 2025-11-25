@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import {Link} from "react-router-dom";
+import {useState} from "react";
 import SidebarCart from "@/components/model/SidebarCart";
 import MobileManuSidebar from "@/components/model/MobileManuSidebar";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useTranslation } from "react-i18next"; // t funksiyasini olamiz!
+import {useTranslation} from "react-i18next"; // t funksiyasini olamiz!
 
 // === TYPESCRIPT INTERFEYSLARI ===
 interface Item {
@@ -14,11 +14,12 @@ interface HeaderOneProps {
     cartItems: Item[];
     wishlistItems: Item[];
 }
+
 // ================================
 
-function HeaderOne({ cartItems, wishlistItems }: HeaderOneProps) {
+function HeaderOne({cartItems, wishlistItems}: HeaderOneProps) {
     // 1. t (tarjima) va i18n (tilni boshqarish) funksiyalarini olamiz
-    const { t, i18n } = useTranslation("headerOne");
+    const {t, i18n} = useTranslation("headerOne");
 
     // State'lar
     const [isCartOpen, setIsCartOpen] = useState(false);
@@ -37,6 +38,7 @@ function HeaderOne({ cartItems, wishlistItems }: HeaderOneProps) {
     // Tilni o'zgartirish funksiyasi
     const changeLanguage = (lng: string) => {
         i18n.changeLanguage(lng);
+        window.location.reload();
     };
 
     // Til kodiga mos keluvchi matnni qaytarish (endilikda tarjima kaliti orqali)
@@ -49,14 +51,13 @@ function HeaderOne({ cartItems, wishlistItems }: HeaderOneProps) {
 
     // Til tanlash uchun massiv (Faqat 'uz' va 'ru')
     const availableLanguages = [
-        { code: 'uz', nameKey: 'common.uzbek_language' },
-        { code: 'ru', nameKey: 'common.russian_language' },
+        {code: 'uz', nameKey: 'common.uzbek_language'},
+        {code: 'ru', nameKey: 'common.russian_language'},
     ];
     const availableLanguages2 = [
-        { code2: 'uz', nameKey: 'common.uzbek_language' },
-        { code2: 'ru', nameKey: 'common.russian_language' },
+        {code2: 'uz', nameKey: 'common.uzbek_language'},
+        {code2: 'ru', nameKey: 'common.russian_language'},
     ];
-
 
 
     return (
@@ -217,7 +218,7 @@ function HeaderOne({ cartItems, wishlistItems }: HeaderOneProps) {
                     </div>
                 </div>
             </div>
-            <SidebarCart isCartOpen={isCartOpen} closeCart={closeCart} />
+            <SidebarCart isCartOpen={isCartOpen} closeCart={closeCart}/>
             <MobileManuSidebar
                 isMobileMenuOpen={isMobileMenuOpen}
                 closeMobileManu={closeMobileManu}
