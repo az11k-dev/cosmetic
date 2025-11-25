@@ -1,56 +1,83 @@
-import { useDispatch } from "react-redux";
-import { updateQuantity } from "../../store/reducers/cartSlice";
+import React, { useCallback } from 'react';
 
-const QuantitySelector = ({
-  id,
-  quantity,
-  setQuantity,
-}: {
-  id: number;
-  quantity: number;
-  setQuantity?: any;
-}) => {
-  const dispatch = useDispatch();
+// 💡 Props tipini yangilaymiz: endi Redux dispatch kerak emas
+interface QuantitySelectorProps {
+    id: string; // IDni string deb o'zgartirdik (Contextga mos)
+    quantity: number;
+    // Savat miqdorini o'zgartirish uchun kerakli funksiya
+    onQuantityChange?: (id: string, newQuantity: number) => void;
+    // Lokal miqdorni o'zgartirish uchun (masalan, mahsulot sahifasida)
+    setQuantity?: React.Dispatch<React.SetStateAction<number>>;
+}
 
-  const handleQuantityChange = (operation: "increase" | "decrease") => {
-    let newQuantity = quantity;
+// Bizning QuantitySelector endi Context/Redux bilan to'g'ridan-to'g'ri bog'liq emas
+const QuantitySelector: React.FC<QuantitySelectorProps> = ({
+                                                               id,
+                                                               quantity,
+                                                               setQuantity,
+                                                               onQuantityChange, // Yangi prop
+                                                           }) => {
 
-    if (operation === "increase") {
-      newQuantity = quantity + 1;
-    } else if (operation === "decrease" && quantity > 1) {
-      newQuantity = quantity - 1;
-    }
+    // Miqdorni kamaytirish funksiyasi
+    const handleDecrease = useCallback(() => {
+        const newQuantity = quantity - 1;
 
-    if (undefined !== setQuantity) {
-      setQuantity(newQuantity);
-    } else {
-      dispatch(updateQuantity({ id, quantity: newQuantity }));
-    }
-  };
+        if (newQuantity >= 0) {
+            // Agar onQuantityChange prop berilgan bo'lsa (ya'ni, bu savat ichida ishlatilyapti)
+            if (onQuantityChange) {
+                // newQuantity = 0 bo'lsa ham yuboramiz. CartProvider uni o'chiradi.
+                onQuantityChange(id, newQuantity);
+            }
+            // Agar setQuantity prop berilgan bo'lsa (ya'ni, bu lokal holatni o'zgartiryapti)
+            else if (setQuantity) {
+                // Lokal miqdor 1 dan kam bo'lmasligi kerak (yoki 0)
+                setQuantity(newQuantity);
+            }
+        }
+    }, [id, quantity, setQuantity, onQuantityChange]);
 
-  return (
-    <>
-      <div
-        style={{ margin: " 0 0 0 10px", cursor: "pointer" }}
-        onClick={() => handleQuantityChange("decrease")}
-      >
-        -
-      </div>
-      <input
-        readOnly
-        className="qty-input"
-        type="text"
-        name="gi-qtybtn"
-        value={quantity}
-      />
-      <div
-        style={{ margin: " 0 10px 0 0", cursor: "pointer" }}
-        onClick={() => handleQuantityChange("increase")}
-      >
-        +
-      </div>
-    </>
-  );
+
+    // Miqdorni oshirish funksiyasi
+    const handleIncrease = useCallback(() => {
+        const newQuantity = quantity + 1;
+
+        // Savatni yangilash
+        if (onQuantityChange) {
+            onQuantityChange(id, newQuantity);
+        }
+        // Lokal holatni yangilash
+        else if (setQuantity) {
+            setQuantity(newQuantity);
+        }
+    }, [id, quantity, setQuantity, onQuantityChange]);
+
+
+    return (
+        <>
+            {/* Kamaytirish tugmasi */}
+            <div
+                style={{ margin: " 0 0 0 10px", cursor: "pointer" }}
+                // Miqdor 1 dan katta bo'lsa yoki savatda bo'lsa (o'chirish uchun) kamaytirishni yoqamiz
+                onClick={handleDecrease}
+            >
+                -
+            </div>
+            <input
+                readOnly
+                className="qty-input"
+                type="text"
+                name="gi-qtybtn"
+                value={quantity}
+            />
+            {/* Oshirish tugmasi */}
+            <div
+                style={{ margin: " 0 10px 0 0", cursor: "pointer" }}
+                onClick={handleIncrease}
+            >
+                +
+            </div>
+        </>
+    );
 };
 
 export default QuantitySelector;

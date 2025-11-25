@@ -60,7 +60,7 @@ const BannerLeftSidebarCol3 = lazy(
 );
 const Checkout = lazy(() => import("@/pages/main/checkout/page"));
 const ProductDetailsPage = lazy(
-  () => import("@/components/productDetailsPage/ProductDetailsPage.tsx")
+  () => import("@/pages/main/product-left-sidebar/page")
 );
 const ShopRightSidebarCol3 = lazy(
   () => import("@/pages/main/shop-right-sidebar-col-3/page")

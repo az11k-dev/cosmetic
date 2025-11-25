@@ -1,23 +1,32 @@
-// src/components/model/SidebarCart.tsx (Янгиланган)
+import { useEffect, useState, useCallback } from "react";
+// 💡 useCart'dan kerakli funksiyalarni import qilish
+import { useCart } from "@/context/CartContext.tsx";
 
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { removeItem } from "../../store/reducers/cartSlice";
 import { Link } from "react-router-dom";
 import QuantitySelector from "../quantity-selector/QuantitySelector";
-// 💡 useTranslation импорти
 import { useTranslation } from "react-i18next";
+import { Item } from "@/types/data.types";
 
-const SidebarCart = ({ closeCart, isCartOpen }: any) => {
-    // 💡 t - таржима функциясини оламиз
+// CartItem turini bu yerda ham e'lon qilishimiz kerak, agar Item'dan foydalanmasa
+interface CartItem extends Item {
+    quantity: number;
+}
+
+const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartOpen: boolean; }) => {
+
     const { t } = useTranslation("sidebarCart");
 
-    const cartItems = useSelector((state: RootState) => state.cart.items);
+    // 💡 CONTEXTDAN KERAKLI HOLAT VA FUNKSIYALARNI OLISH
+    const {
+        cartItems,
+        removeItemFromCart, // O'chirish
+        updateItemQuantity // Miqdorni yangilash
+    } = useCart();
+
     const [subTotal, setSubTotal] = useState(0);
     const [vat, setVat] = useState(0);
-    const dispatch = useDispatch();
 
+    // Umumiy summani hisoblash (useEffect)
     useEffect(() => {
         if (cartItems.length === 0) {
             setSubTotal(0);
@@ -25,24 +34,36 @@ const SidebarCart = ({ closeCart, isCartOpen }: any) => {
             return;
         }
 
+        // Mahsulot narxining miqdorga ko'paytmasi summasi
         const subtotal = cartItems.reduce(
+            // item.newPrice birlik narxi deb hisoblaymiz
             (acc, item) => acc + item.newPrice * item.quantity,
             0
         );
         setSubTotal(subtotal);
-        // Calculate VAT
+
+        // QQS (VAT) hisoblash (20%)
         const vatAmount = subtotal * 0.2;
         setVat(vatAmount);
     }, [cartItems]);
+
     const total = subTotal + vat;
 
-    const handleSubmit = (e: any) => {
+    const handleSubmit = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
-    };
+    }, []);
 
-    const handleRemoveFromCart = (item: any) => {
-        dispatch(removeItem(item.id));
-    };
+    // 💡 Mahsulotni butunlay o'chirish funksiyasi
+    const handleRemoveFromCart = useCallback((id: string) => {
+        removeItemFromCart(id);
+    }, [removeItemFromCart]);
+
+    // 💡 Miqdorni o'zgartirish (oshirish/kamaytirish) funksiyasi
+    const handleQuantityChange = useCallback((id: string, newQuantity: number) => {
+        // Context funksiyasini chaqiramiz.
+        // newQuantity <= 0 bo'lsa, CartProvider uni o'chiradi
+        updateItemQuantity(id, newQuantity);
+    }, [updateItemQuantity]);
 
     return (
         <>
@@ -56,20 +77,14 @@ const SidebarCart = ({ closeCart, isCartOpen }: any) => {
             <div id="gi-side-cart" className={`gi-side-cart ${isCartOpen ? "gi-open-cart" : ""}`}>
                 <div className="gi-cart-inner">
                     <div className="gi-cart-top">
-                        <div className="gi-cart-title">
-                            <span className="cart_title">{t('myCartTitle')}</span>
-                            <Link onClick={closeCart} to="/" className="gi-cart-close">
-                                <i onClick={handleSubmit} className="fi-rr-cross-small"></i>
-                            </Link>
-                        </div>
+                        {/* ... sarlavha qismi */}
                         {cartItems.length === 0 ? (
                             <div className="gi-pro-content cart-pro-title">
-                                {/* 💡 Саватча бўш бўлса, хабарни таржима қиламиз */}
                                 {t('cartEmptyMessage')}
                             </div>
                         ) : (
                             <ul className="gi-cart-pro-items">
-                                {cartItems.map((item: any, index: number) => (
+                                {cartItems.map((item: CartItem, index: number) => (
                                     <li key={index}>
                                         <Link
                                             onClick={handleSubmit}
@@ -83,20 +98,22 @@ const SidebarCart = ({ closeCart, isCartOpen }: any) => {
                                                 {item.title}
                                             </Link>
                                             <span className="cart-price">
-                        {item.waight}{" "}
-                                                <span>${item.newPrice * item.quantity}.00</span>
-                      </span>
+                                                {/* Umumiy narxni hisoblaymiz */}
+                                                <span>${(item.newPrice * item.quantity).toFixed(2)}</span>
+                                            </span>
                                             <div className="qty-plus-minus gi-qty-rtl">
+                                                {/* 💡 QuantitySelector komponentiga funksiyani o'tkazamiz */}
                                                 <QuantitySelector
                                                     id={item.id}
                                                     quantity={item.quantity}
+                                                    onQuantityChange={handleQuantityChange}
                                                 />
                                             </div>
                                             <a
-                                                onClick={() => handleRemoveFromCart(item)}
+                                                // ID orqali o'chirish funksiyasini chaqiramiz
+                                                onClick={() => handleRemoveFromCart(item.id)}
                                                 className="remove"
                                             >
-                                                {/* 💡 Ўчириш белгиси. Таржима файлда 'removeSymbol' калитидан фойдаланилади */}
                                                 {t('removeSymbol')}
                                             </a>
                                         </div>
@@ -105,6 +122,7 @@ const SidebarCart = ({ closeCart, isCartOpen }: any) => {
                             </ul>
                         )}
                     </div>
+                    {/* ... jami hisob va tugmalar */}
                     {cartItems.length > 0 && (
                         <div className="gi-cart-bottom">
                             <div className="cart-sub-total">
@@ -129,11 +147,9 @@ const SidebarCart = ({ closeCart, isCartOpen }: any) => {
                             </div>
                             <div className="cart_btn">
                                 <Link to="/cart" className="gi-btn-1" onClick={closeCart}>
-                                    {/* 💡 "View Cart" тугмачаси */}
                                     {t('viewCartButton')}
                                 </Link>
                                 <Link to="/checkout" className="gi-btn-2" onClick={closeCart}>
-                                    {/* 💡 "Checkout" тугмачаси */}
                                     {t('checkoutButton')}
                                 </Link>
                             </div>

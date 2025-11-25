@@ -181,9 +181,6 @@ function HeaderOne({ cartItems, wishlistItems }: HeaderOneProps) {
                                         <div className="header-icon">
                                             <i className="fi-rr-heart"></i>
                                         </div>
-                                        <span className="gi-header-count gi-wishlist-count">
-                                            {wishlistItems.length}
-                                        </span>
                                     </Link>
                                     {/* */}
                                     <Link
@@ -196,9 +193,6 @@ function HeaderOne({ cartItems, wishlistItems }: HeaderOneProps) {
                                             <i className="fi-rr-shopping-bag"></i>
                                             <span className="main-label-note-new"></span>
                                         </div>
-                                        <span className="gi-header-count gi-cart-count">
-                                            {cartItems.length}
-                                        </span>
                                     </Link>
                                     {/* */}
                                     <Link

@@ -1,57 +1,74 @@
-import React, { useState, useCallback } from "react";
+import React, { useState,useRef, useCallback ,useEffect} from "react";
 import { Col, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+// ❌ REDUX IMPORTLARI TO'LIQ OLIB TASHLANDI
+// import { useDispatch, useSelector } from "react-redux";
+// import { RootState } from "@/store";
+// import { addItem, updateItemQuantity } from "@/store/reducers/cartSlice";
+
+// 💡 CONTEXTDAN FOYDALANAMIZ
+import { useCart } from "@/context/CartContext.tsx";
+
 import { Fade } from "react-awesome-reveal";
-import ZoomImage from "@/components/zoom-image/ZoomImage"; // Убедитесь в правильности пути
-import { RootState } from "@/store"; // Убедитесь в правильности пути
-import { Item } from "@/types/data.types"; // Убедитесь в правильности пути
-import { addItem, updateItemQuantity } from "@/store/reducers/cartSlice";
+import ZoomImage from "@/components/zoom-image/ZoomImage";
+import { Item } from "@/types/data.types";
 import { showSuccessToast } from "@/utility/toast";
 import { useTranslation } from "react-i18next";
 import QuantitySelector from "@/components/quantity-selector/QuantitySelector.tsx";
 import SizeOptions from "@/components/product-item/SizeOptions.tsx";
 import StarRating from "@/components/stars/StarRating.tsx";
 import Modal from "react-bootstrap/Modal";
+import Slider from "react-slick";
 
-// 💡 Props uchun TypeScript interfeys
+
+// 💡 Props uchun TypeScript interfeysini aniqlaymiz
 interface SingleProductContentPageProps {
     data: Item;
+    show: boolean;
+    handleClose: () => void;
 }
 
-/**
- * Компонент для отображения деталей продукта на полноценной странице.
- * Дизайн адаптирован из QuickViewModal.tsx.
- */
-const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ data , show, handleClose}:any) => {
+
+const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ data , show, handleClose}) => {
+
     const { t } = useTranslation(["productCard", "itemNames", "categoryNames"]);
-    const dispatch = useDispatch();
-    const cartItems = useSelector((state: RootState) => state.cart.items);
+
+    // 💡 CART CONTEXTDAN KERAKLI FUNKSIYANI OLISH
+    const { addItemToCart } = useCart();
+
     const [quantity, setQuantity] = useState(1);
+    const [nav1, setNav1] = useState<Slider | null>(null);
+    const slider1 = useRef<Slider | null>(null);
+    const [isSliderInitialized, setIsSliderInitialized] = useState(false);
 
-    // --- Логика корзины (как в твоем QuickViewModal) ---
-    const handleCart = useCallback((data: Item) => {
-        const isItemInCart = cartItems.some((item: Item) => item.id === data.id);
-
-        if (!isItemInCart) {
-            dispatch(addItem({ ...data, quantity: quantity }));
-            showSuccessToast(t("addToCartSuccessMsg"), { icon: false });
-        } else {
-            const updatedCartItems = cartItems.map((item: Item) =>
-                item.id === data.id
-                    ? {
-                        ...item,
-                        quantity: item.quantity + quantity,
-                        price: item.newPrice + data.newPrice,
-                    }
-                    : item
-            );
-            dispatch(updateItemQuantity(updatedCartItems));
-            showSuccessToast(t("addToCartSuccessMsg"), { icon: false });
+    useEffect(() => {
+        if (slider1.current ) {
+            setNav1(slider1.current);
         }
-    }, [cartItems, dispatch, quantity, t, data.newPrice]);
-    // ---------------------------------------------------------------------
+    }, []);
 
-    if (!data) return <div>Mahsulot tafsilotlari yuklanmoqda...</div>;
+    useEffect(() => {
+        setIsSliderInitialized(true);
+    }, [isSliderInitialized]);
+
+    const handleCart = useCallback((product: Item) => {
+        // Redux dispatch o'rniga Context funksiyasi ishlatilmoqda
+        addItemToCart(product, quantity);
+
+        showSuccessToast(t("addToCartSuccessMsg"), { icon: false });
+
+    }, [addItemToCart, quantity, t]);
+
+    if (!data) return <div>Mahsulot ma'lumotlari mavjud emas.</div>;
+
+    // handleSlider2Click funksiyasi
+    // const handleSlider2Click = (index: number) => {
+    //     if (slider1.current) {
+    //         slider1.current.slickGoTo(index);
+    //     }
+    // };
+
+    // --- Context Savat Logikasi ---
+    // ---------------------------------------------------------------------
 
     return (
         <Fade>
@@ -62,72 +79,80 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ dat
                 keyboard={false}
                 className="modal fade quickview-modal"
                 id="gi_quickview_modal"
-                tabIndex="-1"
+                tabIndex={-1}
                 role="dialog">
-
             </Modal>
+
             <div className="modal-dialog-centered" role="document">
                 <div className="modal-content">
                     <Modal.Body>
                         <Row className="product-details-content-wrapper">
 
-                            {/* 1. ЛЕВАЯ КОЛОНКА (Изображение) */}
-                            <Col md={5} sm={12} className="mb-767">
-                                <div className="single-pro-img single-pro-img-no-sidebar">
-                                    <div className="single-product-scroll">
-                                        <div className={`single-slide zoom-image-hover`}>
-                                            <ZoomImage src={data.image} alt={t(data.title)} />
-                                        </div>
-
+                            {/* 1. CHAP KOLONKA (Tasvir) */}
+                            <Col className="single-pro-img">
+                                <div className="single-product-scroll">
+                                    <div className="single-slide zoom-image-hover">
+                                        <ZoomImage src={data.image} alt={t(data.title)} />
                                     </div>
+                                    {isSliderInitialized && (
+                                        <Slider
+                                            slidesToShow={4}
+                                            slidesToScroll={1}
+                                            asNavFor={nav1 as Slider}
+                                            dots={false}
+                                            arrows={true}
+                                            focusOnSelect={true}
+                                            ref={slider1}
+                                            className="single-nav-thumb"
+                                        >
+                                            <div className="single-slide">
+                                                <img className="img-responsive" src={data.image} alt="" />
+                                            </div>
+                                        </Slider>
+                                    )}
                                 </div>
                             </Col>
 
-                            {/* 2. ПРАВАЯ КОЛОНКА (Контент) */}
+                            {/* 2. O'NG KOLONKA (Kontent) */}
                             <Col md={7} sm={12}>
                                 <div className="quickview-pro-content single-page-content">
 
-
-                                    {/* A. Заголовок */}
+                                    {/* A. Sarlavha */}
                                     <h1 className="gi-quick-title gi-single-product-title">
                                         {t(data.title, { ns: 'itemNames' })}
                                     </h1>
 
-                                    {/* B. Рейтинг */}
+                                    {/* B. Baho */}
                                     <div className="gi-quickview-rating gi-single-rating">
                                         <StarRating rating={data.rating} />
                                         <span className="rating-text">({data.rating} baho)</span>
                                     </div>
 
-                                    {/* C. Цена */}
+                                    {/* C. Narx */}
                                     <div className="gi-quickview-price gi-single-price">
-                            <span className="new-price">
-                                ${data.oldPrice * quantity}
-                            </span>
+                                        <span className="new-price">
+                                            ${(data.oldPrice * quantity).toFixed(2)}
+                                        </span>
                                         {data.newPrice && (
-                                            <span className="old-price">${data.newPrice}.00</span>
+                                            <span className="old-price">${data.newPrice.toFixed(2)}</span>
                                         )}
                                     </div>
 
-                                    {/* D. Описание */}
+                                    {/* D. Tavsif */}
                                     <div className="gi-quickview-desc gi-single-desc">
-                                        {/* Показываем короткое описание или полное описание */}
                                         <p>{data.shortDescription}</p>
                                     </div>
 
-                                    {/* E. Вариации (Размер/Цвет) */}
+                                    {/* E. Variatsiyalar */}
                                     <div className="gi-pro-variation">
                                         <div className="gi-pro-variation-inner gi-pro-variation-size gi-pro-size">
                                             <div className="gi-pro-variation-content">
-                                                <SizeOptions
-                                                    categories={["catHairCare"]}
-                                                    subCategory={data.category}
-                                                />
+                                                <SizeOptions categories={["catHairCare"]} subCategory={data.category} />
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* F. Выбор количества и Кнопка Корзины */}
+                                    {/* F. Miqdor tanlash va Savat tugmasi */}
                                     <div className="gi-quickview-qty gi-single-qty-block">
                                         <div className="qty-plus-minus gi-qty-rtl">
                                             <QuantitySelector
@@ -147,22 +172,19 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ dat
                                         </div>
                                     </div>
 
-                                    {/* G. Дополнительная информация */}
+                                    {/* G. Qo'shimcha ma'lumot */}
                                     <div className="gi-single-pro-meta">
                                         <ul>
                                             <li><span>SKU:</span> {data.sku}</li>
                                             <li><span>Kategoriya:</span> {t(data.category, { ns: 'categoryNames' })}</li>
                                         </ul>
                                     </div>
-
-
                                 </div>
                             </Col>
                         </Row>
                     </Modal.Body>
                 </div>
             </div>
-
         </Fade>
     );
 };

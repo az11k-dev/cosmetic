@@ -11,7 +11,7 @@ import {setSelectedCategory} from "./store/reducers/filterReducer";
 
 // 💡 ИМПОРТИРУЕМ НОВЫЙ ХУК useAuth
 import {useAuth} from "@/context/AuthContext";
-import ProductDetailsPage from "@/components/productDetailsPage/ProductDetailsPage.tsx"; // Предполагая, что он находится по этому пути
+
 
 const LoadingFallback = () => <Loader/>;
 

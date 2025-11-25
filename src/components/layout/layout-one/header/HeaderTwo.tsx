@@ -166,13 +166,7 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
                                             <i className="fi-rr-heart"></i>
                                         </div>
                                         <div className="gi-btn-desc">
-                                            <span className="gi-btn-title">{t("wishlist")}</span>
-                                            <span className="gi-btn-stitle">
-                        <b className="gi-wishlist-count">
-                          {wishlistItems.length}
-                        </b>
-                                                {t("items")}
-                      </span>
+                                            <span className="gi-btn-stitle">{t("wishlist")}</span>
                                         </div>
                                     </Link>
                                     {/* Cart */}
@@ -187,11 +181,7 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
                                             <span className="main-label-note-new"></span>
                                         </div>
                                         <div className="gi-btn-desc">
-                                            <span className="gi-btn-title">{t("cart")}</span>
-                                            <span className="gi-btn-stitle">
-                        <b className="gi-cart-count">{cartItems.length}</b>
-                                                {t("items")}
-                      </span>
+                                            <span className="gi-btn-stitle">{t("cart")}</span>
                                         </div>
                                     </Link>
                                 </div>
