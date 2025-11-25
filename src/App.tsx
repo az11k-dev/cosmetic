@@ -71,12 +71,12 @@ const App: React.FC = () => {
                     ))}
                 </Routes>
 
-                <Routes>
-                    {/* ... другие маршруты ... */}
-                    {/* 💡 Этот маршрут принимает параметр id */}
-                    <Route path="/product-details/:id" element={<ProductDetailsPage />} />
-                    {/* ... */}
-                </Routes>
+                {/*<Routes>*/}
+                {/*    /!* ... другие маршруты ... *!/*/}
+                {/*    /!* 💡 Этот маршрут принимает параметр id *!/*/}
+                {/*    <Route path="/product-details/:id" element={<ProductDetailsPage />} />*/}
+                {/*    /!* ... *!/*/}
+                {/*</Routes>*/}
             </Suspense>
         </BrowserRouter>
     );

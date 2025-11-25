@@ -20,7 +20,7 @@ function LayoutOne({ children }: any) {
     <>
       <Header />
       {children}
-      {/*<Footer />*/}
+          <Footer />
       <Toastify />
     </>
   );

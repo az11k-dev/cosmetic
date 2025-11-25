@@ -57,13 +57,13 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ dat
         <Fade>
             <Modal
                 centered
-                     show={show}
-                     onHide={handleClose}
-                     keyboard={false}
-                     className="modal fade quickview-modal"
-                     id="gi_quickview_modal"
-                     tabIndex="-1"
-                     role="dialog">
+                show={show}
+                onHide={handleClose}
+                keyboard={false}
+                className="modal fade quickview-modal"
+                id="gi_quickview_modal"
+                tabIndex="-1"
+                role="dialog">
 
             </Modal>
             <div className="modal-dialog-centered" role="document">
@@ -86,6 +86,7 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ dat
                             {/* 2. ПРАВАЯ КОЛОНКА (Контент) */}
                             <Col md={7} sm={12}>
                                 <div className="quickview-pro-content single-page-content">
+
 
                                     {/* A. Заголовок */}
                                     <h1 className="gi-quick-title gi-single-product-title">
@@ -153,6 +154,7 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ dat
                                             <li><span>Kategoriya:</span> {t(data.category, { ns: 'categoryNames' })}</li>
                                         </ul>
                                     </div>
+
 
                                 </div>
                             </Col>

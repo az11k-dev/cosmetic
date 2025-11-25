@@ -59,8 +59,8 @@ const BannerLeftSidebarCol3 = lazy(
   () => import("@/pages/main/banner-left-sidebar-col-3/page")
 );
 const Checkout = lazy(() => import("@/pages/main/checkout/page"));
-const ProductLeftSidebar = lazy(
-  () => import("@/pages/main/product-left-sidebar/page")
+const ProductDetailsPage = lazy(
+  () => import("@/components/productDetailsPage/ProductDetailsPage.tsx")
 );
 const ShopRightSidebarCol3 = lazy(
   () => import("@/pages/main/shop-right-sidebar-col-3/page")
@@ -347,10 +347,10 @@ export const mainRoutes: LayoutRouteConfig = {
     },
 
     {
-      path: "/product-left-sidebar",
-      element: <ProductLeftSidebar />,
+      path: "/product-details/:id",
+      element: <ProductDetailsPage />,
       meta: {
-        title: "product-left-sidebar",
+        title: "product-details",
         requiresAuth: false,
       },
     },

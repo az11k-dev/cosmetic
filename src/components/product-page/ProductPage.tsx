@@ -15,6 +15,7 @@ import {
     setSelectedWeight,
 } from "@/store/reducers/filterReducer";
 import { useSliceData } from "@/hooks/useSliceData";
+import SingleProductContent from "@/components/product-page/single-product-content/SingleProductContent.tsx";
 
 const ProductPage = ({
                          order = "",
@@ -90,7 +91,7 @@ const ProductPage = ({
             >
                 {/* <!-- Single product content Start --> */}
                 <div className="single-pro-block">
-
+                    {/*<SingleProductContent/>*/}
                 </div>
                 {/* <!--Single product content End -->
                     <!-- Add More and get discount content Start --> */}
