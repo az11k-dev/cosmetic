@@ -290,7 +290,7 @@ const EmailTemplateThree = () => {
                                                   style={{ fontSize: "30px" }}
                                                 >
                                                   <strong>
-                                                    Welcome to Grabit
+                                                    Welcome to Beauty Point
                                                   </strong>
                                                   .
                                                 </span>
@@ -307,7 +307,7 @@ const EmailTemplateThree = () => {
                                                       style={{ color: "#fff" }}
                                                     >
                                                       {" "}
-                                                      Grabit
+                                                      Beauty Point
                                                     </span>
                                                   </strong>{" "}
                                                   on your next order when shop

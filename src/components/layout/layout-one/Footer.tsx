@@ -331,7 +331,7 @@ function Footer() {
                                         <div className="footer-bottom-copy ">
                                             <div className="gi-copy">
                                                 {/* 💡 TARJIMA 6: Copyright matni */}
-                                                {t("copyright", { siteName: "Grabit" })}
+                                                {t("copyright", { siteName: "Beauty Point" })}
                                             </div>
                                         </div>
                                     </div>
