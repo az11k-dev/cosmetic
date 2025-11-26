@@ -76,6 +76,7 @@ const QuickViewModal = ({ show, handleClose, data }: any) => {
                                     </div>
                                 </Col>
 
+
                                 <Col md={7} sm={12}>
                                     <div className="quickview-pro-content">
                                         <h5 className="gi-quick-title">
@@ -93,9 +94,9 @@ const QuickViewModal = ({ show, handleClose, data }: any) => {
 
                                         <div className="gi-quickview-price">
                       <span className="new-price">
-                        ${data.newPrice * data.quantity}
+                        ${data.oldPrice * data.quantity}
                       </span>
-                                            <span className="old-price">${data.oldPrice}</span>
+                                            <span className="old-price">${data.newPrice}</span>
                                         </div>
 
                                         <div className="gi-pro-variation">
@@ -103,8 +104,10 @@ const QuickViewModal = ({ show, handleClose, data }: any) => {
                                                 <div className="gi-pro-variation-content">
                                                     <SizeOptions
                                                         categories={[
-                                                            // SizeOptions ichidagi kategoriyalar, tarjima kalitiga o'tkaziladi
-                                                            "catHairCare",
+                                                            "clothes",
+                                                            "footwear",
+                                                            "vegetables",
+                                                            "accessorise",
                                                         ]}
                                                         subCategory={data.category}
                                                     />

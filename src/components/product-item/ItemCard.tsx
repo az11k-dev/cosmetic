@@ -186,8 +186,8 @@ const ItemCard = ({ data }: { data: Item }) => {
                             </span>
                             <span className="gi-price">
                                 {/* 💡 Tuzatilgan: newPrice (yangi) va oldPrice (eski) o'rniga qo'yildi */}
-                                <span className="new-price">${data.newPrice}.00</span>
-                                <span className="old-price">${data.oldPrice}.00</span>
+                                <span className="new-price">${data.oldPrice}.00</span>
+                                <span className="old-price">${data.newPrice}.00</span>
                             </span>
                         </div>
                     </div>

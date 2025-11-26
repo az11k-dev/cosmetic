@@ -29,7 +29,7 @@ interface SingleProductContentPageProps {
 
 
 const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ data , show, handleClose}) => {
-
+    console.log(data)
     const { t } = useTranslation(["productCard", "itemNames", "categoryNames"]);
 
     // 💡 CART CONTEXTDAN KERAKLI FUNKSIYANI OLISH
@@ -94,90 +94,224 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ dat
                                     <div className="single-slide zoom-image-hover">
                                         <ZoomImage src={data.image} alt={t(data.title)} />
                                     </div>
-                                    {isSliderInitialized && (
-                                        <Slider
-                                            slidesToShow={4}
-                                            slidesToScroll={1}
-                                            asNavFor={nav1 as Slider}
-                                            dots={false}
-                                            arrows={true}
-                                            focusOnSelect={true}
-                                            ref={slider1}
-                                            className="single-nav-thumb"
-                                        >
-                                            <div className="single-slide">
-                                                <img className="img-responsive" src={data.image} alt="" />
-                                            </div>
-                                        </Slider>
-                                    )}
+                                    {/*{isSliderInitialized && (*/}
+                                    {/*    <Slider*/}
+                                    {/*        slidesToShow={8}*/}
+                                    {/*        slidesToScroll={1}*/}
+                                    {/*        asNavFor={nav1 as Slider}*/}
+                                    {/*        dots={false}*/}
+                                    {/*        arrows={true}*/}
+                                    {/*        focusOnSelect={true}*/}
+                                    {/*        ref={slider1}*/}
+                                    {/*        className="single-nav-thumb"*/}
+                                    {/*    >*/}
+                                    {/*        <div className="single-slide">*/}
+                                    {/*            <img className="img-responsive" src={data.image} alt="" />*/}
+                                    {/*        </div>*/}
+                                    {/*    </Slider>*/}
+                                    {/*)}*/}
                                 </div>
                             </Col>
 
                             {/* 2. O'NG KOLONKA (Kontent) */}
-                            <Col md={7} sm={12}>
-                                <div className="quickview-pro-content single-page-content">
+                            {/*<Col md={7} sm={12}>*/}
+                            {/*    <div className="quickview-pro-content single-page-content">*/}
 
-                                    {/* A. Sarlavha */}
-                                    <h1 className="gi-quick-title gi-single-product-title">
-                                        {t(data.title, { ns: 'itemNames' })}
-                                    </h1>
+                            {/*        /!* A. Sarlavha *!/*/}
+                            {/*        <h1 className="gi-quick-title gi-single-product-title">*/}
+                            {/*            {t(data.title, { ns: 'itemNames' })}*/}
+                            {/*        </h1>*/}
 
-                                    {/* B. Baho */}
-                                    <div className="gi-quickview-rating gi-single-rating">
-                                        <StarRating rating={data.rating} />
-                                        <span className="rating-text">({data.rating} baho)</span>
+                            {/*        /!* B. Baho *!/*/}
+                            {/*        <div className="gi-quickview-rating gi-single-rating">*/}
+                            {/*            <StarRating rating={data.rating} />*/}
+
+                            {/*        </div>*/}
+
+                            {/*        /!* C. Narx *!/*/}
+                            {/*        <div className="gi-quickview-price gi-single-price">*/}
+                            {/*            <span className="new-price">*/}
+                            {/*                ${(data.oldPrice * quantity).toFixed(2)}*/}
+                            {/*            </span>*/}
+                            {/*            {data.newPrice && (*/}
+                            {/*                <span className="old-price">${data.newPrice.toFixed(2)}</span>*/}
+                            {/*            )}*/}
+                            {/*        </div>*/}
+
+                            {/*        /!* D. Tavsif *!/*/}
+
+
+                            {/*        /!* E. Variatsiyalar *!/*/}
+                            {/*        <div className="gi-pro-variation">*/}
+                            {/*            <div className="gi-pro-variation-inner gi-pro-variation-size gi-pro-size">*/}
+                            {/*                <div className="gi-pro-variation-content">*/}
+                            {/*                    <SizeOptions categories={["catHairCare"]} subCategory={data.category} />*/}
+                            {/*                </div>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+
+                            {/*        /!* F. Miqdor tanlash va Savat tugmasi *!/*/}
+                            {/*        <div className="gi-quickview-qty gi-single-qty-block">*/}
+                            {/*            <div className="qty-plus-minus gi-qty-rtl">*/}
+                            {/*                <QuantitySelector*/}
+                            {/*                    quantity={quantity}*/}
+                            {/*                    id={data.id}*/}
+                            {/*                    setQuantity={setQuantity}*/}
+                            {/*                />*/}
+                            {/*            </div>*/}
+                            {/*            <div className="gi-quickview-cart gi-single-cart-btn">*/}
+                            {/*                <button*/}
+                            {/*                    onClick={() => handleCart(data)}*/}
+                            {/*                    className="gi-btn-1"*/}
+                            {/*                >*/}
+                            {/*                    <i className="fi-rr-shopping-basket"></i>*/}
+                            {/*                    {t("addToCartButton")}*/}
+                            {/*                </button>*/}
+                            {/*            </div>*/}
+                            {/*            <div className="gi-single-wishlist">*/}
+                            {/*                <a className="gi-btn-group wishlist" title="Wishlist">*/}
+                            {/*                    <i className="fi-rr-heart"></i>*/}
+                            {/*                </a>*/}
+                            {/*            </div>*/}
+                            {/*            <div className="gi-single-quickview">*/}
+                            {/*                <a*/}
+                            {/*                    className="gi-btn-group quickview"*/}
+                            {/*                    data-link-action="quickview"*/}
+                            {/*                    title="Quick view"*/}
+                            {/*                    data-bs-toggle="modal"*/}
+                            {/*                    data-bs-target="#gi_quickview_modal"*/}
+                            {/*                >*/}
+                            {/*                    <i className="fi-rr-eye"></i>*/}
+                            {/*                </a>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+
+
+
+
+
+                            {/*        /!* G. Qo'shimcha ma'lumot *!/*/}
+                            {/*        <div className="gi-single-pro-meta">*/}
+                            {/*            <ul>*/}
+                            {/*                <li><span>SKU:</span> {data.sku}</li>*/}
+                            {/*                <li><span>Kategoriya:</span> {t(data.category, { ns: 'categoryNames' })}</li>*/}
+                            {/*            </ul>*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*</Col>*/}
+                            <Col className="single-pro-desc m-t-991">
+                                <div className="single-pro-content">
+                                    <h5 className="gi-pro-title"   >
+                                        {data.title}
+                                    </h5>
+                                    <div className="gi-single-rating-wrap">
+                                        <div className="gi-single-rating">
+                                            <StarRating rating={data.rating} />
+                                        </div>
+                                        <span className="gi-read-review">
+                  |&nbsp;&nbsp;<a href="#gi-spt-nav-review">992 Ratings</a>
+                </span>
                                     </div>
 
-                                    {/* C. Narx */}
-                                    <div className="gi-quickview-price gi-single-price">
-                                        <span className="new-price">
+                                    <div className="gi-single-price-stoke">
+                                        <div className="gi-single-price">
+                                            <div className="final-price">
+                                         {/*<span className="new-price">${data.newPrice * data.quantity}</span>*/}
+                                                <span className="new-price">
                                             ${(data.oldPrice * quantity).toFixed(2)}
                                         </span>
-                                        {data.newPrice && (
-                                            <span className="old-price">${data.newPrice.toFixed(2)}</span>
-                                        )}
+
+                                            </div>
+                                            <div className="mrp">
+                                                {data.newPrice && (
+                                                    <span className="old-price ">${data.newPrice.toFixed(2)}</span>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className="gi-single-stoke">
+                                            <span className="gi-single-sku"> <span>SKU:</span> {data.sku}</span>
+                                            <span className="gi-single-ps-title">IN STOCK</span>
+                                        </div>
+                                    </div>
+                                    <div className="gi-single-desc">
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting
+                                        industry. Lorem Ipsum has been the industry s standard dummy
+                                        text ever since the 1990.
                                     </div>
 
-                                    {/* D. Tavsif */}
-                                    <div className="gi-quickview-desc gi-single-desc">
-                                        <p>{data.shortDescription}</p>
+                                    <div className="gi-single-list">
+                                        <ul>
+
+                                            <li>
+                                                <strong>Sole :</strong> Polyvinyl Chloride
+                                            </li>
+                                            <li>
+                                                <strong>Width :</strong> {(data.weight)}
+                                            </li>
+                                            <li>
+                                                <strong>Outer Material :</strong> A-Grade Standard Quality
+                                            </li>
+                                            <li>
+                                                <strong>Closure:</strong> {t(data.category, { ns: 'categoryNames' })}
+                                            </li>
+                                        </ul>
                                     </div>
 
-                                    {/* E. Variatsiyalar */}
                                     <div className="gi-pro-variation">
-                                        <div className="gi-pro-variation-inner gi-pro-variation-size gi-pro-size">
-                                            <div className="gi-pro-variation-content">
-                                                <SizeOptions categories={["catHairCare"]} subCategory={data.category} />
+                                        <div className="gi-pro-variation-inner gi-pro-variation-size">
+                                            <span>Weight</span>
+                                            <div className="gi-pro-variation">
+                                                <div className="gi-pro-variation-inner gi-pro-variation-size gi-pro-size">
+                                                    <div className="gi-pro-variation-content">
+                                                        <SizeOptions
+                                                            categories={[
+                                                                "vegetables",
+                                                            ]}
+                                                            subCategory={data.category}
+                                                        />
+                                                        {/* <ul className="gi-opt-size">
+                            {options.map((data: any, index) => (
+                              <li key={index} onClick={() => handleClick(index)} className={activeIndex === index ? "active" : ""}>
+                                <a className="gi-opt-sz" data-tooltip={data.tooltip}>
+                                  {data.value}
+                                </a>
+                              </li>
+                            ))}
+                          </ul> */}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    {/* F. Miqdor tanlash va Savat tugmasi */}
-                                    <div className="gi-quickview-qty gi-single-qty-block">
-                                        <div className="qty-plus-minus gi-qty-rtl">
-                                            <QuantitySelector
-                                                quantity={quantity}
-                                                id={data.id}
-                                                setQuantity={setQuantity}
-                                            />
+                                    <div className="gi-single-qty">
+                                        <div className="qty-plus-minus ">
+                                            <QuantitySelector setQuantity={setQuantity} quantity={quantity} id={data.id} />
                                         </div>
-                                        <div className="gi-quickview-cart gi-single-cart-btn">
-                                            <button
-                                                onClick={() => handleCart(data)}
-                                                className="gi-btn-1"
+                                        <div className="gi-quickview-cart ">
+                                                            <button
+                                                                onClick={() => handleCart(data)}
+                                                                className="gi-btn-1"
+                                                            >
+                                                                <i className="fi-rr-shopping-basket"></i>
+                                                                {t("addToCartButton")}
+                                                            </button>
+                                        </div>
+                                        <div className="gi-single-wishlist">
+                                            <a className="gi-btn-group wishlist" title="Wishlist">
+                                                <i className="fi-rr-heart"></i>
+                                            </a>
+                                        </div>
+                                        <div className="gi-single-quickview">
+                                            <a
+                                                className="gi-btn-group quickview"
+                                                data-link-action="quickview"
+                                                title="Quick view"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#gi_quickview_modal"
                                             >
-                                                <i className="fi-rr-shopping-basket"></i>
-                                                {t("addToCartButton")}
-                                            </button>
+                                                <i className="fi-rr-eye"></i>
+                                            </a>
                                         </div>
-                                    </div>
-
-                                    {/* G. Qo'shimcha ma'lumot */}
-                                    <div className="gi-single-pro-meta">
-                                        <ul>
-                                            <li><span>SKU:</span> {data.sku}</li>
-                                            <li><span>Kategoriya:</span> {t(data.category, { ns: 'categoryNames' })}</li>
-                                        </ul>
                                     </div>
                                 </div>
                             </Col>
