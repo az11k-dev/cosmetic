@@ -1,5 +1,5 @@
 import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
+import {initReactI18next} from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import headerOneUzbData from "./localesI18n/uzb/headerOneUzb.json";
 import headerOneRuData from "./localesI18n/rus/headerOneRu.json";
@@ -43,6 +43,8 @@ import cartAllRuData from "./localesI18n/rus/cartAllRu.json";
 import cartAllUzbData from "./localesI18n/uzb/cartAllUzb.json";
 import manuRuData from "./localesI18n/rus/manuMobile.json";
 import manuUzbData from "./localesI18n/uzb/manuMobile.json"
+import contactsUz from "./localesI18n/uzb/contacts.json"
+import contactsRu from "./localesI18n/rus/contacts.json"
 
 i18n
     .use(LanguageDetector)
@@ -51,56 +53,58 @@ i18n
         resources: {
             uz: {
                 headerOne: headerOneUzbData,
-                headerTwo:headerTwoUzbData,
+                headerTwo: headerTwoUzbData,
                 headerManu: headerManuUzbData,
                 footer: footerUzbData,
-                heroSlider:heroUzbData,
-                common:commonUzb,
+                heroSlider: heroUzbData,
+                common: commonUzb,
                 categoryNames: categoryUzb,
                 deal1: dealUzb,
-                productCard:itemUzb,
-                itemNames:itemNameUz,
-                banner:bannerUz,
-                newArrivals:arrialsUz,
-                offerBanners:offerUz,
-                services:servicesUz,
-                trackOrder:trackUz,
-                sidebarCart:sidebarUz,
+                productCard: itemUzb,
+                itemNames: itemNameUz,
+                banner: bannerUz,
+                newArrivals: arrialsUz,
+                offerBanners: offerUz,
+                services: servicesUz,
+                trackOrder: trackUz,
+                sidebarCart: sidebarUz,
                 treding: tredingUzb,
                 tredingAll: tredingAllUzb,
                 faqAll: faqAllUzb,
                 cartAll: cartAllUzbData,
-                manuMobile:manuUzbData
+                manuMobile: manuUzbData,
+                contacts: contactsUz
             },
             ru: {
                 headerOne: headerOneRuData,
                 headerTwo: headerTwoRuData,
                 headerManu: headerManuRuData,
                 footer: footerRuData,
-                heroSlider:heroRuData,
-                common:commonRu,
+                heroSlider: heroRuData,
+                common: commonRu,
                 categoryNames: categoryRu,
                 deal1: dealRu,
-                productCard:itemRu,
-                itemNames:itemNameRu,
-                banner:bannerRu,
-                newArrivals:arrialsRu,
-                offerBanners:offerRu,
-                services:servicesRu,
-                trackOrder:trackRu,
-                sidebarCart:sidebarRu,
+                productCard: itemRu,
+                itemNames: itemNameRu,
+                banner: bannerRu,
+                newArrivals: arrialsRu,
+                offerBanners: offerRu,
+                services: servicesRu,
+                trackOrder: trackRu,
+                sidebarCart: sidebarRu,
                 treding: tredingRU,
                 tredingAll: tredingAllRU,
                 faqAll: faqAllRU,
                 cartAll: cartAllRuData,
-                manuMobile:manuRuData
+                manuMobile: manuRuData,
+                contacts: contactsRu
             },
         },
 
         fallbackLng: "uz",
 
 
-        ns: ["headerOne","headerTwo","headerManu","footer","heroSlider","common","categoryNames","deal1","productCard","itemNames","banner","newArrivals","offerBanners","services","trackOrder","sidebarCart","treding", "tredingAll", "faqAll" , "cartAll","manuMobile"],
+        ns: ["headerOne", "headerTwo", "headerManu", "footer", "heroSlider", "common", "categoryNames", "deal1", "productCard", "itemNames", "banner", "newArrivals", "offerBanners", "services", "trackOrder", "sidebarCart", "treding", "tredingAll", "faqAll", "cartAll", "manuMobile", "contacts"],
         defaultNS: "headerOne",
 
 

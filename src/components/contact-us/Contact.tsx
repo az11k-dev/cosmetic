@@ -1,11 +1,11 @@
-import React, {useState} from "react";
 import {Col, Form, Row, Button} from "react-bootstrap";
 import {
-    FaEnvelope,
     FaMobileAlt,
     FaGlobeAmericas,
     FaMapMarkerAlt,
 } from "react-icons/fa";
+import {useState} from "react";
+import {useTranslation} from "react-i18next";
 
 // --- КОНФИГУРАЦИЯ TELEGRAM ---
 // 1. Замени на свой токен бота
@@ -13,7 +13,7 @@ const TELEGRAM_BOT_TOKEN = "8231848673:AAGufSiOI32ASRWeRUzOQ-AOKh2sMsUzZVw";
 // 2. Замени на ID чата, куда придет сообщение (твой личный или группы)
 const TELEGRAM_CHAT_ID = "7963820017";
 // ------------------------------
-
+const lang = localStorage.getItem("i18nextLng");
 const Contact = () => {
     const [validated, setValidated] = useState(false);
     const [formData, setFormData] = useState({
@@ -23,6 +23,7 @@ const Contact = () => {
         message: "",
     });
     const [submitMessage, setSubmitMessage] = useState(""); // Для сообщений о статусе
+    const {t} = useTranslation("contacts");
 
     // Обработчик изменения полей формы
     const handleChange = (e) => {
@@ -101,11 +102,10 @@ const Contact = () => {
                 <div className="container">
                     <div className="section-title-2">
                         <h2 className="gi-title">
-                            Get in <span>Touch</span>
+                            {t("firstText")}
                         </h2>
                         <p>
-                            Please select a topic below related to you inquiry. If you don t
-                            fint what you need, fill out our contact form.
+                            {t("secondText")}
                         </p>
                     </div>
                     {/* ... (Ваша существующая разметка с контактными данными) ... */}
@@ -114,23 +114,17 @@ const Contact = () => {
                             <div className="gi-box">
                                 <div className="detail">
                                     <div className="icon">
-                                        <i className="fa fa-envelope" aria-hidden="true">
-                                            <FaEnvelope/>
+                                        <i className="fa fa-globe" aria-hidden="true">
+                                            <FaGlobeAmericas/>
                                         </i>
                                     </div>
                                     <div className="info">
-                                        <h3 className="title">Mail & Website</h3>
-                                        <p>
-                                            <i className="fa fa-envelope" aria-hidden="true">
-                                                <FaEnvelope/>
-                                            </i>{" "}
-                                            mail.example@gmail.com
-                                        </p>
+                                        <h3 className="title">{t("website")}</h3>
                                         <p>
                                             <i className="fa fa-globe" aria-hidden="true">
                                                 <FaGlobeAmericas/>
                                             </i>{" "}
-                                            www.yourdomain.com
+                                            <a href="https://beauty-point.uz">https://beauty-point.uz</a>
                                         </p>
                                     </div>
                                 </div>
@@ -147,18 +141,12 @@ const Contact = () => {
                                         </i>
                                     </div>
                                     <div className="info">
-                                        <h3 className="title">Contact</h3>
+                                        <h3 className="title">{t("contact")}</h3>
                                         <p>
                                             <i className="fa fa-mobile" aria-hidden="true">
                                                 <FaMobileAlt/>
                                             </i>{" "}
-                                            (+91)-9876XXXXX
-                                        </p>
-                                        <p>
-                                            <i className="fa fa-mobile" aria-hidden="true">
-                                                <FaMobileAlt/>
-                                            </i>{" "}
-                                            (+91)-987654XXXX
+                                            <a href="tel:+998990996050">+998 99 099 60 50</a>
                                         </p>
                                     </div>
                                 </div>
@@ -175,13 +163,14 @@ const Contact = () => {
                                         </i>
                                     </div>
                                     <div className="info">
-                                        <h3 className="title">Address</h3>
+                                        <h3 className="title">{t("address")}</h3>
                                         <p>
                                             <i className="fa fa-map-marker" aria-hidden="true">
                                                 <FaMapMarkerAlt/>
                                             </i>{" "}
-                                            Ruami Mello Moraes Filho, 987 - Salvador - MA,
-                                            40352, Brazil.
+                                            {lang === "ru" ? "Мирабадский район, Ул Авлие-ота 63А" : "Mirobod tumani, Avliyo ota ko‘chasi 63A"}
+                                            <br/>
+                                            {lang === "ru" ? "Юнус Абад 13 квартал, дом 4" : "Yunusobod 13-kvartal, 4-uy"}
                                         </p>
                                     </div>
                                 </div>
@@ -201,7 +190,7 @@ const Contact = () => {
                                         className="form-control"
                                         id="fname"
                                         name="fullName" // Добавлено поле `name`
-                                        placeholder="Full Name"
+                                        placeholder={t("fullName")}
                                         required
                                         value={formData.fullName} // Привязка к состоянию
                                         onChange={handleChange} // Обработка изменений
@@ -216,7 +205,7 @@ const Contact = () => {
                                         className="form-control"
                                         id="umail"
                                         name="email" // Добавлено поле `name`
-                                        placeholder="Email"
+                                        placeholder={t("email")}
                                         required
                                         value={formData.email} // Привязка к состоянию
                                         onChange={handleChange} // Обработка изменений
@@ -231,7 +220,7 @@ const Contact = () => {
                                         className="form-control"
                                         id="phone"
                                         name="phone" // Добавлено поле `name`
-                                        placeholder="Phone"
+                                        placeholder={t("phone")}
                                         pattern="^\d{10,12}$"
                                         required
                                         value={formData.phone} // Привязка к состоянию
@@ -247,17 +236,17 @@ const Contact = () => {
                                         id="exampleFormControlTextarea1"
                                         name="message" // Добавлено поле `name`
                                         rows={3}
-                                        placeholder="Message"
+                                        placeholder={t("message")}
                                         required
                                         value={formData.message} // Привязка к состоянию
                                         onChange={handleChange} // Обработка изменений
                                     ></textarea>
                                     <Form.Control.Feedback type="invalid">
-                                        Please Enter Message.
+                                        {lang === "ru" ? "Пожалуйста, введите сообщение." : "Iltimos, xabarni kiriting."}
                                     </Form.Control.Feedback>
                                 </Form.Group>
                                 <Button type="submit" className="gi-btn-2">
-                                    Submit
+                                    {lang === "ru" ? "Отправить" : "Yuborish"}
                                 </Button>
                                 {/* Поле для отображения статуса отправки */}
                                 {submitMessage && (

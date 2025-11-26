@@ -9,12 +9,11 @@ import Team from '@/components/about-us/Team'
 const Page = () => {
     return (
         <>
-            <Breadcrumb title={"About Us"} />
-            <About />
-            <Service />
-            <Testimonials />
-            <Facts />
-            <Team />
+            <Breadcrumb title={"About Us"}/>
+            <About/>
+            <Facts/>
+            <Service/>
+            <Team/>
         </>
     )
 }
