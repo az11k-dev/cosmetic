@@ -3,9 +3,11 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import Spinner from "../button/Spinner";
 import { useSliceData } from "@/hooks/useSliceData";
-
+import { useTranslation, Trans } from "react-i18next";
+import React from "react";
 const Team = () => {
   const { data, error } = useSliceData('team');
+    const { t } = useTranslation("about");
 
 
   if (error) return <div>Failed to load products</div>;
@@ -26,9 +28,9 @@ const Team = () => {
         <div className="container">
           <div className="section-title-2">
             <h2 className="gi-title">
-              Our <span>Team</span>
+                {t("team_title")} <span>{t("team_title2")}</span>
             </h2>
-            <p>Meet out expert team members.</p>
+            <p>  {t('team_subtitle')}</p>
           </div>
           <Swiper
             loop={true}
