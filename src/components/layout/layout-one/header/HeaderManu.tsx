@@ -74,18 +74,6 @@ function HeaderManu() {
                                                 </li>
                                                 <li className="dropdown drop-list">
                                                     <Link to="#" className="dropdown-arrow">
-                                                        {t("menuBlog")}<i className="fi-rr-angle-small-right"></i>
-                                                    </Link>
-                                                    <ul className="sub-menu">
-                                                        {blog.map((data, index) => (
-                                                            <li key={index}>
-                                                                <Link to={data.href}>{data.name}</Link>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </li>
-                                                <li className="dropdown drop-list">
-                                                    <Link to="#" className="dropdown-arrow">
                                                         {t("menuPages")}<i className="fi-rr-angle-small-right"></i>
                                                     </Link>
                                                     <ul className="sub-menu">
@@ -115,7 +103,8 @@ function HeaderManu() {
                                 <img style={{width: '18px', height: '18px'}}
                                      src="https://cdn-icons-png.flaticon.com/512/5952/5952689.png" alt="discount"/>
                             </p>
-                            <p className={"bty-header-hover"} style={{fontSize: '15px', fontWeight: '500', color: '#4b5966'}}>
+                            <p className={"bty-header-hover"}
+                               style={{fontSize: '15px', fontWeight: '500', color: '#4b5966'}}>
                                 {t("menuOffers")}
                             </p>
                         </div>

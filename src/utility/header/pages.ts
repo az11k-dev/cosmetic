@@ -22,16 +22,8 @@ const pages: LinkAttr[] = [
     href: "/orders",
   },
   {
-    name: "Compare",
-    href: "/compare",
-  },
-  {
     name: "FAQ",
     href: "/faq",
-  },
-  {
-    name: "Login",
-    href: "/login",
   },
 ];
 export default pages;

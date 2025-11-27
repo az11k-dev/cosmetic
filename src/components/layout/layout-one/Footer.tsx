@@ -8,7 +8,6 @@ import {useEffect, useState} from "react";
 import {slice} from "lodash";
 import {motion} from "framer-motion";
 import {useNavigate} from "react-router-dom";
-import {useSliceData} from "@/hooks/useSliceData";
 import {Link} from "react-router-dom";
 // 💡 Yangi import: Tarjima uchun
 import {useTranslation} from "react-i18next";
@@ -83,11 +82,13 @@ function Footer() {
                                         className=" gi-footer-cat"
                                     >
                                         <div className="gi-footer-widget gi-footer-company">
-                                            <img
-                                                src={"/assets/img/logo/logo.png"}
-                                                className="gi-footer-logo"
-                                                alt="footer logo"
-                                            />
+                                            <a href="/">
+                                                <img
+                                                    src={"/assets/img/logo/logo.png"}
+                                                    className="gi-footer-logo"
+                                                    alt="footer logo"
+                                                />
+                                            </a>
                                             <p className="gi-footer-detail">
                                                 {/* 💡 TARJIMA 1: Kompaniya tavsifi (Kosmetikaga moslangan) */}
                                                 {t("companyDetail")}
