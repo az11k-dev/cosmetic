@@ -116,7 +116,6 @@ const CategorySliderOne = ({
                                     name: lang === "ru" ? item?.name?.ru : item?.name?.uz,
                                     num: index + 1,
                                 };
-                                console.log(item)
 
                                 return (
                                     <SwiperSlide

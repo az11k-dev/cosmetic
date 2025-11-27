@@ -115,7 +115,7 @@ function HeaderManu() {
                                 <img style={{width: '18px', height: '18px'}}
                                      src="https://cdn-icons-png.flaticon.com/512/5952/5952689.png" alt="discount"/>
                             </p>
-                            <p style={{fontSize: '15px', fontWeight: '500', color: '#4b5966'}}>
+                            <p className={"bty-header-hover"} style={{fontSize: '15px', fontWeight: '500', color: '#4b5966'}}>
                                 {t("menuOffers")}
                             </p>
                         </div>

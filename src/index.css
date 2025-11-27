@@ -11,6 +11,10 @@
   display: none;
 }
 
+.bty-header-hover::hover {
+  color: red !important;
+}
+
 a {
   cursor: pointer;
 }
