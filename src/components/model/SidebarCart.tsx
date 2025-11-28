@@ -15,7 +15,7 @@ interface CartItem extends Item {
 const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartOpen: boolean; }) => {
 
     const { t } = useTranslation("sidebarCart");
-
+    const lang = localStorage.getItem("i18nextLng");
     // 💡 CONTEXTDAN KERAKLI HOLAT VA FUNKSIYALARNI OLISH
     const {
         cartItems,
@@ -37,7 +37,7 @@ const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartO
         // Mahsulot narxining miqdorga ko'paytmasi summasi
         const subtotal = cartItems.reduce(
             // item.newPrice birlik narxi deb hisoblaymiz
-            (acc, item) => acc + item.newPrice * item.quantity,
+            (acc, item) => acc + item.price * item.quantity,
             0
         );
         setSubTotal(subtotal);
@@ -53,17 +53,16 @@ const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartO
         e.preventDefault();
     }, []);
 
-    // 💡 Mahsulotni butunlay o'chirish funksiyasi
+
     const handleRemoveFromCart = useCallback((id: string) => {
         removeItemFromCart(id);
     }, [removeItemFromCart]);
 
-    // 💡 Miqdorni o'zgartirish (oshirish/kamaytirish) funksiyasi
+
     const handleQuantityChange = useCallback((id: string, newQuantity: number) => {
-        // Context funksiyasini chaqiramiz.
-        // newQuantity <= 0 bo'lsa, CartProvider uni o'chiradi
         updateItemQuantity(id, newQuantity);
     }, [updateItemQuantity]);
+
 
     return (
         <>
@@ -91,15 +90,15 @@ const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartO
                                             to="/"
                                             className="gi-pro-img"
                                         >
-                                            <img src={item.image} alt="product" />
+                                            <img src={item?.images[0]?.upload?.file_url} alt="product" />
                                         </Link>
                                         <div className="gi-pro-content">
                                             <Link to="/" className="cart-pro-title">
-                                                {item.title}
+                                                {lang === "ru" ? item?.name?.ru : item?.name?.uz}
                                             </Link>
                                             <span className="cart-price">
                                                 {/* Umumiy narxni hisoblaymiz */}
-                                                <span>${(item.newPrice * item.quantity).toFixed(2)}</span>
+                                                <span>${(item.price * item.quantity).toFixed(2)}</span>
                                             </span>
                                             <div className="qty-plus-minus gi-qty-rtl">
                                                 {/* 💡 QuantitySelector komponentiga funksiyani o'tkazamiz */}

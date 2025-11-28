@@ -49,6 +49,8 @@ import aboutUz from "./localesI18n/uzb/aboutUz.json"
 import aboutRu from "./localesI18n/rus/aboutRu.json"
 import factUz from "./localesI18n/uzb/fact.json"
 import factRu from "./localesI18n/rus/fact.json"
+import wishlistUz from "./localesI18n/uzb/wishlist.json"
+import wishlistRu from "./localesI18n/rus/wishlist.json"
 
 i18n
     .use(LanguageDetector)
@@ -79,7 +81,8 @@ i18n
                 manuMobile: manuUzbData,
                 contacts: contactsUz,
                 about:aboutUz,
-                facts:factUz
+                facts:factUz,
+                wishlist:wishlistUz
             },
             ru: {
                 headerOne: headerOneRuData,
@@ -105,14 +108,15 @@ i18n
                 manuMobile: manuRuData,
                 contacts: contactsRu,
                 about:aboutRu,
-                facts:factRu
+                facts:factRu,
+                wishlist:wishlistRu
             },
         },
 
         fallbackLng: "uz",
 
 
-        ns: ["headerOne", "headerTwo", "headerManu", "footer", "heroSlider", "common", "categoryNames", "deal1", "productCard", "itemNames", "banner", "newArrivals", "offerBanners", "services", "trackOrder", "sidebarCart", "treding", "tredingAll", "faqAll", "cartAll", "manuMobile", "contacts","about","facts"],
+        ns: ["headerOne", "headerTwo", "headerManu", "footer", "heroSlider", "common", "categoryNames", "deal1", "productCard", "itemNames", "banner", "newArrivals", "offerBanners", "services", "trackOrder", "sidebarCart", "treding", "tredingAll", "faqAll", "cartAll", "manuMobile", "contacts","about","facts","wishlist"],
         defaultNS: "headerOne",
 
 

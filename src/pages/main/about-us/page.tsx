@@ -5,15 +5,18 @@ import Testimonials from '@/components/about-us/Testimonials'
 import Facts from '@/components/about-us/Facts'
 import Team from '@/components/about-us/Team'
 
+const lang = localStorage.getItem("i18nextLng");
+
 
 const Page = () => {
     return (
         <>
-            {/*<Breadcrumb title={"About Us"}/>*/}
+            <Breadcrumb title={lang ===
+            "ru" ? "О нас" : "Biz haqimizda"}/>
             {/*<About/>*/}
             {/*<Facts/>*/}
             {/*<Service/>*/}
-            <Team/>
+            {/*<Team/>*/}
         </>
     )
 }

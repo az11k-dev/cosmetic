@@ -120,16 +120,16 @@ const ProductDetailsPage: React.FC = ({order = "", none = "none", lg = 12,}:any)
                                     +
                                 </a>
                                 <div className="add-more-img">
-                                    <img src={item.image} alt="product" />
+                                    <img src={item.file_url} alt="product" />
                                 </div>
                                 <div className="add-more-info">
-                                    <h5>{item.title}</h5>
+                                    <h5>{item.name}</h5>
                                     <span className="gi-pro-rating">
                                         <StarRating rating={item.rating} />
                                     </span>
                                     <span className="gi-price">
-                                        <span className="new-price">${item.newPrice}</span>
-                                        <span className="old-price">${item.oldPrice}</span>
+                                        <span className="new-price">${item.price}</span>
+                                        <span className="old-price">${item.old_price}</span>
                                     </span>
                                 </div>
                             </SwiperSlide>

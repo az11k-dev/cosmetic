@@ -1,7 +1,7 @@
 import React from "react";
 import { Col,Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+const lang = localStorage.getItem("i18nextLng");
 const Breadcrumb = ({ title }: any) => {
   return (
     <>
@@ -17,7 +17,7 @@ const Breadcrumb = ({ title }: any) => {
                   {/* <!-- gi-breadcrumb-list start --> */}
                   <ul className="gi-breadcrumb-list">
                     <li className="gi-breadcrumb-item">
-                      <Link to={`/`}>Home</Link>
+                      <Link to={`/`}>{lang=== "ru"?"Главная":"Bosh sahifa"}</Link>
                     </li>
                     <li className="gi-breadcrumb-item active">{title}</li>
                   </ul>

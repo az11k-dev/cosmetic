@@ -54,10 +54,10 @@ function HeaderOne({cartItems, wishlistItems}: HeaderOneProps) {
         {code: 'uz', nameKey: 'common.uzbek_language'},
         {code: 'ru', nameKey: 'common.russian_language'},
     ];
-    const availableLanguages2 = [
-        {code2: 'uz', nameKey: 'common.uzbek_language'},
-        {code2: 'ru', nameKey: 'common.russian_language'},
-    ];
+    // const availableLanguages2 = [
+    //     {code2: 'uz', nameKey: 'common.uzbek_language'},
+    //     {code2: 'ru', nameKey: 'common.russian_language'},
+    // ];
 
 
     return (

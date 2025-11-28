@@ -1,0 +1,35 @@
+{
+
+
+
+  "wishlist_main_title": "Mahsulotlar",
+  "wishlist_main_title2": "Istaklari",
+  "wishlist_main_subtitle": "Mahsulot haqidagi istagingiz bizning birinchi ustuvor vazifamizdir.",
+
+
+  "wishlist_table_title": "Istaklar ro'yxati",
+  "wishlist_shop_now": "Hozir xarid qilish",
+  "wishlist_empty_message": "Istaklar ro'yxatingiz bo'sh.",
+
+
+  "wishlist_col_id": "ID",
+  "wishlist_col_image": "Rasm",
+  "wishlist_col_name": "Nomi",
+  "wishlist_col_date": "Sana",
+  "wishlist_col_price": "Narxi",
+  "wishlist_col_status": "Holat",
+  "wishlist_col_actions": "Harakatlar",
+
+
+  "status_available": "Mavjud",
+  "status_out_of_stock": "Sotuvda yo'q",
+  "action_add_to_cart": "Savatga qo'shish",
+  "action_remove_from_list": "Ro'yxatdan o'chirish",
+
+
+  "toast_remove_wishlist": "Mahsulot istaklar ro'yxatidan o'chirildi!",
+  "toast_add_to_cart": "Mahsulot savatga muvaffaqiyatli qo'shildi!",
+  "new_arrivals_title": "Yangi",
+  "new_arrivals_title2": "Kelganlar",
+  "new_arrivals_subtitle": "Eng yaxshi mahsulotlar to'plamini ko'rib chiqing"
+}

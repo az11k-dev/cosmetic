@@ -8,17 +8,19 @@ import {AuthProvider} from "@/context/AuthContext.tsx";
 import {FilterProvider} from "@/context/FilterContext.tsx";
 // 💡 CartProviderni import qilamiz
 import {CartProvider} from "@/context/CartContext.tsx";
-
+import { WishlistProvider } from '@/context/WishlistContext';
 
 createRoot(document.getElementById("root")!).render(
     <StrictMode>
         <AuthProvider>
             <FilterProvider>
-                <CartProvider>
-                    <Providers>
-                        <App/>
-                    </Providers>
-                </CartProvider>
+                <WishlistProvider>
+                    <CartProvider>
+                        <Providers>
+                            <App/>
+                        </Providers>
+                    </CartProvider>
+                </WishlistProvider>
             </FilterProvider>
         </AuthProvider>
     </StrictMode>

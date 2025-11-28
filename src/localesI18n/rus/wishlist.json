@@ -1,0 +1,32 @@
+{
+  "wishlist_main_title": "Список",
+  "wishlist_main_title2": "Желаний",
+  "wishlist_main_subtitle": "Ваше желание о продукте — наш первый приоритет.",
+
+
+  "wishlist_table_title": "Список желаний",
+  "wishlist_shop_now": "Купить сейчас",
+  "wishlist_empty_message": "Ваш список желаний пуст.",
+
+
+  "wishlist_col_id": "№",
+  "wishlist_col_image": "Изображение",
+  "wishlist_col_name": "Название",
+  "wishlist_col_date": "Дата",
+  "wishlist_col_price": "Цена",
+  "wishlist_col_status": "Статус",
+  "wishlist_col_actions": "Действия",
+
+
+  "status_available": "В наличии",
+  "status_out_of_stock": "Нет в наличии",
+  "action_add_to_cart": "Добавить в Корзину",
+  "action_remove_from_list": "Удалить из Списка",
+
+
+  "toast_remove_wishlist": "Продукт удален из списка желаний!",
+  "toast_add_to_cart": "Продукт успешно добавлен в корзину!",
+  "new_arrivals_title": "Новые",
+  "new_arrivals_title2": "Поступления",
+  "new_arrivals_subtitle": "Просмотрите коллекцию лучших продуктов"
+}

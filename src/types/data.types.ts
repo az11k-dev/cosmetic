@@ -1,4 +1,5 @@
 import { RootState } from "@/store";
+import {array} from "yup";
 
 export interface moreItem {
     rating: number;
@@ -60,11 +61,11 @@ export interface Facts {
   export interface Deal {
     category: string;
     sale: string;
-    image: string;
+    images: [];
     imageTwo: string;
-    oldPrice: number;
-    newPrice: number;
-    title: string;
+    old_price: number;
+    price: number;
+    name: string;
     weight?: string;
     rating: any;
     status: string;
@@ -73,6 +74,8 @@ export interface Facts {
     sku: number;
     quantity: number;
     id: number;
+    is_main:number;
+    file_url:string
   }
 
 export interface ProductSidebar {
@@ -335,16 +338,16 @@ export interface ProductSidebar {
   }
   export interface Item {
     id: number;
-    title: string;
     name?: string;
     category?: string;
     newPrice: number;
     waight?: string;
     sale?: string;
+    images: unknown;
     image: string;
     imageTwo?: string;
     date?: string;
-    oldPrice: number;
+    old_price: number;
     href?: string;
     weight?: string;
     rating?: any;
@@ -361,6 +364,8 @@ export interface ProductSidebar {
     color3?: string;
     size1?: string;
     size2?: string;
+    price?: number;
+
   }
 
   export interface Weight {
