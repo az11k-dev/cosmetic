@@ -47,7 +47,7 @@ i[class^="fi-rr-"]:before,
 i[class*=" fi-rr-"]:before,
 span[class^="fi-rr-"]:before,
 span[class*="fi-rr-"]:before {
-    font-family: uicons-regular-rounded !important;
+    font-family: uicons-regular-rounded;
     font-style: normal;
     font-weight: normal !important;
     font-variant: normal;
@@ -61,7 +61,7 @@ i[class^="fi-brands-"]:before,
 i[class*=" fi-brands-"]:before,
 span[class^="fi-brands-"]:before,
 span[class*="fi-brands-"]:before {
-    font-family: uicons-brands !important;
+    font-family: uicons-brands;
     font-style: normal;
     font-weight: normal !important;
     font-variant: normal;
@@ -75,7 +75,7 @@ i[class^="fi-rs-"]:before,
 i[class*=" fi-rs-"]:before,
 span[class^="fi-rs-"]:before,
 span[class*="fi-rs-"]:before {
-    font-family: uicons-regular-straight !important;
+    font-family: uicons-regular-straight;
     font-style: normal;
     font-weight: normal !important;
     font-variant: normal;
@@ -89,7 +89,7 @@ i[class^="fi-tr-"]:before,
 i[class*=" fi-tr-"]:before,
 span[class^="fi-tr-"]:before,
 span[class*="fi-tr-"]:before {
-    font-family: uicons-thin-rounded !important;
+    font-family: uicons-thin-rounded;
     font-style: normal;
     font-weight: normal !important;
     font-variant: normal;
@@ -103,7 +103,7 @@ i[class^="fi-ts-"]:before,
 i[class*=" fi-ts-"]:before,
 span[class^="fi-ts-"]:before,
 span[class*="fi-ts-"]:before {
-    font-family: uicons-thin-straight !important;
+    font-family: uicons-thin-straight;
     font-style: normal;
     font-weight: normal !important;
     font-variant: normal;

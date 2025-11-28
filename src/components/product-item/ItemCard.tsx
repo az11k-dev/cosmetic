@@ -117,8 +117,9 @@ const ItemCard: React.FC<SingleProductContentPageProps>  = ({ data  }: { data: I
                         </Link>
 
                         {/* Sarlavha (ProdTitle) Link'i */}
-                        <h5 className="gi-pro-title">
+                        <h5 className="gi-pro-title" style={{fontFamily: "\"Roboto\", sans-serif"}}>
                             <Link
+                                style={{fontFamily: "\"Roboto\", sans-serif"}}
                                 to={`/product-details/${data.id}`}
                                 state={{ productData: data }}
                             >
