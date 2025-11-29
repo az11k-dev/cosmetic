@@ -29,17 +29,17 @@ const About = () => {
                             <div className="gi-about-img">
                                 {/* Изображения остались без изменений */}
                                 <img
-                                    src={"/assets/img/common/about.png"}
+                                    src={"/assets/firstAbout.jpg"}
                                     className="v-img"
                                     alt="about"
                                 />
                                 <img
-                                    src={"/assets/img/common/about-2.png"}
+                                    src={"/assets/secondAbout.png"}
                                     className="h-img"
                                     alt="about"
                                 />
                                 <img
-                                    src={"/assets/img/common/about-3.png"}
+                                    src={"/assets/secondAbout.png"}
                                     className="h-img"
                                     alt="about"
                                 />

@@ -1,11 +1,11 @@
 {
   "service": {
     "free_shipping_name": "Bepul Yetkazib Berish",
-    "free_shipping_title": "Barcha buyurtmalar yoki $200 dan yuqori buyurtmalar bepul yetkazib beriladi",
-    "support_name": "24X7 Qo'llab-quvvatlash",
+    "free_shipping_title": "Barcha $200 dan yuqori buyurtmalar bepul yetkazib beriladi",
+    "support_name": "Qo'llab-quvvatlash",
     "support_title": "Biz bilan kuniga 24 soat, haftada 7 kun bog'laning",
-    "return_name": "30 Kun Ichida Qaytarish",
-    "return_title": "Shunchaki 30 kun ichida almashtirish uchun qaytaring",
+    "return_name": "7 Kun Ichida Qaytarish",
+    "return_title": "Shunchaki 7 kun ichida almashtirish imkoniyatiga egasiz",
     "payment_name": "Xavfsiz To'lov",
     "payment_title": "To'lov ma'lumotlaringiz to'liq himoyalangan"
   }

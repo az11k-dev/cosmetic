@@ -1,13 +1,9 @@
 {
   "allCategories": "Все категории",
-
-
   "tabFaceMakeup": "Уход за лицом и Макияж",
   "tabHairBodyCare": "Уход за волосами и телом",
   "tabPerfumeNails": "Парфюмерия и Ногти",
   "tabAccessoriesTools": "Аксессуары и Инструменты",
-
-
   "colFaceCare": "Уход за лицом",
   "colMakeup": "Макияж",
   "colHairCare": "Уход за волосами",
@@ -16,8 +12,6 @@
   "colNails": "Ногти",
   "colAccessories": "Аксессуары",
   "colTools": "Инструменты",
-
-
   "menuHome": "Главная",
   "menuShops": "Магазины",
   "menuCategories": "Категории",
@@ -25,14 +19,15 @@
   "menuBlog": "Блог",
   "menuPages": "Страницы",
   "menuOffers": "Предложения",
-
-
   "prodFullWidth": "Полная Ширина",
   "prodAccordionFullWidth": "Аккордеон (Полная Ширина)",
-
-
   "megaClassic": "Классический Макет",
   "megaBanner": "Макет с Баннером",
   "megaColumns": "Макет Колонки",
-  "megaList": "Макет Списка"
+  "megaList": "Макет Списка",
+  "contact": "Контакты",
+  "about": "О нас",
+  "checkout": "Оформление",
+  "cart": "Корзинка",
+  "faq": "Вопросы"
 }

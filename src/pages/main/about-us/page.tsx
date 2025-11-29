@@ -13,9 +13,9 @@ const Page = () => {
         <>
             <Breadcrumb title={lang ===
             "ru" ? "О нас" : "Biz haqimizda"}/>
-            {/*<About/>*/}
-            {/*<Facts/>*/}
-            {/*<Service/>*/}
+            <About/>
+            <Facts/>
+            <Service/>
             {/*<Team/>*/}
         </>
     )

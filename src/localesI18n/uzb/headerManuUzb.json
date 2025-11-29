@@ -4,7 +4,6 @@
   "tabHairBodyCare": "Soch & Tana parvarishi",
   "tabPerfumeNails": "Parfyumeriya & Tirnoqlar",
   "tabAccessoriesTools": "Aksessuarlar & Asboblar",
-
   "colFaceCare": "Yuz parvarishi",
   "colMakeup": "Makiyaj",
   "colHairCare": "Soch parvarishi",
@@ -13,7 +12,6 @@
   "colNails": "Tirnoqlar",
   "colAccessories": "Aksessuarlar",
   "colTools": "Asboblar",
-
   "menuCategories": "Kategoriyalar",
   "menuProducts": "Mahsulotlar",
   "menuBlog": "Blog",
@@ -24,5 +22,10 @@
   "megaClassic": "Klassik",
   "megaBanner": "Banner",
   "megaColumns": "Ustunlar",
-  "megaList": "Ro'yxat"
+  "megaList": "Ro'yxat",
+  "contact": "Murojaat qilish",
+  "about": "Biz haqimizda",
+  "checkout": "To'lov",
+  "cart": "Savatcha",
+  "faq": "Savollar"
 }

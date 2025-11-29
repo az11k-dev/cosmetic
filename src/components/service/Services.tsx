@@ -8,6 +8,20 @@ import { useTranslation } from 'react-i18next'; // 👈 i18next ni import qilami
 // 3.1 qismdagi kalitlar joylashgan faylni import qilamiz
 import service from '/src/utility/data/service.ts';
 
+const datas = [
+    {
+        id: 1,
+        icon: "fa-globe",
+        nameKey: "name",
+        titleKey: "title",
+    },
+    {
+        id: 2,
+        icon: "fa-paper-plane",
+        nameKey: "name",
+        titleKey: "title",
+    }
+]
 
 const Services = ({children = <></>}: any) => {
     // const { data, error } = useSliceData('service'); // Agar bu serverdan kelmasa, qattiq kodlangan ma'lumotdan foydalanamiz

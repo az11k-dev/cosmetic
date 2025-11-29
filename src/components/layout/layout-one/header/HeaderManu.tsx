@@ -1,15 +1,43 @@
 import React, {useState} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import blog from "@/utility/header/blog";
 import pages from "@/utility/header/pages";
 import productpage from "@/utility/header/productpage";
 import AllCategories from "@/components/layout/layout-one/header/AllCategories.tsx";
 
-
 function HeaderManu() {
     const {t} = useTranslation("headerManu"); // Namespace 'headerMenu'
     const [selectedIndex, setSelectedIndex] = useState(0);
+    const navigate = useNavigate();
+
+    const data = [
+        {
+            id: 1,
+            name: t("contact"),
+            link: "/contact-us",
+        },
+        {
+            id: 2,
+            name: t("about"),
+            link: "/about-us",
+        },
+        {
+            id: 3,
+            name: t("checkout"),
+            link: "/checkout",
+        },
+        {
+            id: 4,
+            name: t("cart"),
+            link: "/cart",
+        },
+        {
+            id: 5,
+            name: t("faq"),
+            link: "/faq",
+        }
+    ]
 
     const handleProductClick = (index: number) => {
         setSelectedIndex(index);
@@ -32,58 +60,35 @@ function HeaderManu() {
                                     <div className="col-md-12 align-self-center">
                                         <div className="gi-main-menu">
                                             <ul>
-                                                <li className="dropdown drop-list">
-                                                    <Link to="#" className="dropdown-arrow">
-                                                        {/* 💡 TARJIMA 19: Products */}
-                                                        {t("menuProducts")}<i className="fi-rr-angle-small-right"></i>
-                                                    </Link>
-                                                    <ul className="sub-menu">
-                                                        {productpage.map((data, index) => (
-                                                            <li
-                                                                key={index}
-                                                                className="dropdown position-static"
-                                                            >
-                                                                <Link to="#">
-                                                                    {data.name}
-                                                                    <i className="fi-rr-angle-small-right"></i>
-                                                                </Link>
-                                                                <ul className="sub-menu sub-menu-child">
-                                                                    {data.subname && data.subname.map((subPage, subIndex) => (
-                                                                        <React.Fragment key={subIndex}>
-                                                                            <li>
-                                                                                <Link to={subPage.href}>
-                                                                                    {subPage.name}
-                                                                                </Link>
-                                                                            </li>
-                                                                        </React.Fragment>
-                                                                    ))}
-                                                                </ul>
-                                                            </li>
-                                                        ))}
-                                                        <li>
-                                                            <Link to={`/product-full-width`}>
-                                                                {t("prodFullWidth")}
-                                                            </Link>
-                                                        </li>
-                                                        <li>
-                                                            <Link to={`/product-according-full-width`}>
-                                                                {t("prodAccordionFullWidth")}
-                                                            </Link>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li className="dropdown drop-list">
-                                                    <Link to="#" className="dropdown-arrow">
-                                                        {t("menuPages")}<i className="fi-rr-angle-small-right"></i>
-                                                    </Link>
-                                                    <ul className="sub-menu">
-                                                        {pages.map((data, index) => (
-                                                            <li key={index}>
-                                                                <Link to={data.href}>{data.name}</Link>
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                </li>
+                                                <div style={{
+                                                    display: "flex",
+                                                    gap: "20px",
+                                                    alignItems: "center",
+                                                    justifyContent: "center",
+                                                    paddingTop: "15px",
+                                                }}>
+                                                    {data.map((item: any) => (
+                                                        <div style={{
+                                                            display: 'flex',
+                                                            justifyContent: 'center',
+                                                            alignItems: 'center',
+                                                            marginTop: 'auto',
+                                                            gap: '5px',
+                                                            cursor: 'pointer',
+                                                        }}>
+                                                            <p onClick={() => {
+                                                                navigate(item?.link);
+                                                            }} className={"bty-header-hover"}
+                                                               style={{
+                                                                   fontSize: '15px',
+                                                                   fontWeight: '500',
+                                                                   color: '#4b5966'
+                                                               }}>
+                                                                {item?.name}
+                                                            </p>
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             </ul>
                                         </div>
                                     </div>

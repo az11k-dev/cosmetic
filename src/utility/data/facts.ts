@@ -1,5 +1,5 @@
 // Предположительно, файл с данными facts
-import { Facts } from "@/types/data.types";
+import {Facts} from "@/types/data.types";
 
 const facts: Facts[] = [
     {

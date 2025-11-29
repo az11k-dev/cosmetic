@@ -1,13 +1,12 @@
 // Service.tsx
 
-import React from "react";
 import Services from "../service/Services";
 // Импортируем useTranslation и Trans
-import { useTranslation, Trans } from "react-i18next";
+import {useTranslation, Trans} from "react-i18next";
 
 const Service = () => {
     // Получаем функцию t (translate)
-    const { t } = useTranslation("about");
+    const {t} = useTranslation("about");
 
     return (
         <>
