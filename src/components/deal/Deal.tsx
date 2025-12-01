@@ -9,62 +9,6 @@ import Spinner from "../button/Spinner";
 import {useTranslation} from "react-i18next";
 import {useEffect, useState} from "react";
 // import {display} from "html2canvas/dist/types/css/property-descriptors/display"; // 💡 Tarjima importi
-
-// const data = [
-//
-//     {
-//         name: "prodTitle_1",
-//         sale: "Sale",
-//         images:  [
-//             {
-//                 is_main: 1,
-//                 file_url: "https://ichef.bbci.co.uk/ace/standard/976/cpsprodpb/14235/production/_100058428_mediaitem100058424.jpg"
-//             },
-//             {
-//                 is_main: 0,
-//                 file_url: "https://cdn.pixabay.com/photo/2018/08/04/11/30/draw-3583548_1280.png"
-//             }
-//         ],
-//         category: "catPerfumes",
-//         old_price: 20.00,
-//         price: 3.0,
-//         location: "Online",
-//         brand: "Glamour Glow",
-//         sku: 23122,
-//         id: 1,
-//         quantity: 1,
-//         weight: "100ml",
-//         rating: 4,
-//         status: "Out Of Stock",
-//     },
-//     {
-//         name: "prodTitle_2",
-//         sale: "Sale",
-//         images:  [
-//             {
-//                 is_main: 1,
-//                 file_url: "https://playcontestofchampions.com/wp-content/uploads/2023/04/champion-iron-man-infinity-war.webp"
-//             },
-//             {
-//                 is_main: 0,
-//                 file_url: "https://cdn.pixabay.com/photo/2018/08/04/11/30/draw-3583548_1280.png"
-//             }
-//         ],
-//         category: "catPerfumes",
-//         old_price: 40.00,
-//         price: 19.0,
-//         location: "Online",
-//         brand: "Glamour Glow",
-//         sku: 23122,
-//         id: 2,
-//         quantity: 1,
-//         weight: "20ml",
-//         rating: 0,
-//         status: "Out Of Stock",
-//
-//     }
-//
-// ];
 const API_URL = "https://admin.beauty-point.uz/api/products";
 const lang = localStorage.getItem("i18nextLng");
 const Deal = () => {
@@ -125,7 +69,6 @@ const Deal = () => {
                                     data-aos="fade-up"
                                     data-aos-duration="2000"
                                     data-aos-delay="200"
-                                    style={{display:"flex", justifyContent:"center"}}
                                 >
                                     <Fade triggerOnce direction="up" duration={2000} delay={200} >
                                         <div className="section-detail" >

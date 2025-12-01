@@ -68,7 +68,7 @@ function HeaderManu() {
                                                     paddingTop: "15px",
                                                 }}>
                                                     {data.map((item: any) => (
-                                                        <div style={{
+                                                        <div key={item?.id} style={{
                                                             display: 'flex',
                                                             justifyContent: 'center',
                                                             alignItems: 'center',

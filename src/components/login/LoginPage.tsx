@@ -1,19 +1,25 @@
-// src/pages/LoginPage.tsx (Обновленный компонент БЕЗ Redux)
+// src/pages/LoginPage.tsx
 
 import {Link, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import {Container, Form} from "react-bootstrap";
-
 import {showErrorToast, showSuccessToast} from "@/utility/toast";
 import axios from "axios";
 
-// 💡 ИМПОРТИРУЕМ НОВЫЙ ХУК useAuth
-import {useAuth} from "@/context/AuthContext"; // Предполагая, что он находится по этому пути
+// --- i18next ИМПОРТЫ ---
+import { useTranslation, Trans } from "react-i18next";
+// -----------------------
+
+// 💡 ИМПОРТ ХУКА useAuth
+import {useAuth} from "@/context/AuthContext";
 
 const LOGIN_API_URL = "https://admin.beauty-point.uz/api/login";
 
 const LoginPage = () => {
+    // Инициализируем t
+    const { t } = useTranslation("login");
+
     const [loginField, setLoginField] = useState("");
     const [password, setPassword] = useState("");
     const [validated, setValidated] = useState(false);
@@ -21,10 +27,8 @@ const LoginPage = () => {
 
     const navigate = useNavigate();
 
-    // 💡 ЗАМЕНА Redux Hooks: используем хук useAuth
-    const {isAuthenticated, login} = useAuth(); // Получаем isAuthenticated и функцию login из контекста
+    const {isAuthenticated, login} = useAuth();
 
-    // Эффект остается для перенаправления
     useEffect(() => {
         if (isAuthenticated) {
             navigate("/");
@@ -34,14 +38,12 @@ const LoginPage = () => {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // --- Логика валидации Form, если нужно
         const form = e.currentTarget as HTMLFormElement;
         if (form.checkValidity() === false) {
             e.stopPropagation();
             setValidated(true);
             return;
         }
-        // ---
 
         setLoading(true);
 
@@ -51,12 +53,12 @@ const LoginPage = () => {
                 password: password,
             });
 
-            // Извлекаем "user" и "token" из "response.data.data"
             const {user, token} = response.data.data;
 
             login(token, user);
 
-            showSuccessToast("Login Successful!");
+            // 📢 Локализация Toast
+            showSuccessToast(t("toast_login_success"));
             navigate("/");
 
         } catch (error) {
@@ -64,9 +66,13 @@ const LoginPage = () => {
 
             const errorResponse = axios.isAxiosError(error) && error.response;
             const apiErrorMessage = errorResponse?.data?.data?.message || errorResponse?.data?.message;
-            const errorMessage = apiErrorMessage || "An unexpected error occurred. Please try again.";
 
-            showErrorToast(errorMessage);
+            // 📢 Локализация сообщения об ошибке
+            const genericError = t("toast_login_failed_generic");
+            const errorMessage = apiErrorMessage || t("toast_login_failed_unexpected");
+
+            // Отображаем сообщение об ошибке, используя локализованный текст
+            showErrorToast(`${genericError}: ${errorMessage}`);
 
         } finally {
             setLoading(false);
@@ -75,14 +81,19 @@ const LoginPage = () => {
 
     return (
         <>
-            <Breadcrumb title={"Login Page"}/>
+            {/* 📢 Локализация Breadcrumb */}
+            <Breadcrumb title={t("login_page_title")}/>
             <section className="gi-login padding-tb-40">
                 <Container>
                     <div className="section-title-2">
                         <h2 className="gi-title">
-                            Login<span></span>
+                            {/* 📢 Локализация заголовка */}
+                            <Trans i18nKey="login_heading">
+                                {t("login_page_title")} <span></span>
+                            </Trans>
                         </h2>
-                        <p>Get access to your Orders, Wishlist and Recommendations.</p>
+                        {/* 📢 Локализация подзаголовка */}
+                        <p>{t("login_subtitle")}</p>
                     </div>
                     <div className="gi-login-content">
                         <div className="gi-login-box">
@@ -97,18 +108,21 @@ const LoginPage = () => {
                                             method="post"
                                         >
                       <span className="gi-login-wrap">
-                          <label>Phone Number / Login*</label>
+                          {/* 📢 Локализация метки */}
+                          <label>{t("label_login_field")}</label>
                         <Form.Group>
                           <Form.Control
                               type="text"
                               name="login"
                               value={loginField}
                               onChange={(e) => setLoginField(e.target.value)}
-                              placeholder="Enter your phone number..."
+                              // 📢 Локализация плейсхолдера
+                              placeholder={t("placeholder_login_field")}
                               required
                           />
                           <Form.Control.Feedback type="invalid">
-                            Please Enter your login/phone number.
+                            {/* 📢 Локализация валидации */}
+                              {t("validation_login_field")}
                           </Form.Control.Feedback>
                         </Form.Group>
                       </span>
@@ -117,7 +131,8 @@ const LoginPage = () => {
                                                 style={{marginTop: "24px"}}
                                                 className="gi-login-wrap"
                                             >
-                        <label>Password*</label>
+                        {/* 📢 Локализация метки */}
+                                                <label>{t("label_password")}</label>
                         <Form.Group>
                           <Form.Control
                               type="password"
@@ -125,24 +140,30 @@ const LoginPage = () => {
                               min={6}
                               value={password}
                               onChange={(e) => setPassword(e.target.value)}
-                              placeholder="Enter your password"
+                              // 📢 Локализация плейсхолдера
+                              placeholder={t("placeholder_password")}
                               required
                           />
                           <Form.Control.Feedback type="invalid">
-                            Password must be at least 6 characters
+                            {/* 📢 Локализация валидации */}
+                              {t("validation_password_length")}
                           </Form.Control.Feedback>
                         </Form.Group>
                       </span>
 
                                             <span className="gi-login-wrap gi-login-fp">
                         <label>
-                          <Link to="/forgot-password">Forgot Password?</Link>
+                          <Link to="/forgot-password">
+                            {/* 📢 Локализация ссылки */}
+                              {t("link_forgot_password")}
+                          </Link>
                         </label>
                       </span>
                                             <span className="gi-login-wrap gi-login-btn">
                         <span>
                           <Link to="/register" className="">
-                            Create Account?
+                            {/* 📢 Локализация ссылки */}
+                              {t("link_create_account")}
                           </Link>
                         </span>
                         <button
@@ -150,7 +171,8 @@ const LoginPage = () => {
                             type="submit"
                             disabled={loading}
                         >
-                          {loading ? "Logging In..." : "Login"}
+                          {/* 📢 Локализация кнопки, зависит от состояния */}
+                            {loading ? t("btn_logging_in") : t("btn_login")}
                         </button>
                       </span>
                                         </Form>

@@ -1,10 +1,18 @@
+// RegisterPage.tsx
+
 import {useRef} from "react";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import {Form} from "react-bootstrap";
 import * as formik from "formik";
 import * as yup from "yup";
 import {useNavigate, Link} from "react-router-dom";
-// 💡 ИМПОРТИРУЕМ НОВЫЙ ХУК useAuth
+
+// --- i18next ИМПОРТЫ ---
+import { useTranslation, Trans } from "react-i18next";
+// --- Предполагается, что настройка Yup локали выполняется при старте приложения ---
+
+
+// 💡 ИМПОРТИРУЕМ ХУК useAuth
 import {useAuth} from "@/context/AuthContext"; // Предполагая, что он находится по этому пути
 
 const API_URL = "https://admin.beauty-point.uz/api/register";
@@ -36,6 +44,9 @@ interface RegisterErrorResponse {
 }
 
 const RegisterPage = () => {
+    // Инициализируем t
+    const { t } = useTranslation("register");
+
     const {Formik} = formik;
     const formikRef = useRef<any>(null);
     const navigate = useNavigate();
@@ -43,26 +54,27 @@ const RegisterPage = () => {
     // 💡 ИСПОЛЬЗУЕМ useAuth ДЛЯ ПОЛУЧЕНИЯ ФУНКЦИИ LOGIN
     const {login} = useAuth(); // Получаем функцию login из контекста
 
-    // 1. Yup Validation Schema (без изменений)
+    // 1. Yup Validation Schema (большинство сообщений берется из yup-locale.ts)
     const schema = yup.object().shape({
-        first_name: yup.string().required("First name is required"),
-        last_name: yup.string().required("Last name is required"),
+        first_name: yup.string().required(),
+        last_name: yup.string().required(),
         email: yup
             .string()
-            .email("Invalid email address")
-            .required("Email is required"),
+            .email()
+            .required(),
         phone_number: yup
             .string()
-            .matches(/^[\d\s()+-]{5,20}$/, "Invalid phone number format")
-            .required("Phone number is required"),
+            .matches(/^[\d\s()+-]{5,20}$/)
+            .required(),
         password: yup
             .string()
-            .min(6, "Password must be at least 6 characters")
-            .required("Password is required"),
+            .min(6)
+            .required(),
         confirmPassword: yup
             .string()
-            .required("Confirm password is required")
-            .oneOf([yup.ref("password")], "Passwords must match"),
+            .required()
+            // oneOf переводим вручную, используя ключ из JSON
+            .oneOf([yup.ref("password")], t("yup_passwords_match")),
     });
 
     // 2. Начальные значения (без изменений)
@@ -75,7 +87,7 @@ const RegisterPage = () => {
         confirmPassword: "",
     };
 
-    // 3. Обновленная функция отправки (теперь использует login из Context)
+    // 3. Обновленная функция отправки (переводим alert-сообщения)
     const registerUser = async (values: typeof initialValues) => {
         const payload = {
             first_name: values.first_name,
@@ -99,32 +111,30 @@ const RegisterPage = () => {
 
             if (response.ok && data.status) {
                 // --- ЛОГИКА УСПЕШНОЙ РЕГИСТРАЦИИ ---
-                const {user, token, message} = (data as RegisterSuccessResponse).data;
+                const {user, token} = (data as RegisterSuccessResponse).data;
 
-                console.log("Registration successful:", message);
+                // console.log("Registration successful:", message);
 
                 login(token, user);
-
-                // 3. Перенаправление
                 navigate("/");
-                // --------------------------------------
+
 
             } else {
-                // --- ОБРАБОТКА ОШИБОК API ---
                 const errorData = data as RegisterErrorResponse;
-                const errorMessage = errorData.data.message || "Registration failed. Please check the form.";
+                const errorMessage = errorData.data.message || t("error_register_failed_generic");
 
                 console.error("Registration failed:", errorData);
-                alert(`Registration Error: ${errorMessage}`);
+                alert(`${t("error_register_failed_generic")}: ${errorMessage}`);
 
                 if (errorData.data.errors) {
                     console.error("Validation Errors:", errorData.data.errors);
                 }
-                // -----------------------------
+
             }
         } catch (error) {
             console.error("Network or submission error:", error);
-            alert("A network error occurred. Please try again.");
+            // Используем переведенное сообщение
+            alert(t("error_network"));
         }
     };
 
@@ -134,14 +144,19 @@ const RegisterPage = () => {
 
     return (
         <>
-            <Breadcrumb title={"Register Page"}/>
+            {/* Предполагается, что Breadcrumb принимает переведенный заголовок */}
+            <Breadcrumb title={t("register_page_title")}/>
             <section className="gi-register padding-tb-40">
                 <div className="container">
                     <div className="section-title-2">
                         <h2 className="gi-title">
-                            Register<span></span>
+                            {/* Перевод заголовка с Trans */}
+                            <Trans i18nKey="register_page_title">
+                                {t("register_page_title")}
+                            </Trans>
                         </h2>
-                        <p>Best place to buy and sell digital products.</p>
+                        {/* Перевод подзаголовка */}
+                        <p>{t("register_page_subtitle")}</p>
                     </div>
                     <div className="row">
                         <div className="gi-register-wrapper">
@@ -163,12 +178,12 @@ const RegisterPage = () => {
                                                 <Form noValidate onSubmit={handleSubmit}>
                                                     {/* First Name */}
                                                     <span className="gi-register-wrap gi-register-half">
-                                                        <label htmlFor="first_name">First Name*</label>
+                                                        <label htmlFor="first_name">{t("label_first_name")}</label>
                                                         <Form.Group>
                                                           <Form.Control
                                                               type="text"
                                                               name="first_name"
-                                                              placeholder="Enter your first name"
+                                                              placeholder={t("placeholder_first_name")}
                                                               value={values.first_name}
                                                               onChange={handleChange}
                                                               isInvalid={!!errors.first_name}
@@ -184,12 +199,12 @@ const RegisterPage = () => {
                                                   </span>
                                                     {/* Last Name */}
                                                     <span className="gi-register-wrap gi-register-half">
-                                                        <label>Last Name*</label>
+                                                        <label>{t("label_last_name")}</label>
                                                         <Form.Group>
                                                           <Form.Control
                                                               type="text"
                                                               name="last_name"
-                                                              placeholder="Enter your last name"
+                                                              placeholder={t("placeholder_last_name")}
                                                               required
                                                               value={values.last_name}
                                                               onChange={handleChange}
@@ -208,12 +223,12 @@ const RegisterPage = () => {
                                                         style={{marginTop: "10px"}}
                                                         className="gi-register-wrap gi-register-half"
                                                     >
-                                                        <label>Email*</label>
+                                                        <label>{t("label_email")}</label>
                                                         <Form.Group>
                                                           <Form.Control
                                                               type="email"
                                                               name="email"
-                                                              placeholder="Enter your email add..."
+                                                              placeholder={t("placeholder_email")}
                                                               required
                                                               value={values.email}
                                                               onChange={handleChange}
@@ -232,12 +247,12 @@ const RegisterPage = () => {
                                                         style={{marginTop: "10px"}}
                                                         className="gi-register-wrap gi-register-half"
                                                     >
-                                                        <label>Phone Number*</label>
+                                                        <label>{t("label_phone_number")}</label>
                                                         <Form.Group>
                                                           <Form.Control
                                                               type="text"
                                                               name="phone_number"
-                                                              placeholder="Enter your phone number"
+                                                              placeholder={t("placeholder_phone_number")}
                                                               required
                                                               value={values.phone_number}
                                                               onChange={handleChange}
@@ -256,12 +271,12 @@ const RegisterPage = () => {
                                                         style={{marginTop: "10px"}}
                                                         className="gi-register-wrap gi-register-half"
                                                     >
-                                                        <label>Password*</label>
+                                                        <label>{t("label_password")}</label>
                                                         <Form.Group>
                                                           <Form.Control
                                                               type="password"
                                                               name="password"
-                                                              placeholder="Enter your password"
+                                                              placeholder={t("placeholder_password")}
                                                               required
                                                               value={values.password}
                                                               onChange={handleChange}
@@ -280,12 +295,12 @@ const RegisterPage = () => {
                                                         style={{marginTop: "10px"}}
                                                         className="gi-register-wrap gi-register-half"
                                                     >
-                                                        <label>Confirm Password*</label>
+                                                        <label>{t("label_confirm_password")}</label>
                                                         <Form.Group>
                                                           <Form.Control
                                                               type="password"
                                                               name="confirmPassword"
-                                                              placeholder="Enter your Conform password"
+                                                              placeholder={t("placeholder_confirm_password")}
                                                               required
                                                               value={values.confirmPassword}
                                                               onChange={handleChange}
@@ -322,11 +337,11 @@ const RegisterPage = () => {
                                                         className="gi-register-wrap gi-register-btn"
                                                     >
                                                         <span>
-                                                          Already have an account?
-                                                          <Link to="/login">Login</Link>
+                                                          {t("already_have_account")}
+                                                            <Link to="/login">{t("link_login")}</Link>
                                                         </span>
                                                         <button className="gi-btn-1" type="submit">
-                                                          Register
+                                                          {t("register_btn")}
                                                         </button>
                                                   </span>
                                                 </Form>

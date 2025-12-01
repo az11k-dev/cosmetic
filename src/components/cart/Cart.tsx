@@ -13,8 +13,8 @@ import {City, Country, Item, State} from "@/types/data.types";
 import { useCountries } from "@/hooks/useCountries";
 import { useStates } from "@/hooks/useStates";
 import { useCities } from "@/hooks/useCities";
-
 import { useTranslation } from "react-i18next";
+import {useCart} from "@/context/CartContext.tsx";
 // ✅ i18next import qilindi
 interface CartItem extends Item {
     quantity: number;
@@ -42,7 +42,7 @@ const Cart = () => {
         // Mahsulot narxining miqdorga ko'paytmasi summasi
         const subtotal = cartItems.reduce(
             // item.newPrice birlik narxi deb hisoblaymiz
-            (acc, item) => acc + item.price * item.quantity,
+            (acc, item) => acc + item?.price  * item?.quantity ,
             0
         );
         setSubTotal(subtotal);
@@ -115,19 +115,7 @@ const Cart = () => {
 
 
 
-    const { data, error } = useSelector((state: RootState) => state.deal);
 
-    if (error) return <div>Failed to load products</div>;
-    if (!data)
-        return (
-            <div>
-                <Spinner />
-            </div>
-        );
-
-    const getData = () => {
-        return data;
-    };
 
 
     return (
@@ -150,169 +138,6 @@ const Cart = () => {
                         </div>
                     ) : (
                         <div className="row">
-                            {/* */}
-                          {/*  <div className="gi-cart-rightside col-lg-4 col-md-12">*/}
-                          {/*      <div className="gi-sidebar-wrap">*/}
-                          {/*          /!* *!/*/}
-                          {/*          <div className="gi-sidebar-block">*/}
-                          {/*              <div className="gi-sb-title">*/}
-                          {/*                  <h3 className="gi-sidebar-title">{t('sidebar.summaryTitle')}</h3>*/}
-                          {/*              </div>*/}
-                          {/*              <div className="gi-sb-block-content">*/}
-                          {/*                  <h4 className="gi-ship-title">{t('sidebar.shippingTitle')}</h4>*/}
-                          {/*                  <div className="gi-cart-form">*/}
-                          {/*                      <p>{t('sidebar.shippingEstimateHint')}</p>*/}
-                          {/*                      <form action="#" method="post">*/}
-                          {/*<span className="gi-cart-wrap">*/}
-                          {/*  <label>{t('sidebar.countryLabel')}</label>*/}
-                          {/*  <span className="gi-cart-select-inner">*/}
-                          {/*    <select*/}
-                          {/*        name="country"*/}
-                          {/*        id="gi-cart-select-country"*/}
-                          {/*        className="gi-cart-select"*/}
-                          {/*        value={formData.country} // defaultValue o'rniga value*/}
-                          {/*        aria-label={t('sidebar.countryPlaceholder')}*/}
-                          {/*        onChange={handleInputChange}*/}
-                          {/*    >*/}
-                          {/*      <option value="" disabled>*/}
-                          {/*        {t('sidebar.countryPlaceholder')}*/}
-                          {/*      </option>*/}
-                          {/*        {filteredCountryData.map(*/}
-                          {/*            (country: Country, index: number) => (*/}
-                          {/*                <option key={index} value={country.iso2}>*/}
-                          {/*                    {country.name}*/}
-                          {/*                </option>*/}
-                          {/*            )*/}
-                          {/*        )}*/}
-                          {/*    </select>*/}
-                          {/*  </span>*/}
-                          {/*</span>*/}
-                          {/*                          <span className="gi-cart-wrap">*/}
-                          {/*  <label>{t('sidebar.stateLabel')}</label>*/}
-                          {/*  <span className="gi-cart-select-inner">*/}
-                          {/*    <select*/}
-                          {/*        name="state"*/}
-                          {/*        id="gi-select-state"*/}
-                          {/*        className="gi-register-select"*/}
-                          {/*        value={formData.state}*/}
-                          {/*        onChange={handleInputChange}*/}
-                          {/*        aria-label={t('sidebar.statePlaceholder')}*/}
-                          {/*        disabled={!formData.country} // Davlat tanlanmasa o'chirilgan*/}
-                          {/*    >*/}
-                          {/*      <option value="" disabled>*/}
-                          {/*        {t('sidebar.statePlaceholder')}*/}
-                          {/*      </option>*/}
-                          {/*        {filteredStateData && filteredStateData.length === 0 && formData.country ? (*/}
-                          {/*            <option disabled>{t('table.loading')}</option>*/}
-                          {/*        ) : (*/}
-                          {/*            filteredStateData.map((state: State, index) => (*/}
-                          {/*                <option*/}
-                          {/*                    key={index}*/}
-                          {/*                    value={state.state_code}*/}
-                          {/*                >*/}
-                          {/*                    {state.name}*/}
-                          {/*                </option>*/}
-                          {/*            ))*/}
-                          {/*        )}*/}
-                          {/*    </select>*/}
-                          {/*  </span>*/}
-                          {/*</span>*/}
-                          {/*                          <span className="gi-cart-wrap">*/}
-                          {/*  <label>{t('sidebar.cityLabel')}</label>*/}
-                          {/*  <span className="gi-cart-select-inner">*/}
-                          {/*    <select*/}
-                          {/*        name="city"*/}
-                          {/*        id="gi-select-city"*/}
-                          {/*        className="gi-register-select"*/}
-                          {/*        value={formData.city}*/}
-                          {/*        onChange={handleInputChange}*/}
-                          {/*        aria-label={t('sidebar.cityPlaceholder')}*/}
-                          {/*        disabled={!formData.state} // Viloyat tanlanmasa o'chirilgan*/}
-                          {/*    >*/}
-                          {/*      <option value="" disabled>*/}
-                          {/*        {t('sidebar.cityPlaceholder')}*/}
-                          {/*      </option>*/}
-                          {/*        {filteredCityData && filteredCityData.length === 0 && formData.state ? (*/}
-                          {/*            <option disabled>{t('table.loading')}</option>*/}
-                          {/*        ) : (*/}
-                          {/*            filteredCityData.map((city: City, index) => (*/}
-                          {/*                <option*/}
-                          {/*                    key={index}*/}
-                          {/*                    value={city.iso2}*/}
-                          {/*                >*/}
-                          {/*                    {city.name}*/}
-                          {/*                </option>*/}
-                          {/*            ))*/}
-                          {/*        )}*/}
-                          {/*    </select>*/}
-                          {/*  </span>*/}
-                          {/*</span>*/}
-                          {/*                          <span className="gi-cart-wrap">*/}
-                          {/*  <label>{t('sidebar.zipLabel')}</label>*/}
-                          {/*  <input*/}
-                          {/*      type="text"*/}
-                          {/*      name="postalcode"*/}
-                          {/*      placeholder={t('sidebar.zipPlaceholder')}*/}
-                          {/*  />*/}
-                          {/*</span>*/}
-                          {/*                      </form>*/}
-                          {/*                  </div>*/}
-                          {/*              </div>*/}
-                          
-                          {/*              <div className="gi-sb-block-content">*/}
-                          {/*                  <div className="gi-cart-summary-bottom">*/}
-                          {/*                      <div className="gi-cart-summary">*/}
-                          {/*                          <div>*/}
-                          {/*                              <span className="text-left">{t('sidebar.subTotal')}</span>*/}
-                          {/*                              <span className="text-right">*/}
-                          {/*    ${subTotal.toFixed(2)}*/}
-                          {/*  </span>*/}
-                          {/*                          </div>*/}
-                          {/*                          <div>*/}
-                          {/*                              <span className="text-left">{t('sidebar.deliveryCharges')}</span>*/}
-                          {/*                              <span className="text-right">*/}
-                          {/*    ${vat.toFixed(2)}*/}
-                          {/*  </span>*/}
-                          {/*                          </div>*/}
-                          {/*                          <DiscountCoupon*/}
-                          {/*                              onDiscountApplied={handleDiscountApplied}*/}
-                          {/*                          />*/}
-                          {/*                          <div className="gi-cart-coupan-content">*/}
-                          {/*                              <form*/}
-                          {/*                                  className="gi-cart-coupan-form"*/}
-                          {/*                                  name="gi-cart-coupan-form"*/}
-                          {/*                                  method="post"*/}
-                          {/*                                  action="#"*/}
-                          {/*                              >*/}
-                          {/*                                  <input*/}
-                          {/*                                      className="gi-coupan"*/}
-                          {/*                                      type="text"*/}
-                          {/*                                      required*/}
-                          {/*                                      placeholder={t('sidebar.coupanPlaceholder')}*/}
-                          {/*                                      name="gi-coupan"*/}
-                          {/*                                      defaultValue=""*/}
-                          {/*                                  />*/}
-                          {/*                                  <button*/}
-                          {/*                                      className="gi-btn-2"*/}
-                          {/*                                      type="submit"*/}
-                          {/*                                      name="subscribe"*/}
-                          {/*                                  >*/}
-                          {/*                                      {t('sidebar.applyBtn')}*/}
-                          {/*                                  </button>*/}
-                          {/*                              </form>*/}
-                          {/*                          </div>*/}
-                          {/*                          <div className="gi-cart-summary-total">*/}
-                          {/*                              <span className="text-left">{t('sidebar.totalAmount')}</span>*/}
-                          {/*                              <span className="text-right">*/}
-                          {/*    ${total.toFixed(2)}*/}
-                          {/*  </span>*/}
-                          {/*                          </div>*/}
-                          {/*                      </div>*/}
-                          {/*                  </div>*/}
-                          {/*              </div>*/}
-                          {/*          </div>*/}
-                          {/*      </div>*/}
-                          {/*  </div>*/}
                             <div className="gi-cart-leftside col-lg-8 col-md-12 m-t-991">
                                 {/* */}
                                 <div className="gi-cart-content">
@@ -339,13 +164,13 @@ const Cart = () => {
                                                                     data-label={t('table.productHeader')}
                                                                     className="gi-cart-pro-name"
                                                                 >
-                                                                    <Link  to={`/product-details/${item.id}`} >
+                                                                    <Link  to={`/product-details/${item?.id}`} >
                                                                         <img
                                                                             className="gi-cart-pro-img mr-4"
-                                                                            src={item?.images[0]?.file_url}
+                                                                            src={item?.images[0]?.upload?.file_url}
                                                                             alt=""
                                                                         />
-                                                                        {item.name}
+                                                                        {item?.name}
                                                                     </Link>
                                                                 </td>
                                                                 <td
@@ -353,7 +178,7 @@ const Cart = () => {
                                                                     className="gi-cart-pro-price"
                                                                 >
                                     <span className="amount">
-                                      ${item.price}
+                                      ${item?.price}
                                     </span>
                                                                 </td>
                                                                 <td
@@ -363,7 +188,7 @@ const Cart = () => {
                                                                 >
                                                                     <div className="cart-qty-plus-minus">
                                                                         <QuantitySelector
-                                                                            quantity={item.quantity}
+                                                                            quantity={item?.quantity}
                                                                             id={item.id}
                                                                             onQuantityChange={handleQuantityChange}
                                                                         />
@@ -373,10 +198,10 @@ const Cart = () => {
                                                                     data-label={t('table.totalHeader')}
                                                                     className="gi-cart-pro-subtotal"
                                                                 >
-                                                                    ${item.price * item.quantity}
+                                                                    ${item?.price }
                                                                 </td>
                                                                 <td
-                                                                    onClick={() => handleRemoveFromCart(item.id)}
+                                                                    onClick={() => handleRemoveFromCart(item?.id)}
                                                                     data-label={t('table.actionHeader')}
                                                                     className="gi-cart-pro-remove"
                                                                 >
@@ -389,10 +214,6 @@ const Cart = () => {
                                                         </tbody>
                                                     </table>
                                                 </div>
-
-
-
-
                                                 <div className="row">
                                                     <div className="col-lg-12">
                                                         <div className="gi-cart-update-bottom">

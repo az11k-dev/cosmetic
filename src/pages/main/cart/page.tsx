@@ -4,8 +4,6 @@ const lang = localStorage.getItem("i18nextLng");
 const page = () => {
   return (
     <>
-
-
       <Breadcrumb title={lang ==="ru"?"Корзинка":"Savat"} />
       <Cart />
     </>

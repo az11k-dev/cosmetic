@@ -74,7 +74,7 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ dat
                             <Col className="single-pro-img">
                                 <div className="single-product-scroll">
                                     <div className="single-slide zoom-image-hover">
-                                        <ZoomImage  src={data?.images[0]?.upload.file_url} alt="" />
+                                        <ZoomImage  src={data?.images[0]?.upload?.file_url} alt="" />
                                     </div>
                                         <Slider
                                             slidesToShow={2}
@@ -86,13 +86,13 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ dat
                                             ref={slider1}
                                             className="single-nav-thumb"
                                         >
-                                            {data?.images.upload.map((item: any, index: number) => (
+                                            {data?.images?.map((item: any, index: number) => (
                                                 <div
                                                     key={index}
                                                     className="single-slide"
                                                     onClick={() => handleSlider2Click(index)}
                                                 >
-                                                    <img className="img-responsive" src={item.file_url} alt="" />
+                                                    <img className="img-responsive" src={item?.upload?.file_url} alt="" />
                                                 </div>
                                             ))}
                                         </Slider>
@@ -109,7 +109,6 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ dat
                                         </div>
                                         <span className="gi-read-review">|&nbsp;&nbsp;<a href="#gi-spt-nav-review">992 Ratings</a></span>
                                     </div>
-
                                     <div className="gi-single-price-stoke">
                                         <div className="gi-single-price">
                                             <div className="final-price">
@@ -119,19 +118,17 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ dat
                                             </div>
                                             <div className="mrp">
                                                 {data.price && (
-                                                    <span className="old-price ">${data.old_price.toFixed(2)}</span>
+                                                    <span className="old-price ">${data?.old_price}</span>
                                                 )}
                                             </div>
                                         </div>
                                         <div className="gi-single-stoke">
-                                            <span className="gi-single-sku"> <span>SKU:</span> {data.sku}</span>
-                                            <span className="gi-single-ps-title">IN STOCK</span>
+                                            <span className="gi-single-sku"> <span>SKU:</span> {data?.details.sku}</span>
+                                            <span className="gi-single-ps-title"> <span>SROCK:</span> {data?.details?.stock}</span>
                                         </div>
                                     </div>
                                     <div className="gi-single-desc">
-                                        Lorem Ipsum is simply dummy text of the printing and typesetting
-                                        industry. Lorem Ipsum has been the industry s standard dummy
-                                        text ever since the 1990.
+                                        {lang==="ru"? data?.details?.description?.ru:data?.details?.description?.uz}
                                     </div>
 
                                     <div className="gi-single-list">
@@ -139,33 +136,21 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({ dat
                                             <li>
                                                 <strong>Sole :</strong> Polyvinyl Chloride
                                             </li>
-                                            <li>
-                                                <strong>Width :</strong> {(data.weight)}
-                                            </li>
+
                                             <li>
                                                 <strong>Outer Material :</strong> A-Grade Standard Quality
                                             </li>
                                             <li>
-                                                <strong>Closure:</strong> {lang === "ru"?data?.category?.name.ru:data?.category?.name.uz}
+                                                <strong>Category:</strong> {lang === "ru"?data?.category?.name.ru:data?.category?.name.uz}
                                             </li>
                                         </ul>
                                     </div>
                                     <div className="gi-pro-variation">
                                         <div className="gi-pro-variation-inner gi-pro-variation-size">
                                             <span>Weight</span>
-                                            <div className="gi-pro-variation">
-                                                <div className="gi-pro-variation-inner gi-pro-variation-size gi-pro-size">
                                                     <div className="gi-pro-variation-content">
-                                                        <SizeOptions
-                                                            categories={[
-                                                                "vegetables",
-                                                            ]}
-                                                            // subCategory={data.category}
-                                                        />
-
+                                                        {data?.details?.weight}
                                                     </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div className="gi-single-qty">

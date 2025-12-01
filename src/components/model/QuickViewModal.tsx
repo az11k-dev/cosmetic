@@ -85,8 +85,7 @@ const QuickViewModal: React.FC<SingleProductContentPageProps> = ({ show, handleC
                                         </div>
 
                                         <div className="gi-quickview-desc">
-                                            {/* 💡 Mahsulot tavsifini tarjima qilish */}
-                                            {t("fullDescription")}
+                                            {lang==="ru"? data?.details?.description?.ru:data?.details?.description?.uz}
                                         </div>
 
                                         <div className="gi-quickview-price">
@@ -94,21 +93,13 @@ const QuickViewModal: React.FC<SingleProductContentPageProps> = ({ show, handleC
                                             <span className="old-price">${data?.old_price}</span>
                                         </div>
 
-                                        <div className="gi-pro-variation">
-                                            <div className="gi-pro-variation-inner gi-pro-variation-size gi-pro-size">
-                                                <div className="gi-pro-variation-content">
-                                                    <SizeOptions
-                                                        categories={[
-                                                            "clothes",
-                                                            "footwear",
-                                                            "vegetables",
-                                                            "accessorise",
-                                                        ]}
-                                                        subCategory={data.category}
-                                                    />
-                                                </div>
+                                            <div className="gi-single-list">
+                                                <ul>
+                                                    <li>
+                                                        <strong>Weight :</strong>  {data?.details?.weight}
+                                                    </li>
+                                                </ul>
                                             </div>
-                                        </div>
                                         <div className="gi-quickview-qty">
                                             <div className="qty-plus-minus gi-qty-rtl">
                                                 <QuantitySelector

@@ -124,27 +124,27 @@ const Wishlist = () => {
                                                             <img
                                                                 className="prod-img"
                                                                 // data.image o'rniga to'g'ri rasm manbasini ko'rsating, masalan data.images[0].file_url
-                                                                src={data.images && data.images.length > 0 ? data.images[0].file_url : ''}
+                                                                src={data?.images && data?.images?.length > 0 ? data?.images[0]?.upload?.file_url : ''}
                                                                 alt="product image"
                                                             />
                                                         </td>
                                                         <td>
-                                                            <span>{data.name}</span> {/* data.title o'rniga data.name ishlatiladi */}
+                                                            <span>{data?.name}</span> {/* data.title o'rniga data.name ishlatiladi */}
                                                         </td>
                                                         <td>
                                                             <span>{currentDate}</span>
                                                         </td>
                                                         <td>
-                                                            <span>${data.price}</span>
+                                                            <span>${data?.price}</span>
                                                         </td>
                                                         <td>
                                                             <span
                                                                 className={
-                                                                    data.status === "Available" ? "avl" : "out"
+                                                                    data?.status === "Available" ? "avl" : "out"
                                                                 }
                                                             >
                                                                 {/* Переводим статус */}
-                                                                {data.status === "Available"
+                                                                {data?.status === "Available"
                                                                     ? t("status_available")
                                                                     : t("status_out_of_stock")
                                                                 }
@@ -161,7 +161,7 @@ const Wishlist = () => {
                                                                 </a>
                                                                 <a
                                                                     onClick={() =>
-                                                                        handleRemoveFromwishlist(data.id)
+                                                                        handleRemoveFromwishlist(data?.id)
                                                                     }
                                                                     className="gi-btn-1 gi-remove-wish btn"
                                                                     title={t("action_remove_from_list")}
@@ -244,10 +244,10 @@ const Wishlist = () => {
                                         }}
                                         className="deal-slick-carousel gi-product-slider"
                                     >
-                                        {getData().map((item: Item, index: number) => (
-                                            <SwiperSlide key={index}>
-                                                <ItemCard data={item} />
-                                            </SwiperSlide>
+                                        {data?.map((item: any, index: number) => (
+                                            <div key={index}>
+                                                <ItemCard data={item}   />
+                                            </div>
                                         ))}
                                     </Swiper>
                                 </Fade>

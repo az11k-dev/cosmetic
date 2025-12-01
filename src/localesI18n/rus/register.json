@@ -1,0 +1,31 @@
+{
+  "register_page_title": "Регистрация",
+  "register_page_subtitle": "Лучшее место для покупки и продажи цифровых продуктов.",
+  "register_btn": "Зарегистрироваться",
+  "already_have_account": "Уже есть аккаунт?",
+  "link_login": "Войти",
+
+  "label_first_name": "Имя*",
+  "label_last_name": "Фамилия*",
+  "label_email": "Email*",
+  "label_phone_number": "Номер телефона*",
+  "label_password": "Пароль*",
+  "label_confirm_password": "Подтвердите пароль*",
+
+  "placeholder_first_name": "Введите ваше имя",
+  "placeholder_last_name": "Введите вашу фамилию",
+  "placeholder_email": "Введите ваш email...",
+  "placeholder_phone_number": "Введите ваш номер телефона",
+  "placeholder_password": "Введите ваш пароль",
+  "placeholder_confirm_password": "Введите ваш пароль повторно",
+
+  "error_register_failed_generic": "Ошибка регистрации. Пожалуйста, проверьте форму.",
+  "error_network": "Произошла сетевая ошибка. Пожалуйста, попробуйте еще раз.",
+
+
+  "yup_required": "Это поле обязательно для заполнения",
+  "yup_invalid_email": "Неверный адрес электронной почты",
+  "yup_min_password": "Пароль должен содержать не менее {{min}} символов",
+  "yup_passwords_match": "Пароли должны совпадать",
+  "yup_invalid_phone": "Неверный формат номера телефона"
+}

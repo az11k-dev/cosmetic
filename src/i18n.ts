@@ -51,6 +51,14 @@ import factUz from "./localesI18n/uzb/fact.json"
 import factRu from "./localesI18n/rus/fact.json"
 import wishlistUz from "./localesI18n/uzb/wishlist.json"
 import wishlistRu from "./localesI18n/rus/wishlist.json"
+import registerUz from "./localesI18n/uzb/register.json"
+import registerRu from "./localesI18n/rus/register.json"
+import checkOutUz from "./localesI18n/uzb/checkOut.json"
+import checkOutRu from "./localesI18n/rus/checkOut.json"
+import loginUz from "./localesI18n/uzb/login.json"
+import loginRu from "./localesI18n/rus/login.json"
+import newsletterUz from "./localesI18n/uzb/newsletter.json"
+import newsletterRu from "./localesI18n/rus/newsletter.json"
 
 i18n
     .use(LanguageDetector)
@@ -82,7 +90,11 @@ i18n
                 contacts: contactsUz,
                 about:aboutUz,
                 facts:factUz,
-                wishlist:wishlistUz
+                wishlist:wishlistUz,
+                register:registerUz,
+                checkOut:checkOutUz,
+                login:loginUz,
+                newsletter:newsletterUz
             },
             ru: {
                 headerOne: headerOneRuData,
@@ -109,14 +121,18 @@ i18n
                 contacts: contactsRu,
                 about:aboutRu,
                 facts:factRu,
-                wishlist:wishlistRu
+                wishlist:wishlistRu,
+                register:registerRu,
+                checkOut:checkOutRu,
+                login:loginRu,
+                newsletter:newsletterRu
             },
         },
 
         fallbackLng: "uz",
 
 
-        ns: ["headerOne", "headerTwo", "headerManu", "footer", "heroSlider", "common", "categoryNames", "deal1", "productCard", "itemNames", "banner", "newArrivals", "offerBanners", "services", "trackOrder", "sidebarCart", "treding", "tredingAll", "faqAll", "cartAll", "manuMobile", "contacts","about","facts","wishlist"],
+        ns: ["headerOne", "headerTwo", "headerManu", "footer", "heroSlider", "common", "categoryNames", "deal1", "productCard", "itemNames", "banner", "newArrivals", "offerBanners", "services", "trackOrder", "sidebarCart", "treding", "tredingAll", "faqAll", "cartAll", "manuMobile", "contacts","about","facts","wishlist","register","checkOut","login","newsletter"],
         defaultNS: "headerOne",
 
 

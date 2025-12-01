@@ -1,0 +1,27 @@
+{
+  "login_page_title": "Страница Входа",
+  "login_heading": "Вход",
+  "login_subtitle": "Получите доступ к вашим Заказам, Списку желаний и Рекомендациям.",
+  "label_login_field": "Номер телефона / Логин*",
+  "placeholder_login_field": "Введите ваш номер телефона или логин...",
+  "validation_login_field": "Пожалуйста, введите ваш логин или номер телефона.",
+  "label_password": "Пароль*",
+  "placeholder_password": "Введите ваш пароль",
+  "validation_password_length": "Пароль должен содержать не менее 6 символов.",
+  "link_forgot_password": "Забыли пароль?",
+  "link_create_account": "Создать Аккаунт?",
+  "btn_login": "Войти",
+  "btn_logging_in": "Вход...",
+  "toast_login_success": "Успешный вход!",
+  "toast_login_failed_generic": "Произошла ошибка при входе. Попробуйте снова.",
+  "toast_login_failed_unexpected": "Произошла непредвиденная ошибка. Попробуйте снова.",
+  "forgot_page_title": "Восстановление Пароля",
+  "forgot_heading": "Забыли Пароль",
+  "forgot_subtitle": "Введите ваш email, чтобы получить ссылку для сброса пароля.",
+  "label_email_address": "Email Адрес*",
+  "placeholder_email": "Введите ваш email...",
+  "btn_forgot_submit": "Отправить",
+  "yup_email_invalid": "Неверный формат email адреса",
+  "yup_email_required": "Email обязателен для заполнения"
+
+}
