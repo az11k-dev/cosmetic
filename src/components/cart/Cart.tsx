@@ -1,27 +1,21 @@
-import { useEffect, useState, useCallback} from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import ItemCard from "../product-item/ItemCard";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { removeItem } from "../../store/reducers/cartSlice";
-import { Fade } from "react-awesome-reveal";
-import Spinner from "../button/Spinner";
-import DiscountCoupon from "../discount-coupon/DiscountCoupon";
+import {useEffect, useState, useCallback} from "react";
 import QuantitySelector from "../quantity-selector/QuantitySelector";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import {City, Country, Item, State} from "@/types/data.types";
-import { useCountries } from "@/hooks/useCountries";
-import { useStates } from "@/hooks/useStates";
-import { useCities } from "@/hooks/useCities";
-import { useTranslation } from "react-i18next";
+import {useCountries} from "@/hooks/useCountries";
+import {useStates} from "@/hooks/useStates";
+import {useCities} from "@/hooks/useCities";
+import {useTranslation} from "react-i18next";
 import {useCart} from "@/context/CartContext.tsx";
+
 // ✅ i18next import qilindi
 interface CartItem extends Item {
     quantity: number;
 }
+
 // const API_URL = "https://admin.beauty-point.uz/api/products";
 const Cart = () => {
-    const { t, } = useTranslation('cartAll');
+    const {t,} = useTranslation('cartAll');
     const [subTotal, setSubTotal] = useState(0);
     const [vat, setVat] = useState(0);
     // const [data, setData] = useState([]);
@@ -49,7 +43,7 @@ const Cart = () => {
     const {
         cartItems,
         removeItemFromCart,
-        updateItemQuantity ,
+        updateItemQuantity,
     } = useCart();
     useEffect(() => {
         if (cartItems.length === 0) {
@@ -58,7 +52,7 @@ const Cart = () => {
             return;
         }
         const subtotal = cartItems.reduce(
-            (acc, item) => acc + item?.price  * item?.quantity ,
+            (acc, item) => acc + item?.price * item?.quantity,
             0
         );
         setSubTotal(subtotal);
@@ -85,27 +79,25 @@ const Cart = () => {
         city: ""
     });
     const filteredCountryData: Country[] = useCountries();
-    const filteredStateData: State[]  = useStates(formData?.country || "") || [];
+    const filteredStateData: State[] = useStates(formData?.country || "") || [];
     const filteredCityData: City[] = useCities(formData?.state || "") || [];
     const handleInputChange = async (e: any) => {
-        const { name, value } = e.target;
-        console.log("{ name, value }", { name, value })
+        const {name, value} = e.target;
+        console.log("{ name, value }", {name, value})
         if (name === 'country') {
             setFormData({
                 country: value,
                 state: "",
                 city: ""
             });
-        }
-        else if (name === 'state') {
+        } else if (name === 'state') {
             setFormData(prev => ({
                 ...prev,
                 state: value,
                 city: ""
             }));
-        }
-        else {
-            setFormData(prev => ({ ...prev, [name]: value }));
+        } else {
+            setFormData(prev => ({...prev, [name]: value}));
         }
     }
 
@@ -141,7 +133,7 @@ const Cart = () => {
                                                         <tr>
                                                             <th>{t('table.productHeader')}</th>
                                                             <th>{t('table.priceHeader')}</th>
-                                                            <th style={{ textAlign: "center" }}>
+                                                            <th style={{textAlign: "center"}}>
                                                                 {t('table.quantityHeader')}
                                                             </th>
                                                             <th>{t('table.totalHeader')}</th>
@@ -155,13 +147,13 @@ const Cart = () => {
                                                                     data-label={t('table.productHeader')}
                                                                     className="gi-cart-pro-name"
                                                                 >
-                                                                    <Link  to={`/product-details/${item?.id}`} >
+                                                                    <Link to={`/product-details/${item?.id}`}>
                                                                         <img
                                                                             className="gi-cart-pro-img mr-4"
                                                                             src={item?.images[0]?.upload?.file_url}
                                                                             alt=""
                                                                         />
-                                                                        {item?.name}
+                                                                        {item?.name?.uz}
                                                                     </Link>
                                                                 </td>
                                                                 <td
@@ -175,7 +167,7 @@ const Cart = () => {
                                                                 <td
                                                                     data-label={t('table.quantityHeader')}
                                                                     className="gi-cart-pro-qty"
-                                                                    style={{ textAlign: "center" }}
+                                                                    style={{textAlign: "center"}}
                                                                 >
                                                                     <div className="cart-qty-plus-minus">
                                                                         <QuantitySelector
@@ -189,7 +181,7 @@ const Cart = () => {
                                                                     data-label={t('table.totalHeader')}
                                                                     className="gi-cart-pro-subtotal"
                                                                 >
-                                                                    ${item?.price }
+                                                                    ${item?.price}
                                                                 </td>
                                                                 <td
                                                                     onClick={() => handleRemoveFromCart(item?.id)}

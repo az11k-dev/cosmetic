@@ -129,7 +129,7 @@ const Wishlist = () => {
                                                             />
                                                         </td>
                                                         <td>
-                                                            <span>{data?.name}</span> {/* data.title o'rniga data.name ishlatiladi */}
+                                                            <span>{data?.name?.uz}</span> {/* data.title o'rniga data.name ishlatiladi */}
                                                         </td>
                                                         <td>
                                                             <span>{currentDate}</span>
@@ -188,23 +188,20 @@ const Wishlist = () => {
                 <div className="container">
                     <Row className="overflow-hidden m-b-minus-24px">
                         <Col lg={12} className="gi-new-prod-section">
+
+
                             <div className="gi-products">
-                                <Fade
+                                <div
                                     triggerOnce
                                     direction="up"
                                     duration={2000}
                                     delay={200}
-                                    className="section-title-2"
-                                >
+                                    className="section-title-2">
                                     <h2 className="gi-title">
-                                        {/* Перевод заголовка New Arrivals */}
-                                        <Trans i18nKey="new_arrivals_title">
                                             {t("new_arrivals_title")} <span>{t("new_arrivals_title2")}</span>
-                                        </Trans>
                                     </h2>
-                                    {/* Перевод подзаголовка New Arrivals */}
                                     <p>{t("new_arrivals_subtitle")}</p>
-                                </Fade>
+                                </div>
                                 <Fade
                                     triggerOnce
                                     direction="up"
@@ -242,11 +239,10 @@ const Wishlist = () => {
                                                 slidesPerView: 5,
                                             },
                                         }}
-                                        className="deal-slick-carousel gi-product-slider"
-                                    >
+                                        className="deal-slick-carousel gi-product-slider">
                                         {data?.map((item: any, index: number) => (
                                             <div key={index}>
-                                                <ItemCard data={item}   />
+                                                <ItemCard data={item}/>
                                             </div>
                                         ))}
                                     </Swiper>
