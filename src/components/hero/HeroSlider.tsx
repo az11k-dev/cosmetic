@@ -4,6 +4,8 @@ import {Pagination, Autoplay} from "swiper/modules";
 import "swiper/css";
 import {useTranslation} from "react-i18next";
 
+const lang = localStorage.getItem("i18nextLng");
+
 function HeroSlider() {
     const {i18n} = useTranslation("heroSlider");
     const [slides, setSlides] = useState([]);
@@ -81,7 +83,7 @@ function HeroSlider() {
                                             <div className="gi-slide-content slider-animation">
                                                 <p>
                                                     {/* Вывод скидки */}
-                                                    {slide.discounts}% - chegirma
+                                                    {slide.discounts}% - {lang === "ru" ? "скидка" : "chegirma"}
                                                 </p>
                                                 <h1 className="gi-slide-title">
                                                     {/* Вывод заголовка на текущем языке */}
