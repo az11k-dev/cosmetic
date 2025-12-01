@@ -1,7 +1,7 @@
 {
   "newsletter_title": "Axborotnomaga obuna bo'lish",
-  "newsletter_subtitle": "Yangilanishlardan xabardor bo'lish uchun Masterkartga obuna bo'ling.",
-  "newsletter_placeholder_email": "Email manzilingiz",
+  "newsletter_subtitle": "Yangilanishlardan xabardor bo'lish uchun obuna bo'ling.",
+  "newsletter_placeholder_email": "Telefon raqamingizni kiriting...",
   "newsletter_button_subscribe": "Obuna bo'lish",
-  "yup_newsletter_email_required": "Email kiritish majburiy"
+  "yup_newsletter_email_required": "Telefon raqamini kiritish majburiy"
 }
