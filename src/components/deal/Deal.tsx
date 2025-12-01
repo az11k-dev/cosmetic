@@ -54,6 +54,9 @@ const Deal = () => {
     //     name: lang === "ru" ? item?.name?.ru : item?.name?.uz,
     //     num: index + 1,
     // };
+
+
+
     return (
         <>
             <section

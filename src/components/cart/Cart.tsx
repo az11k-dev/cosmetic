@@ -19,61 +19,62 @@ import {useCart} from "@/context/CartContext.tsx";
 interface CartItem extends Item {
     quantity: number;
 }
+// const API_URL = "https://admin.beauty-point.uz/api/products";
 const Cart = () => {
     const { t, } = useTranslation('cartAll');
+    const [subTotal, setSubTotal] = useState(0);
+    const [vat, setVat] = useState(0);
+    // const [data, setData] = useState([]);
+
+    // useEffect(() => {
+    //     const fetchProducts=async ()=>{
+    //         try{
+    //             const response = await fetch(API_URL);
+    //             if (!response.ok) {
+    //                 throw new Error(`HTTP error! status: ${response.status}`);
+    //             }
+    //             const result = await response.json();
+    //             const apiData = result?.data?.data || [];
+    //             setData(apiData);}
+    //         catch (e){
+    //             console.error(e,"Failed to fetch categories:");
+    //
+    //         }finally {
+    //
+    //         }
+    //     };
+    //     fetchProducts();
+    // }, []);
 
     const {
         cartItems,
-        removeItemFromCart, // O'chirish
-        updateItemQuantity // Miqdorni yangilash
+        removeItemFromCart,
+        updateItemQuantity ,
     } = useCart();
-
-    const [subTotal, setSubTotal] = useState(0);
-    const [vat, setVat] = useState(0);
-
-    // Umumiy summani hisoblash (useEffect)
     useEffect(() => {
         if (cartItems.length === 0) {
             setSubTotal(0);
             setVat(0);
             return;
         }
-
-        // Mahsulot narxining miqdorga ko'paytmasi summasi
         const subtotal = cartItems.reduce(
-            // item.newPrice birlik narxi deb hisoblaymiz
             (acc, item) => acc + item?.price  * item?.quantity ,
             0
         );
         setSubTotal(subtotal);
-
-        // QQS (VAT) hisoblash (20%)
         const vatAmount = subtotal * 0.2;
         setVat(vatAmount);
     }, [cartItems]);
-
     const total = subTotal + vat;
-
     const handleSubmit = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
     }, []);
-
-    // 💡 Mahsulotni butunlay o'chirish funksiyasi
     const handleRemoveFromCart = useCallback((id: string) => {
         removeItemFromCart(id);
     }, [removeItemFromCart]);
-
-    // 💡 Miqdorni o'zgartirish (oshirish/kamaytirish) funksiyasi
     const handleQuantityChange = useCallback((id: string, newQuantity: number) => {
-        // Context funksiyasini chaqiramiz.
-        // newQuantity <= 0 bo'lsa, CartProvider uni o'chiradi
         updateItemQuantity(id, newQuantity);
     }, [updateItemQuantity]);
-
-
-
-
-
     const [formData, setFormData] = useState<{
         country: string,
         state: string,
@@ -83,17 +84,12 @@ const Cart = () => {
         state: "",
         city: ""
     });
-
-
-
     const filteredCountryData: Country[] = useCountries();
     const filteredStateData: State[]  = useStates(formData?.country || "") || [];
     const filteredCityData: City[] = useCities(formData?.state || "") || [];
     const handleInputChange = async (e: any) => {
         const { name, value } = e.target;
         console.log("{ name, value }", { name, value })
-
-        // Davlat o'zgarsa, viloyat/shahar maydonlarini tozalash logikasi qo'shildi
         if (name === 'country') {
             setFormData({
                 country: value,
@@ -114,13 +110,8 @@ const Cart = () => {
     }
 
 
-
-
-
-
     return (
         <>
-
             <section className="gi-cart-section padding-tb-40">
                 <h2 className="d-none">{t('cartTitle')}</h2>
                 <div className="container">
@@ -234,85 +225,6 @@ const Cart = () => {
                     )}
                 </div>
             </section>
-            
-            
-            
-            
-            
-            {/*<section className="gi-new-product padding-tb-40">*/}
-            {/*    <div className="container">*/}
-            {/*        <div className="row overflow-hidden m-b-minus-24px">*/}
-            {/*            <div className="gi-new-prod-section col-lg-12">*/}
-            {/*                <div className="gi-products">*/}
-            {/*                    <Fade*/}
-            {/*                        triggerOnce*/}
-            {/*                        direction="up"*/}
-            {/*                        duration={2000}*/}
-            {/*                        delay={200}*/}
-            {/*                        className="section-title-2"*/}
-            {/*                        data-aos="fade-up"*/}
-            {/*                        data-aos-duration="2000"*/}
-            {/*                        data-aos-delay="200"*/}
-            {/*                    >*/}
-            {/*                        <>*/}
-            {/*                            <h2 className="gi-title">*/}
-            {/*                                New <span>Arrivals</span>*/}
-            {/*                            </h2>*/}
-            {/*                            <p>Browse The Collection of Top Products</p>*/}
-            {/*                        </>*/}
-            {/*                    </Fade>*/}
-            {/*                    <Fade*/}
-            {/*                        triggerOnce*/}
-            {/*                        direction="up"*/}
-            {/*                        duration={2000}*/}
-            {/*                        delay={200}*/}
-            {/*                        className="gi-new-block m-minus-lr-12"*/}
-            {/*                        data-aos="fade-up"*/}
-            {/*                        data-aos-duration="2000"*/}
-            {/*                        data-aos-delay="300"*/}
-            {/* >*/}
-            {/* <Swiper*/}
-            {/* loop={true}*/}
-            {/* autoplay={{ delay: 1000 }}*/}
-            {/* slidesPerView={5}*/}
-            {/* breakpoints={{*/}
-            {/* 0: {*/}
-            {/* slidesPerView: 1,*/}
-            {/* },*/}
-            {/* 320: {*/}
-            {/* slidesPerView: 1,*/}
-            {/* spaceBetween: 25,*/}
-            {/* },*/}
-            {/* 426: {*/}
-            {/* slidesPerView: 2,*/}
-            {/* },*/}
-            {/* 640: {*/}
-            {/* slidesPerView: 2,*/}
-            {/* },*/}
-            {/* 768: {*/}
-            {/* slidesPerView: 3,*/}
-            {/* },*/}
-            {/* 1024: {*/}
-            {/* slidesPerView: 3,*/}
-            {/* },*/}
-            {/* 1025: {*/}
-            {/* slidesPerView: 5,*/}
-            {/* },*/}
-            {/* }}*/}
-            {/* className="deal-slick-carousel gi-product-slider"*/}
-            {/* >*/}
-            {/* {getData().map((item: any, index: number) => (*/}
-            {/* <SwiperSlide key={index}>*/}
-            {/* <ItemCard data={item} />*/}
-            {/* </SwiperSlide>*/}
-            {/* ))}*/}
-            {/* </Swiper>*/}
-            {/* </Fade>*/}
-            {/* </div>*/}
-            {/* </div>*/}
-            {/* </div>*/}
-            {/* </div>*/}
-            {/*</section>*/}
         </>
     );
 };
