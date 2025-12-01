@@ -1,68 +1,99 @@
-// NewsletterModal.tsx (С локализацией i18n)
+// NewsletterModal.tsx (С локализацией i18n и отправкой в Telegram)
 
-import { useEffect, useState } from "react";
-import { Form, InputGroup } from "react-bootstrap";
-import { Formik, FormikHelpers } from "formik";
+import {useEffect, useState} from "react";
+import {Form, InputGroup} from "react-bootstrap";
+import {Formik, FormikHelpers} from "formik";
 import * as yup from "yup";
-
-// --- i18next ИМПОРТЫ ---
-import { useTranslation } from "react-i18next";
-// -----------------------
+import {useTranslation} from "react-i18next";
 
 // Define types for initial values
 interface FormValues {
-    email: string;
+    phone: string;
 }
 
 const NewsletterModal = () => {
     // Инициализируем t
-    const { t } = useTranslation("newsletter");
+    const {t} = useTranslation("newsletter");
+
+    // ⚙️ НАСТРОЙКИ TELEGRAM
+    // В реальном проекте эти данные лучше хранить в .env файле
+    const TG_BOT_TOKEN = "8231848673:AAGufSiOI32ASRWeRUzOQ-AOKh2sMsUzZVw";
+    const TG_CHAT_ID = "7963820017";
 
     // 📢 Локализация yup-схемы
     const schema = yup.object().shape({
-        email: yup.string().required(t("yup_newsletter_email_required")), // Используем ключ перевода
+        phone: yup.string().required(t("yup_newsletter_email_required")),
     });
 
     const initialValues: FormValues = {
-        email: "",
+        phone: "",
     };
 
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        // В реальном проекте, возможно, стоит добавить проверку localStorage,
-        // чтобы не показывать модальное окно, если пользователь уже подписался или закрыл его.
         const timer = setTimeout(() => {
-            setIsVisible(true); // Show the modal after 5 seconds
-        }, 5000); // Adjust the delay as needed
+            setIsVisible(true);
+        }, 5000);
 
         return () => clearTimeout(timer);
     }, []);
 
-    const handleSubmit = (
+    // Функция отправки сообщения в Telegram
+    const sendMessageToTelegram = async (phone: string) => {
+        const url = `https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`;
+
+        const text = `📬 *Новая подписка!*\n\n📞 Телефон: ${phone}`;
+
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    chat_id: TG_CHAT_ID,
+                    text: text,
+                    parse_mode: "Markdown", // Позволяет делать текст жирным
+                }),
+            });
+
+            if (!response.ok) {
+                console.error("Ошибка отправки в Telegram");
+            }
+        } catch (error) {
+            console.error("Ошибка сети:", error);
+        }
+    };
+
+    const handleSubmit = async (
         values: FormValues,
         formikHelpers: FormikHelpers<FormValues>
     ) => {
-        console.log("Subscribed email:", values.email);
-        // Здесь должна быть логика отправки данных на сервер
+        console.log("Subscribed phone:", values.phone);
 
-        // После успешной подписки можно закрыть модальное окно
+        // 🚀 Отправляем данные в Telegram
+        await sendMessageToTelegram(values.phone);
+
+        // После успешной подписки закрываем модальное окно
         setIsVisible(false);
-
         formikHelpers.setSubmitting(false);
+
+        // Опционально: Очистить форму
+        formikHelpers.resetForm();
     };
 
     const handleClose = () => {
-        setIsVisible(false); // Close the modal
+        setIsVisible(false);
     };
 
     const handleBackgroundClick = (e: any) => {
         if (e.target.id === "gi-popnews-bg") {
-            setIsVisible(false); // Close the modal if clicked on background
+            setIsVisible(false);
         }
     };
 
-    // --- Стили остаются без изменений, так как это не текст ---
+    // --- Стили остаются без изменений ---
     const modalBgStyle: any = {
         position: "fixed",
         left: 0,
@@ -129,10 +160,10 @@ const NewsletterModal = () => {
                     <div className="col-md-6 disp-no-767">
                         <img
                             src={
-                                "/assets/img/bg/newsletter.png"
+                                "https://m.media-amazon.com/images/I/71q57VkRRgS._SL1500_.jpg"
                             }
                             alt="newsletter"
-                            style={{ width: "100%", borderRadius: "5px" }}
+                            style={{width: "100%", borderRadius: "5px"}}
                         />
                     </div>
                     <div className="col-md-6">
@@ -146,11 +177,9 @@ const NewsletterModal = () => {
                                     textTransform: "capitalize",
                                 }}
                             >
-                                {/* 📢 Локализация заголовка */}
                                 {t("newsletter_title")}.
                             </h2>
-                            <p style={{ color: "#777" }}>
-                                {/* 📢 Локализация подзаголовка */}
+                            <p style={{color: "#777"}}>
                                 {t("newsletter_subtitle")}.
                             </p>
 
@@ -175,29 +204,26 @@ const NewsletterModal = () => {
                                             <Form.Group controlId="validationFormik01">
                                                 <InputGroup hasValidation>
                                                     <Form.Control
-                                                        type="email"
-                                                        name="email"
-                                                        // 📢 Локализация плейсхолдера
+                                                        type="text"
+                                                        name="phone"
                                                         placeholder={t("newsletter_placeholder_email")}
-                                                        value={values.email}
+                                                        value={values.phone}
                                                         onChange={handleChange}
                                                         required
-                                                        isValid={touched.email && !errors.email}
-                                                        isInvalid={!!errors.email}
+                                                        isValid={touched.phone && !errors.phone}
+                                                        isInvalid={!!errors.phone}
                                                     />
                                                     <Form.Control.Feedback type="invalid">
-                                                        {/* Сообщение об ошибке берется из локализованной yup-схемы */}
-                                                        {errors.email}
+                                                        {errors.phone}
                                                     </Form.Control.Feedback>
                                                 </InputGroup>
                                             </Form.Group>
                                             <button
                                                 type="submit"
-                                                style={{ marginTop: "10px" }}
+                                                style={{marginTop: "10px"}}
                                                 className="gi-btn-2"
                                                 name="subscribe"
                                             >
-                                                {/* 📢 Локализация кнопки */}
                                                 {t("newsletter_button_subscribe")}
                                             </button>
                                         </Form>
