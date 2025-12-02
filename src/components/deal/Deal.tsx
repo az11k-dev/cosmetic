@@ -1,5 +1,5 @@
 import { Col, Row } from "react-bootstrap";
-import { Swiper,  } from "swiper/react";
+import {Swiper, SwiperSlide,} from "swiper/react";
 import "swiper/css";
 import ItemCard from "../product-item/ItemCard";
 import { Fade } from "react-awesome-reveal";
@@ -49,14 +49,6 @@ const Deal = () => {
                 <Spinner />
             </div>
         );
-    // const formattedItem = {
-    //     ...item,
-    //     name: lang === "ru" ? item?.name?.ru : item?.name?.uz,
-    //     num: index + 1,
-    // };
-
-
-
     return (
         <>
             <section
@@ -81,7 +73,6 @@ const Deal = () => {
                                             <p>{t("dealTagline")}</p>
                                         </div>
                                     </Fade>
-                                    {/*<DealendTimer />*/}
                                 </div>
                                 <Fade
                                     triggerOnce
@@ -97,17 +88,38 @@ const Deal = () => {
                                                 autoplay={{ delay: 1000 }}
                                                 slidesPerView={5}
                                                 breakpoints={{
-                                                    0: { slidesPerView: 1 }, 320: { slidesPerView: 1 },
-                                                    425: { slidesPerView: 2 }, 640: { slidesPerView: 2 },
-                                                    768: { slidesPerView: 3 }, 1024: { slidesPerView: 3 },
-                                                    1200: { slidesPerView: 5 }, 1440: { slidesPerView: 5 },
+                                                    0: {
+                                                        slidesPerView: 1,
+                                                    },
+                                                    320: {
+                                                        slidesPerView: 1,
+                                                    },
+                                                    425: {
+                                                        slidesPerView: 2,
+                                                    },
+                                                    640: {
+                                                        slidesPerView: 2,
+                                                    },
+                                                    768: {
+                                                        slidesPerView: 3,
+                                                    },
+                                                    1024: {
+                                                        slidesPerView: 3,
+                                                    },
+                                                    1200: {
+                                                        slidesPerView: 5,
+                                                    },
+                                                    1440: {
+                                                        slidesPerView: 5,
+                                                    },
                                                 }}
                                                 className="slick-track"
                                             >
                                                 {data?.map((item: any, index: number) => (
-
-                                                    <div key={index}>
-                                                        <ItemCard data={item}   />
+                                                    <div >
+                                                        <SwiperSlide key={item.id || index} >
+                                                            <ItemCard data={item}   />
+                                                        </SwiperSlide>
                                                     </div>
                                                 ))}
                                             </Swiper>

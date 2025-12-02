@@ -3,22 +3,48 @@ import ItemCard from "../../product-item/ItemCard";
 import { Fade } from "react-awesome-reveal";
 import Spinner from "@/components/button/Spinner";
 import { useSliceData } from "@/hooks/useSliceData";
-
+import {useEffect, useState} from "react";
+const API_URL = "https://admin.beauty-point.uz/api/products";
+const lang = localStorage.getItem("i18nextLng");
 const RelatedProduct = () => {
-  const { data, error } = useSliceData('deal');
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchProducts=async ()=>{
+            try{
+                const response = await fetch(API_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+                const apiData = result?.data?.data || [];
+                setData(apiData);
+                setError(null);}
+            catch (e){
+                console.error(e,"Failed to fetch categories:");
+                setError("Ne udalos' zagruzit' kategorii.");
+            }finally {
+                setIsLoading(false);
+            }
+
+        };
+        fetchProducts();
+    }, []);
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    if (isLoading)
+        return (
+            <div>
+                <Spinner />
+            </div>
+        );
 
 
-  if (error) return <div>Failed to load products</div>;
-  if (!data)
-    return (
-      <div>
-        <Spinner />
-      </div>
-    );
-
-  const getData = () => {
-    return data;
-  };
 
   return (
     <>
@@ -36,9 +62,9 @@ const RelatedProduct = () => {
                 >
                   <>
                     <h2 className="gi-title">
-                      Related <span>Products</span>
+                        {lang==="ru"?"Сопутствующие ":"Tegishli "} <span> {lang==="ru"?" товары":" mahsulotlar"}</span>
                     </h2>
-                    <p>Browse The Collection of Top Products</p>
+                    <p> {lang==="ru"?"Просмотрите коллекцию лучших товаров":"Eng yaxshi mahsulotlar to'plamini ko'rib chiqing"}</p>
                   </>
                 </Fade>
                 <Fade
@@ -80,7 +106,7 @@ const RelatedProduct = () => {
                     }}
                     className="deal-slick-carousel gi-product-slider"
                   >
-                    {getData().map((item: any, index: number) => (
+                    {data?.map((item: any, index: number) => (
                       <SwiperSlide key={index}>
                         <ItemCard data={item} />
                       </SwiperSlide>

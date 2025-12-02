@@ -2409,7 +2409,7 @@ Tools sidebar
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-wrap: wrap;
+
     flex-wrap: wrap;
 }
 
@@ -12366,3 +12366,13 @@ ul.gi li.gi-todo::before {
 }
 
 /*# sourceMappingURL=style.css.map */
+
+
+
+/* ...Весь предыдущий CSS код... */
+
+/* --------------------------------
+ * Медиа-запросы для мобильных устройств
+ * --------------------------------
+ */
+

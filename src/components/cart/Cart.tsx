@@ -16,6 +16,7 @@ interface CartItem extends Item {
 // const API_URL = "https://admin.beauty-point.uz/api/products";
 const Cart = () => {
     const {t,} = useTranslation('cartAll');
+    const lang = localStorage.getItem("i18nextLng");
     const [subTotal, setSubTotal] = useState(0);
     const [vat, setVat] = useState(0);
     // const [data, setData] = useState([]);
@@ -153,7 +154,7 @@ const Cart = () => {
                                                                             src={item?.images[0]?.upload?.file_url}
                                                                             alt=""
                                                                         />
-                                                                        {item?.name?.uz}
+                                                                        {lang === "ru" ? item?.name?.ru : item?.name?.uz}
                                                                     </Link>
                                                                 </td>
                                                                 <td

@@ -6,7 +6,7 @@ const lang = localStorage.getItem("i18nextLng");
 const page = () => {
     return (
         <>
-            <Breadcrumb title={lang==="ru"?"":""} />
+            <Breadcrumb title={lang==="ru"?"Список желаний":"Istaklar roʻyxati"} />
             <Wishlist />
         </>
     )

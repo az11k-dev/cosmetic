@@ -16,24 +16,56 @@ import { useTranslation, Trans } from "react-i18next";
 // 💡 Context hooklari importi
 import { useWishlist } from "@/context/WishlistContext.tsx";
 import { useCart } from "@/context/CartContext.tsx";
-
+const API_URL = "https://admin.beauty-point.uz/api/products";
 const Wishlist = () => {
     // Получаем функцию t (translate)
     const { t } = useTranslation("wishlist");
-
-    // 💡 CONTEXTDAN OLINADI
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
     const { wishlistItems, removeWishlistItem } = useWishlist();
     const { addItemToCart } = useCart();
-
+    const lang = localStorage.getItem("i18nextLng");
     const [currentDate, setCurrentDate] = useState(
         // Здесь можно использовать t('date_format') для форматирования даты,
         // но оставим toLocaleDateString("en-GB") для примера
         new Date().toLocaleDateString("en-GB")
     );
-
     useEffect(() => {
-        setCurrentDate(new Date().toLocaleDateString("en-GB"));
+        const fetchProducts=async ()=>{
+            try{
+                const response = await fetch(API_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+                const apiData = result?.data?.data || [];
+                setData(apiData);
+                setError(null);}
+            catch (e){
+                console.error(e,"Failed to fetch categories:");
+                setError("Ne udalos' zagruzit' kategorii.");
+            }finally {
+                setIsLoading(false);
+            }
+            setCurrentDate(new Date().toLocaleDateString("en-GB"));
+        };
+        fetchProducts();
     }, []);
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    if (isLoading)
+        return (
+            <div>
+                <Spinner />
+            </div>
+        );
+    // useEffect(() => {
+    //     setCurrentDate(new Date().toLocaleDateString("en-GB"));
+    // }, []);
 
     // Redux dispatch o'rniga Context funksiyasi
     const handleRemoveFromwishlist = (id: string | number) => {
@@ -49,23 +81,6 @@ const Wishlist = () => {
         // Используем переведенное сообщение
         showSuccessToast(t("toast_add_to_cart"));
     };
-
-    // Mahsulot ma'lumotlarini yuklash (O'zgarishsiz)
-    const { data, error } = useSliceData('deal');
-
-    // Переводим сообщения об ошибке/загрузке
-    if (error) return <div>{t('error_loading_products')}</div>;
-    if (!data)
-        return (
-            <div>
-                <Spinner />
-            </div>
-        );
-
-    const getData = () => {
-        return data;
-    };
-
     return (
         <>
             <section className="gi-faq padding-tb-40 gi-wishlist">
@@ -129,7 +144,7 @@ const Wishlist = () => {
                                                             />
                                                         </td>
                                                         <td>
-                                                            <span>{data?.name?.uz}</span> {/* data.title o'rniga data.name ishlatiladi */}
+                                                            <span> {lang === "ru" ? data?.name?.ru : data?.name?.uz}</span> {/* data.title o'rniga data.name ishlatiladi */}
                                                         </td>
                                                         <td>
                                                             <span>{currentDate}</span>

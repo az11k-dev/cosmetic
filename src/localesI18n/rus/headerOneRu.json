@@ -11,5 +11,10 @@
     "uzbek_language": "Узбекский",
     "russian_language": "Русский",
     "select_language": "Выбрать язык"
+  },
+  "common2": {
+    "uzbek_language": "УЗ",
+    "russian_language": "РУ",
+    "select_language": "Выбрать язык"
   }
 }

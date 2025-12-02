@@ -8,11 +8,11 @@ import ProductDetailsPage from "@/components/productDetailsPage/ProductDetailsPa
 
 
 const page = () => {
-
+    const lang = localStorage.getItem("i18nextLng");
 
     return (
         <>
-            <Breadcrumb title={"Product Page"} />
+            <Breadcrumb title={lang==="ru"?"Страница продукта":"Mahsulot sahifasi"} />
             <section className="gi-single-product padding-tb-40">
                 <div className="container" >
                         <Row  >

@@ -59,6 +59,8 @@ import loginUz from "./localesI18n/uzb/login.json"
 import loginRu from "./localesI18n/rus/login.json"
 import newsletterUz from "./localesI18n/uzb/newsletter.json"
 import newsletterRu from "./localesI18n/rus/newsletter.json"
+import editProfileUz from "./localesI18n/uzb/editPr.json"
+import editProfileRu from "./localesI18n/rus/editPr.json"
 
 i18n
     .use(LanguageDetector)
@@ -94,7 +96,8 @@ i18n
                 register:registerUz,
                 checkOut:checkOutUz,
                 login:loginUz,
-                newsletter:newsletterUz
+                newsletter:newsletterUz,
+                profileEdit:editProfileUz
             },
             ru: {
                 headerOne: headerOneRuData,
@@ -125,14 +128,15 @@ i18n
                 register:registerRu,
                 checkOut:checkOutRu,
                 login:loginRu,
-                newsletter:newsletterRu
+                newsletter:newsletterRu,
+                profileEdit:editProfileRu
             },
         },
 
         fallbackLng: "uz",
 
 
-        ns: ["headerOne", "headerTwo", "headerManu", "footer", "heroSlider", "common", "categoryNames", "deal1", "productCard", "itemNames", "banner", "newArrivals", "offerBanners", "services", "trackOrder", "sidebarCart", "treding", "tredingAll", "faqAll", "cartAll", "manuMobile", "contacts","about","facts","wishlist","register","checkOut","login","newsletter"],
+        ns: ["headerOne", "headerTwo", "headerManu", "footer", "heroSlider", "common", "categoryNames", "deal1", "productCard", "itemNames", "banner", "newArrivals", "offerBanners", "services", "trackOrder", "sidebarCart", "treding", "tredingAll", "faqAll", "cartAll", "manuMobile", "contacts","about","facts","wishlist","register","checkOut","login","newsletter","profileEdit"],
         defaultNS: "headerOne",
 
 

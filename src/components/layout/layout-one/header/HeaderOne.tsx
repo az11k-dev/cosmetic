@@ -49,15 +49,23 @@ function HeaderOne({cartItems, wishlistItems}: HeaderOneProps) {
         return t('common.select_language');
     };
 
+    const getCurrentLanguageName2 = (lngCode: string) => {
+        if (lngCode.startsWith('uz')) return t('common2.uzbek_language');
+        if (lngCode.startsWith('ru')) return t('common2.russian_language');
+        // Agar til sozlamalarda topilmasa
+        return t('common.select_language');
+    };
+
     // Til tanlash uchun massiv (Faqat 'uz' va 'ru')
     const availableLanguages = [
         {code: 'uz', nameKey: 'common.uzbek_language'},
         {code: 'ru', nameKey: 'common.russian_language'},
     ];
-    // const availableLanguages2 = [
-    //     {code2: 'uz', nameKey: 'common.uzbek_language'},
-    //     {code2: 'ru', nameKey: 'common.russian_language'},
-    // ];
+
+    const availableLanguages2 = [
+        {code2: 'uz', nameKey2: 'common2.uzbek_language'},
+        {code2: 'ru', nameKey2: 'common2.russian_language'},
+    ];
 
 
     return (
@@ -136,33 +144,29 @@ function HeaderOne({cartItems, wishlistItems}: HeaderOneProps) {
                         <div className="col header-top-res d-lg-none">
                             <div className="gi-header-bottons">
                                 <div className="right-icons">
-                                    {/* */}
-                                    <div className="header-top-right-inner d-flex justify-content-end">
-                                        <Dropdown className="header-top-lan-curr header-top-lan">
-                                            <Dropdown.Toggle variant="" className="dropdown-toggle" id="dropdown-basic">
-                                                {/* Hozirgi aktiv til nomini tarjima orqali ko'rsatish */}
-                                                {getCurrentLanguageName(i18n.language)}
-                                                <i
-                                                    className="fi-rr-angle-small-down"
-                                                    aria-hidden="true"
-                                                ></i>
-                                            </Dropdown.Toggle>
-                                            <Dropdown.Menu as="ul">
-                                                {availableLanguages.map((lang) => (
-                                                    <Dropdown.Item
-                                                        as="li"
-                                                        key={lang.code}
-                                                        onClick={() => changeLanguage(lang.code)}
-                                                        className={i18n.language.startsWith(lang.code) ? 'active' : ''}
-                                                    >
-                                                        {/* Dropdown menyusidagi tillarning nomini tarjima orqali ko'rsatish */}
-                                                        {t(lang.nameKey)}
-                                                    </Dropdown.Item>
-                                                ))}
-                                            </Dropdown.Menu>
-                                        </Dropdown>
-                                        {/* */}
+                                    <div className="gi-header-btn gi-header-user gi-header-rtl-btn">
+                                    <Dropdown className="header-top-lan-curr header-top-lan  ">
+                                        <Dropdown.Toggle variant="" className="dropdown-toggle" id="dropdown-basic">
+                                            {getCurrentLanguageName2(i18n.language)}
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu as="ul">
+                                            {availableLanguages2.map((lang) => (
+                                                <Dropdown.Item
+                                                    as="li"
+                                                    key={lang.code2}
+                                                    onClick={() => changeLanguage(lang.code2)}
+                                                    className={i18n.language.startsWith(lang.code2) ? 'active' : ''}
+                                                >
+                                                    {/* Dropdown menyusidagi tillarning nomini tarjima orqali ko'rsatish */}
+                                                    {t(lang.nameKey2)}
+                                                </Dropdown.Item>
+                                            ))}
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+
                                     </div>
+
+
 
                                     <Link
                                         to="/login"

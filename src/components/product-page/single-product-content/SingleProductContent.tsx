@@ -1,4 +1,4 @@
-import React, {useState, useRef, useCallback, useEffect} from "react";
+import React, {useState, useRef, useCallback, useEffect, useMemo} from "react";
 import {Col, Row} from "react-bootstrap";
 import {useCart} from "@/context/CartContext.tsx";
 import {Fade} from "react-awesome-reveal";
@@ -7,10 +7,10 @@ import {Item} from "@/types/data.types";
 import {showSuccessToast} from "@/utility/toast";
 import {useTranslation} from "react-i18next";
 import QuantitySelector from "@/components/quantity-selector/QuantitySelector.tsx";
-import SizeOptions from "@/components/product-item/SizeOptions.tsx";
 import StarRating from "@/components/stars/StarRating.tsx";
 import Modal from "react-bootstrap/Modal";
 import Slider from "react-slick";
+import {useWishlist} from "@/context/WishlistContext.tsx";
 
 
 interface SingleProductContentPageProps {
@@ -22,6 +22,7 @@ interface SingleProductContentPageProps {
 
 const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data, show, handleClose}) => {
     const {t} = useTranslation(["productCard", "itemNames", "categoryNames"]);
+    const { wishlistItems, addWishlistItem, removeWishlistItem } = useWishlist();
     const {addItemToCart} = useCart();
     const [quantity, setQuantity] = useState(1);
     const [nav1, setNav1] = useState<Slider | null>(null);
@@ -60,6 +61,20 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
             slider1.current.slickGoTo(index);
         }
     };
+    const isInWishlist = useMemo(() =>
+            wishlistItems.some((item: Item) => item.id === data.id),
+        [wishlistItems, data.id]
+    );
+    const handleWishlist = useCallback((products: Item) => {
+        if (!isInWishlist) {
+            addWishlistItem(products);
+            showSuccessToast(t("addToWishlistSuccessMsg"), { icon: false });
+        }
+        else {
+            removeWishlistItem(products.id);
+            showSuccessToast(t("removeWishlistSuccessMsg"), { icon: false });
+        }
+    }, [isInWishlist, addWishlistItem, removeWishlistItem, t, data]);
 
     return (
         <Fade>
@@ -166,15 +181,13 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
 
                                     <div className="gi-single-list">
                                         <ul>
-                                            <li>
-                                                <strong>Sole :</strong> Polyvinyl Chloride
-                                            </li>
+
 
                                             <li>
-                                                <strong>Outer Material :</strong> A-Grade Standard Quality
+                                                <strong>{lang==="ru"?"Внешний материал:":"Tashqi material:"}</strong> A-Grade Standard Quality
                                             </li>
                                             <li>
-                                                <strong>Category:</strong> {lang === "ru" ? data?.category?.name.ru : data?.category?.name.uz}
+                                                <strong>{lang==="ru"?"Категория:":"Kategoriya"}</strong> {lang === "ru" ? data?.category?.name.ru : data?.category?.name.uz}
                                             </li>
                                         </ul>
                                     </div>
@@ -195,26 +208,20 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
                                             <button
                                                 onClick={() => handleCart(data)}
                                                 className="gi-btn-1"
+                                                style={{display:"flex",alignItems:"center", gap:"6px"}}
                                             >
                                                 <i className="fi-rr-shopping-basket"></i>
                                                 {t("addToCartButton")}
                                             </button>
                                         </div>
+
                                         <div className="gi-single-wishlist">
-                                            <a className="gi-btn-group wishlist" title="Wishlist">
+                                            <button
+                                                onClick={() => handleWishlist(data)}
+                                                className={`gi-btn-group wishlist ${isInWishlist ? "active" : ""}`}
+                                                title={t("wishlistTitle")}>
                                                 <i className="fi-rr-heart"></i>
-                                            </a>
-                                        </div>
-                                        <div className="gi-single-quickview">
-                                            <a
-                                                className="gi-btn-group quickview"
-                                                data-link-action="quickview"
-                                                title="Quick view"
-                                                data-bs-toggle="modal"
-                                                data-bs-target="#gi_quickview_modal"
-                                            >
-                                                <i className="fi-rr-eye"></i>
-                                            </a>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

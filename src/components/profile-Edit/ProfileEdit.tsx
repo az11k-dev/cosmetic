@@ -1,3 +1,5 @@
+// ProfileEdit.tsx (С локализацией i18n)
+
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "@/store";
@@ -8,8 +10,11 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {useAuth} from "@/context/AuthContext.tsx";
 
-// --- Типы данных ---
+// --- i18next ИМПОРТЫ ---
+import { useTranslation, Trans } from "react-i18next";
+// -----------------------
 
+// --- Типы данных ---
 // Интерфейс для данных профиля, которые мы получаем и отправляем
 interface ProfileData {
     first_name: string;
@@ -43,6 +48,9 @@ interface ProfileApiResponse {
 
 
 const ProfileEdit = () => {
+    // Инициализируем t
+    const { t } = useTranslation("profileEdit");
+
     const API_PROFILE_URL = "https://admin.beauty-point.uz/api/profile";
     const API_UPDATE_URL = "https://admin.beauty-point.uz/api/profile/update";
     const {updateUser} = useAuth();
@@ -57,8 +65,8 @@ const ProfileEdit = () => {
     const [isSwitchOn, setIsSwitchOn] = useState<boolean>(false);
     const [validated, setValidated] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isLoading, setIsLoading] = useState(true); // Для отслеживания загрузки данных
-    const [apiError, setApiError] = useState<string | null>(null); // Для отображения ошибок при загрузке
+    const [isLoading, setIsLoading] = useState(true);
+    const [apiError, setApiError] = useState<string | null>(null);
 
     // Инициализация с пустыми строками
     const [formData, setFormData] = useState<ProfileData>({
@@ -72,7 +80,7 @@ const ProfileEdit = () => {
     const fetchProfileData = async () => {
         setIsLoading(true);
         setApiError(null);
-        const token = localStorage.getItem("authToken"); // **Замените на ваш токен**
+        const token = localStorage.getItem("authToken");
 
         try {
             const response = await axios.get<ProfileApiResponse>(API_PROFILE_URL, {
@@ -83,7 +91,6 @@ const ProfileEdit = () => {
 
             if (response.data.status && response.data.data.status) {
                 const profileData = response.data.data.data;
-                // Заполняем только те поля, которые мы используем в форме
                 setFormData({
                     first_name: profileData.first_name,
                     last_name: profileData.last_name,
@@ -91,17 +98,21 @@ const ProfileEdit = () => {
                     phone_number: profileData.phone_number,
                 });
             } else {
-                // Обработка логической ошибки в ответе
-                setApiError("Не удалось получить данные профиля.");
+                // 📢 Локализация ошибки
+                setApiError(t("error_failed_fetch"));
             }
         } catch (error) {
+            let errorMessage = t("error_network_unknown");
+
             if (axios.isAxiosError(error) && error.response) {
                 console.error("Ошибка API при загрузке:", error.response.data);
-                setApiError("Ошибка загрузки профиля: " + (error.response.data.message || "Сетевая ошибка."));
+                // 📢 Локализация ошибки
+                errorMessage = error.response.data.message || t("error_network_unknown");
             } else {
                 console.error("Неизвестная ошибка при загрузке:", error);
-                setApiError("Произошла неизвестная ошибка при загрузке.");
             }
+            // 📢 Локализация ошибки
+            setApiError(t("error_loading_profile", { message: errorMessage }));
         } finally {
             setIsLoading(false);
         }
@@ -134,7 +145,7 @@ const ProfileEdit = () => {
         }));
     };
 
-    // Функция для отправки обновлений (осталась из предыдущего ответа)
+    // Функция для отправки обновлений
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -161,16 +172,20 @@ const ProfileEdit = () => {
 
             if (response.status === 200 || response.status === 201) {
                 updateUser(formData);
+                // 📢 Уведомление об успехе (можно использовать showSuccessToast)
                 navigate("/user-profile");
             }
         } catch (error) {
+            let errorMessage = t("error_network_unknown");
+
             if (axios.isAxiosError(error) && error.response) {
                 console.error("Ошибка API при обновлении:", error.response.data);
-                alert("Ошибка обновления: " + (error.response.data.message || "Произошла ошибка."));
+                errorMessage = error.response.data.message || t("error_network_unknown");
             } else {
                 console.error("Неизвестная ошибка:", error);
-                alert("Произошла неизвестная ошибка.");
             }
+            // 📢 Локализация и отображение ошибки
+            alert(t("error_update_generic", { message: errorMessage }));
         } finally {
             setIsSubmitting(false);
         }
@@ -181,12 +196,12 @@ const ProfileEdit = () => {
         return <VendorEdit/>;
     }
 
-    // Отображение статусов загрузки и ошибки
+    // 📢 Отображение статусов загрузки и ошибки
     if (isLoading) {
         return (
             <div className="gi-register padding-tb-40">
                 <div className="container">
-                    <p>Загрузка данных профиля...</p>
+                    <p>{t("state_loading")}</p>
                 </div>
             </div>
         );
@@ -196,7 +211,12 @@ const ProfileEdit = () => {
         return (
             <div className="gi-register padding-tb-40">
                 <div className="container">
-                    <p style={{color: 'red'}}>Ошибка: {apiError}. Пожалуйста, попробуйте позже.</p>
+                    <p style={{color: 'red'}}>
+                        {/* Используем ключ с интерполяцией */}
+                        <Trans i18nKey="state_error_generic" values={{ error: apiError }}>
+                            Ошибка: {{apiError}}. Пожалуйста, попробуйте позже.
+                        </Trans>
+                    </p>
                 </div>
             </div>
         );
@@ -208,9 +228,13 @@ const ProfileEdit = () => {
                 <div className="container">
                     <div className="section-title-2">
                         <h2 className="gi-title">
-                            Edit Profile<span></span>
+                            {/* 📢 Локализация заголовка */}
+                            <Trans i18nKey="profile_edit_title">
+                                {t("profile_edit_title")}<span></span>
+                            </Trans>
                         </h2>
-                        <p>Best place to buy and sell digital products.</p>
+                        {/* 📢 Локализация подзаголовка */}
+                        <p>{t("profile_edit_subtitle")}</p>
                     </div>
                     <div className="row">
                         <div className="gi-register-wrapper">
@@ -225,34 +249,40 @@ const ProfileEdit = () => {
                                         onSubmit={handleSubmit}
                                     >
                     <span className="gi-register-wrap gi-register-half">
-                      <label>First Name*</label>
+                      {/* 📢 Локализация метки */}
+                        <label>{t("label_first_name")}</label>
                       <Form.Group>
                         <Form.Control
                             type="text"
                             name="first_name"
-                            placeholder="Enter your first name"
+                            // 📢 Локализация плейсхолдера
+                            placeholder={t("placeholder_first_name")}
                             value={formData.first_name}
                             onChange={handleInputChange}
                             required
                         />
                         <Form.Control.Feedback type="invalid">
-                          Please Enter First Name.
+                          {/* 📢 Локализация валидации */}
+                            {t("validation_first_name")}
                         </Form.Control.Feedback>
                       </Form.Group>
                     </span>
                                         <span className="gi-register-wrap gi-register-half">
-                      <label>Last Name*</label>
+                      {/* 📢 Локализация метки */}
+                                            <label>{t("label_last_name")}</label>
                       <Form.Group>
                         <Form.Control
                             type="text"
                             name="last_name"
-                            placeholder="Enter your last name"
+                            // 📢 Локализация плейсхолдера
+                            placeholder={t("placeholder_last_name")}
                             required
                             value={formData.last_name}
                             onChange={handleInputChange}
                         />
                         <Form.Control.Feedback type="invalid">
-                          Please Enter Last Name.
+                          {/* 📢 Локализация валидации */}
+                            {t("validation_last_name")}
                         </Form.Control.Feedback>
                       </Form.Group>
                     </span>
@@ -260,18 +290,21 @@ const ProfileEdit = () => {
                                             style={{marginTop: "10px"}}
                                             className="gi-register-wrap gi-register-half"
                                         >
-                      <label>Email*</label>
+                      {/* 📢 Локализация метки */}
+                                            <label>{t("label_email")}</label>
                       <Form.Group>
                         <Form.Control
                             type="email"
                             name="email"
-                            placeholder="Enter your email add..."
+                            // 📢 Локализация плейсхолдера
+                            placeholder={t("placeholder_email_add")}
                             required
                             value={formData.email}
                             onChange={handleInputChange}
                         />
                         <Form.Control.Feedback type="invalid">
-                          Please Enter correct email.
+                          {/* 📢 Локализация валидации */}
+                            {t("validation_email_correct")}
                         </Form.Control.Feedback>
                       </Form.Group>
                     </span>
@@ -279,19 +312,22 @@ const ProfileEdit = () => {
                                             style={{marginTop: "10px"}}
                                             className="gi-register-wrap gi-register-half"
                                         >
-                      <label>Phone Number*</label>
+                      {/* 📢 Локализация метки */}
+                                            <label>{t("label_phone_number")}</label>
                       <Form.Group>
                         <Form.Control
                             type="text"
                             name="phone_number"
-                            placeholder="Enter your phone number"
+                            // 📢 Локализация плейсхолдера
+                            placeholder={t("placeholder_phone_number")}
                             pattern="^\+?\d{9,15}$"
                             required
                             value={formData.phone_number}
                             onChange={handleInputChange}
                         />
                         <Form.Control.Feedback type="invalid">
-                          Please Enter a valid phone number (9-15 digits, optionally with +).
+                          {/* 📢 Локализация валидации */}
+                            {t("validation_phone_number")}
                         </Form.Control.Feedback>
                       </Form.Group>
                     </span>
@@ -301,7 +337,8 @@ const ProfileEdit = () => {
                                             className="gi-register-wrap gi-register-btn"
                                         >
                       <button className="gi-btn-1" type="submit" disabled={isSubmitting}>
-                        {isSubmitting ? "Saving..." : "Save"}
+                        {/* 📢 Локализация кнопки, зависит от состояния */}
+                          {isSubmitting ? t("btn_saving") : t("btn_save")}
                       </button>
                     </span>
                                     </Form>

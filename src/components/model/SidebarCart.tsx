@@ -144,11 +144,11 @@ const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartO
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="cart_btn">
-                                <Link to="/cart" className="gi-btn-1" onClick={closeCart}>
+                            <div className="cart_btn" >
+                                <Link  to="/cart" className="gi-btn-1" style={{fontSize:"15px",paddingTop:"0px" , paddingBottom:"0px",paddingLeft:"20px",paddingRight:"20px"}}  onClick={closeCart} >
                                     {t('viewCartButton')}
                                 </Link>
-                                <Link to="/checkout" className="gi-btn-2" onClick={closeCart}>
+                                <Link to="/checkout" className="gi-btn-2" style={{fontSize:"15px",paddingTop:"0px" , paddingBottom:"0px",paddingLeft:"0px",paddingRight:"0px",textAlign:"center"}}  onClick={closeCart}>
                                     {t('checkoutButton')}
                                 </Link>
                             </div>

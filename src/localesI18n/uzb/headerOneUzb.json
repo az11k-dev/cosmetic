@@ -11,5 +11,10 @@
     "uzbek_language": "O‘zbekcha",
     "russian_language": "Russcha",
     "select_language": "Tilni tanlang"
+  },
+  "common2": {
+    "uzbek_language": "UZ",
+    "russian_language": "RU",
+    "select_language": "Tilni tanlang"
   }
 }
