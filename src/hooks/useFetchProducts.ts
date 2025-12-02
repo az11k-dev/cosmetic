@@ -43,6 +43,7 @@ export const useFetchProducts = () => {
                         category: item.category ? item.category.name.ru : 'Uncategorized', // Предполагаем, что category - это объект с name.ru
                         sale: 'Sale', // Заглушка, если нет данных о скидке
                         weight: item.details.weight,
+                        stock: item.details.stock,
                         // Основное изображение (первое, где is_main=1, или просто первое)
                         image: item.images.find((img: any) => img.is_main)?.upload.file_url || (item.images[0] ? item.images[0].upload.file_url : '/path/to/default/image.jpg'),
                         // Второе изображение (если есть)

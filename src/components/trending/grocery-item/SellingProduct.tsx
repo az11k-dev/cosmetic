@@ -5,6 +5,7 @@ import TrendingItem from "../trendingItem/TrendingItem";
 import Spinner from "@/components/button/Spinner";
 import {useSliceData} from "@/hooks/useSliceData";
 import {useTranslation} from "react-i18next";
+import {useFetchProducts} from "@/hooks/useFetchProducts.ts";
 
 const SellingProduct = () => {
     const {t} = useTranslation('tredingAll');
@@ -56,7 +57,7 @@ const SellingProduct = () => {
         ],
     };
 
-    const {data, error} = useSliceData('selling');
+    const {data, error} = useFetchProducts();
 
 
     if (error) return <div>Failed to load products</div>;
@@ -68,8 +69,9 @@ const SellingProduct = () => {
         );
 
     const getData = () => {
-        return data;
+        return [...data].sort((a: any, b: any) => b?.stock - a?.stock);
     };
+    console.log(data);
 
     return (
         <>

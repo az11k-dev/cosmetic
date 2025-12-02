@@ -1,7 +1,7 @@
 {
   "newsletter_title": "Подписка на рассылку",
-  "newsletter_subtitle": "Подпишитесь на Masterkart, чтобы быть в курсе обновлений.",
-  "newsletter_placeholder_email": "Ваш email адрес",
+  "newsletter_subtitle": "Подпишитесь чтобы быть в курсе обновлений.",
+  "newsletter_placeholder_email": "Ваш телефон номер",
   "newsletter_button_subscribe": "Подписаться",
-  "yup_newsletter_email_required": "Email обязателен для заполнения"
+  "yup_newsletter_email_required": "Телефон номер обязателен для заполнения"
 }
