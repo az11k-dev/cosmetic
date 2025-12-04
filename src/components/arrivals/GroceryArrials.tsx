@@ -177,5 +177,5 @@ const NewArrivals = () => {
     );
 };
 
-// 💡 Export nomi NewArrivals ga o'zgartirildi
+
 export default NewArrivals;

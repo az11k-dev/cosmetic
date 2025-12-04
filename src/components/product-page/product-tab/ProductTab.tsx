@@ -157,10 +157,11 @@ const ProductTab = ({data}) => {
                                     </p>
                                     <ul>
                                         <li>
-                                            <span>Model</span> SKU140
+                                            <span>{lang==="ru"?"Модель":"Model"}</span> SKU{data.details.sku}
                                         </li>
                                         <li>
-                                            <span>Weight</span> 500 g
+                                            <span>{lang==="ru"?"Масса":"Og'irligi"}</span>{data?.details?.weight}
+
                                         </li>
                                         <li>
                                             <span>Dimensions</span> 35 × 30 × 7 cm

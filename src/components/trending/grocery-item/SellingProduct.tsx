@@ -86,7 +86,7 @@ const SellingProduct = () => {
                     <Col md={12}>
                         <div className="section-title">
                             <div className="section-detail">
-                                <h2 className="gi-title">
+                                <h2 className="gi-title" style={{fontSize:"22px"}}>
                                     {/* ✅ FAQQAT SHU YER TARJIMAGA O'TKAZILDI */}
                                     {t('titles.trendingItemsTitle2')}
                                 </h2>

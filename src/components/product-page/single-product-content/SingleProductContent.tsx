@@ -172,7 +172,7 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
                                             <span
                                                 className="gi-single-sku"> <span>SKU:</span> {data?.details.sku}</span>
                                             <span
-                                                className="gi-single-ps-title"> <span>SROCK:</span> {data?.details?.stock}</span>
+                                                className="gi-single-ps-title"> <span>{lang==="ru"?"ЗАПАС":"QOLGAN"}:</span> {data?.details?.stock}</span>
                                         </div>
                                     </div>
                                     <div className="gi-single-desc">
@@ -193,7 +193,7 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
                                     </div>
                                     <div className="gi-pro-variation">
                                         <div className="gi-pro-variation-inner gi-pro-variation-size">
-                                            <span>Weight</span>
+                                            <span>{lang==="ru"?"Масса":"Og'irligi"}</span>
                                             <div className="gi-pro-variation-content">
                                                 {data?.details?.weight}
                                             </div>

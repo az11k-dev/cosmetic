@@ -96,7 +96,7 @@ const QuickViewModal: React.FC<SingleProductContentPageProps> = ({ show, handleC
                                             <div className="gi-single-list">
                                                 <ul>
                                                     <li>
-                                                        <strong>Weight :</strong>  {data?.details?.weight}
+                                                        <strong>{lang==="ru"?"Масса":"Og'irligi"} :</strong>  {data?.details?.weight}
                                                     </li>
                                                 </ul>
                                             </div>

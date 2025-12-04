@@ -65,11 +65,11 @@ const TrendingProduct = () => {
             sm={12}
             className="col-xs-6 gi-all-product-content gi-new-product-content mt-767-40 wow fadeInUp"
         >
-            <Fade triggerOnce direction="up" delay={400}>
+            <Fade triggerOnce direction="up" delay={400}  >
                 <Col md={12}>
                     <div className="section-title">
-                        <div className="section-detail">
-                            <h2 className="gi-title">
+                        <div className="section-detail" >
+                            <h2 className="gi-title" style={{fontSize:"22px"}}>
                                 {/* ✅ FAQQAT SHU YER TARJIMAGA O'TKAZILDI */}
                                 {t('titles.trendingItemsTitle')}
                             </h2>

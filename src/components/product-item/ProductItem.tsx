@@ -3,7 +3,6 @@ import {Col} from "react-bootstrap";
 import ItemCard from "./ItemCard";
 import {ProductContentType} from "@/types/data.types";
 import Spinner from "../button/Spinner";
-import {useSliceData} from "@/hooks/useSliceData";
 
 const API_URL = "https://admin.beauty-point.uz/api/products";
 
@@ -20,20 +19,6 @@ function ProductAll({
     const handleClick = () => {
         setSelected(!selected);
     };
-    //
-    // if (error) return <div>Failed to load products</div>;
-    // if (!data)
-    //     return (
-    //         <div>
-    //             <Spinner/>
-    //         </div>
-    //     );
-    //
-    // const getData = () => {
-    //     if (hasPaginate) return data.data;
-    //     else return data;
-    // };
-
     useEffect(() => {
         const fetchProducts=async ()=>{
             try{
@@ -73,11 +58,8 @@ function ProductAll({
                 <Col
                     key={index}
                     md={4}
-                    className={`col-sm-6 gi-product-box gi-col-5 ${
-                        selected ? "active" : ""
-                    }`}
-                    onClick={handleClick}
-                >
+                    className={`col-sm-6 gi-product-box gi-col-5 ${selected ? "active" : ""}`}
+                    onClick={handleClick}>
                     <ItemCard data={item}/>
                 </Col>
             ))}

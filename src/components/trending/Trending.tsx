@@ -13,21 +13,16 @@ const Trending = () => {
     return (
         <div>
             <section className="gi-offer-section padding-tb-40">
-                <div>
+                <div className={"container"}>
                     <Row style={{
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
-                        paddingLeft: 160,
-                        paddingRight: 160,
+                        // paddingLeft: 160,
+                        // paddingRight: 160,
                     }}>
-                        {/* */}
                         <TrendingProduct/>
-
-                        {/* */}
                         <SellingProduct />
-
-                        {/* */}
                         <TopRatedProduct/>
                     </Row>
                 </div>
