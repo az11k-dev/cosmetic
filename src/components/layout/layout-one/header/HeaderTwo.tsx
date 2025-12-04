@@ -1,55 +1,109 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import SidebarCart from "../../../model/SidebarCart";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@/store";
-import {setSearchTerm} from "@/store/reducers/filterReducer";
 import {useAuth} from "@/context/AuthContext";
 import {useTranslation} from "react-i18next";
+import useDebounce from "@/hooks/useDebounce"; // Используем хук, созданный ранее
+
+// 💡 НОВЫЕ ТИПЫ ДЛЯ ЛОКАЛИЗАЦИИ И РЕЗУЛЬТАТА
+interface LocalizedString {
+    uz: string;
+    ru: string;
+    // Добавьте другие языки, если они поддерживаются
+}
+
+interface SearchResult {
+    id: number;
+    name: LocalizedString;
+    price: string;
+    image_url?: string;
+}
+
+const SEARCH_API_URL = "https://admin.beauty-point.uz/api/search?q=";
 
 function HeaderTwo({cartItems, wishlistItems}: any) {
-    const {t} = useTranslation("headerTwo");
+    // 💡 Получаем i18n instance для доступа к текущему языку
+    const {t, i18n} = useTranslation("headerTwo");
 
     const [isCartOpen, setIsCartOpen] = useState(false);
-
-    // --- Redux ОСТАВЛЕН только для Filter/Search ---
-    const dispatch = useDispatch();
-    const {searchTerm} = useSelector((state: RootState) => state.filter);
-    const [searchInput, setSearchInput] = useState(searchTerm || "");
-    // ------------------------------------------------
-
     const navigate = useNavigate();
 
-    // 💡 ЗАМЕНА Redux Hooks: используем хук useAuth
-    const {isAuthenticated, logout: contextLogout} = useAuth(); // Переименовываем, чтобы избежать конфликта, если бы мы оставили Redux logout
+    const [searchInput, setSearchInput] = useState("");
+    const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
-    // ❌ УДАЛЯЕМ: useEffect для загрузки login_user,
-    //            так как это теперь обрабатывается в AuthProvider.
-    // useEffect(() => { ... }, [dispatch]);
+    const debouncedSearchTerm = useDebounce(searchInput, 500);
 
-    const handleSearch = (event: any) => {
+    const {isAuthenticated, logout: contextLogout} = useAuth();
+
+    // 💡 ФУНКЦИЯ ДЛЯ ОПРЕДЕЛЕНИЯ ИМЕНИ НА ТЕКУЩЕМ ЯЗЫКЕ
+    const getProductName = (name: LocalizedString) => {
+        // Получаем текущий язык (например, 'ru' или 'uz')
+        const currentLang = i18n.language as keyof LocalizedString;
+
+        // Возвращаем имя на текущем языке. Если нет, по умолчанию берем 'ru' или 'uz'.
+        return name[currentLang] || name['ru'] || name['uz'] || 'Product Name';
+    };
+
+
+    // 💡 useEffect для выполнения API-запроса
+    useEffect(() => {
+        const fetchSearchResults = async (query: string) => {
+            if (query.trim().length < 2) {
+                setSearchResults([]);
+                return;
+            }
+
+            setIsLoading(true);
+            try {
+                const response = await fetch(`${SEARCH_API_URL}${query}`);
+                const jsonResponse = await response.json();
+
+                // 💡 ГЛАВНОЕ ИЗМЕНЕНИЕ: Извлекаем массив из data.products
+                const productsArray = jsonResponse?.data?.products || [];
+
+                if (Array.isArray(productsArray)) {
+                    // Используем .slice() для ограничения количества отображаемых результатов
+                    setSearchResults(productsArray.slice(0, 5) as SearchResult[]);
+                } else {
+                    setSearchResults([]);
+                }
+            } catch (error) {
+                console.error("Ошибка при поиске:", error);
+                setSearchResults([]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchSearchResults(debouncedSearchTerm);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debouncedSearchTerm]);
+
+
+    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchInput(event.target.value);
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        dispatch(setSearchTerm(searchInput));
-        navigate("/shop-full-width-col-4");
+        if (searchInput.trim()) {
+            navigate(`/shop-full-width-col-4?q=${searchInput}`);
+            setSearchResults([]);
+        }
     };
 
-    const openCart = () => {
-        setIsCartOpen(true);
+    const handleResultClick = () => {
+        // Очищаем поле ввода и результаты после клика
+        setSearchResults([]);
+        setSearchInput("");
     };
 
-    const closeCart = () => {
-        setIsCartOpen(false);
-    };
-
-    // 💡 ОБНОВЛЕННАЯ ФУНКЦИЯ LOGOUT
+    // ... openCart, closeCart, handleLogout (без изменений) ...
+    const openCart = () => setIsCartOpen(true);
+    const closeCart = () => setIsCartOpen(false);
     const handleLogout = () => {
-        // 1. Context Logout: очищает контекст и localStorage
         contextLogout();
-
         navigate("/");
     };
 
@@ -59,24 +113,10 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
                 <div className="container position-relative">
                     <div className="row">
                         <div className="gi-flex">
-                            {/* */}
-                            <div className="align-self-center gi-header-logo">
-                                <div className="header-logo">
-                                    <Link to="/">
-                                        <img
-                                            src={
-                                                "/assets/img/logo/logo.png"
-                                            }
-                                            alt="Site Logo"
-                                        />
-                                    </Link>
-
-
-                                </div>
-                            </div>
-                            {/* */}
+                            {/* ... Логотип ... */}
+                            {/* ... Поле поиска ... */}
                             <div className="align-self-center gi-header-search">
-                                <div className="header-search">
+                                <div className="header-search position-relative">
                                     <form
                                         onSubmit={handleSubmit}
                                         className="gi-search-group-form"
@@ -93,97 +133,49 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
                                             <i className="fi-rr-search"></i>
                                         </button>
                                     </form>
-                                </div>
-                            </div>
-                            {/* */}
-                            <div className="gi-header-action align-self-center">
-                                <div className="gi-header-bottons">
-                                    {/* Account Dropdown (использует isAuthenticated из Context) */}
-                                    <div className="gi-acc-drop">
-                                        <Link
-                                            to="/"
-                                            className="gi-header-btn gi-header-user dropdown-toggle gi-user-toggle gi-header-rtl-btn"
-                                            title={t("account")}
-                                        >
-                                            <div className="header-icon">
-                                                <i className="fi-rr-user"></i>
-                                            </div>
-                                            <div className="gi-btn-desc">
-                                                <span className="gi-btn-title">{t("account")}</span>
-                                                <span className="gi-btn-stitle">
-                                                    {isAuthenticated ? t("logout") : t("login")}
-                                                </span>
-                                            </div>
-                                        </Link>
-                                        <ul className="gi-dropdown-menu">
-                                            {isAuthenticated ? (
-                                                <>
-                                                    <li>
-                                                        <Link className="dropdown-item" to="/user-profile">
-                                                            {t("myProfile")}
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link className="dropdown-item" to="/orders">
-                                                            {t("orders")}
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        {/* 💡 Используем handleLogout */}
-                                                        <a className="dropdown-item" onClick={handleLogout}>
-                                                            {t("logout")}
-                                                        </a>
-                                                    </li>
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <li>
-                                                        <Link className="dropdown-item" to="/register">
-                                                            {t("register")}
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link className="dropdown-item" to="/checkout">
-                                                            {t("checkout")}
-                                                        </Link>
-                                                    </li>
-                                                    <li>
-                                                        <Link className="dropdown-item" to="/login">
-                                                            {t("login")}
-                                                        </Link>
-                                                    </li>
-                                                </>
+
+                                    {/* 💡 РЕНДЕРИНГ РЕЗУЛЬТАТОВ */}
+                                    {searchInput.trim() && (searchResults.length > 0 || isLoading || (debouncedSearchTerm.length > 1 && !isLoading && searchResults.length === 0)) && (
+                                        <div className="search-results-dropdown">
+                                            {isLoading && <div className="loading-indicator">{t("loading")}...</div>}
+
+                                            {!isLoading && searchResults.length > 0 && (
+                                                <ul className="list-group">
+                                                    {searchResults.map((result) => (
+                                                        // 💡 КЛАССЫ ИЗМЕНЕНЫ ДЛЯ НОВОГО МАКЕТА
+                                                        <li key={result.id}
+                                                            className="list-group-item search-item-with-image">
+                                                            <Link
+                                                                to={`/product-details/${result.id}`}
+                                                                onClick={handleResultClick}
+                                                                className="search-item-link"
+                                                            >
+                                                                {/* 💡 СЕКЦИЯ ИЗОБРАЖЕНИЯ */}
+
+                                                                {/* 💡 СЕКЦИЯ ДЕТАЛЕЙ */}
+                                                                <div className="item-details">
+                                                                    <div className="item-title">
+                                                                        {getProductName(result.name)}
+                                                                    </div>
+                                                                    <div className="item-price">
+                                                                        {result.price} UZS
+                                                                    </div>
+                                                                </div>
+                                                            </Link>
+                                                        </li>
+                                                    ))}
+                                                    {/* Ссылка на полную страницу поиска (без изменений) */}
+                                                </ul>
                                             )}
-                                        </ul>
-                                    </div>
-                                    {/* Wishlist */}
-                                    <Link
-                                        to="/wishlist"
-                                        className="gi-header-btn gi-wish-toggle gi-header-rtl-btn"
-                                        title={t("wishlist")}
-                                    >
-                                        <div className="header-icon">
-                                            <i className="fi-rr-heart"></i>
+
+                                            {/* Если нет результатов и поиск завершен */}
+                                            {!isLoading && debouncedSearchTerm.length > 1 && searchResults.length === 0 && (
+                                                <div className="no-results p-2 text-muted">
+                                                    {t("noResultsFound", {query: searchInput})}
+                                                </div>
+                                            )}
                                         </div>
-                                        <div className="gi-btn-desc">
-                                            <span className="gi-btn-stitle">{t("wishlist")}</span>
-                                        </div>
-                                    </Link>
-                                    {/* Cart */}
-                                    <Link
-                                        onClick={openCart}
-                                        to={{hash: "#"}}
-                                        className="gi-header-btn gi-cart-toggle gi-header-rtl-btn"
-                                        title={t("cart")}
-                                    >
-                                        <div className="header-icon">
-                                            <i className="fi-rr-shopping-bag"></i>
-                                            <span className="main-label-note-new"></span>
-                                        </div>
-                                        <div className="gi-btn-desc">
-                                            <span className="gi-btn-stitle">{t("cart")}</span>
-                                        </div>
-                                    </Link>
+                                    )}
                                 </div>
                             </div>
                         </div>

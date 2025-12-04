@@ -9,5 +9,6 @@
   "wishlist": "Избранное",
   "items": "товаров",
   "cart": "Корзина",
-  "searchProducts": "Поиск товаров..."
+  "searchProducts": "Поиск товаров...",
+  "noResultsFound": "Продукты не найдены"
 }

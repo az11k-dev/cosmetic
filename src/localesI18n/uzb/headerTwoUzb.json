@@ -9,5 +9,6 @@
   "wishlist": "Sevimlilar",
   "items": "ta element",
   "cart": "Savat",
-  "searchProducts": "Mahsulotlarni qidirish..."
+  "searchProducts": "Mahsulotlarni qidirish...",
+  "noResultsFound": "Mahsulotlar topilmadi"
 }
