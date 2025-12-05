@@ -497,3 +497,55 @@ export interface ProductSidebar {
     index: number;
     image: string;
   }
+
+// src/types/data.types.ts
+
+// Ikkilangan til maydoni uchun asosiy tur (uz/ru)
+export interface LangField {
+    uz: string;
+    ru: string;
+}
+
+// Kategoriya uchun interfeys
+export interface Category {
+    id: number;
+    name: LangField;
+    upload_id: number;
+    // ... boshqa maydonlar
+}
+
+// Mahsulot rasmi uchun interfeys
+export interface ProductImage {
+    id: number;
+    upload: {
+        id: number;
+        file_url: string; // Rasmlarni ko'rsatish uchun bu muhim
+    };
+    is_main: number; // Asosiy rasm ekanligi
+    // ... boshqa maydonlar
+}
+
+// Asosiy Mahsulot interfeysi
+export interface Product {
+    id: number;
+    name: LangField;
+    price: string; // float/string kelmoqda
+    old_price: string;
+    rating: number;
+    parent_id: number | null;
+    category_id: number | null; // Filtrlash uchun asosiy maydon
+    images: ProductImage[];
+    details: {
+        description: LangField;
+        sku: string;
+        // ... boshqa maydonlar
+    };
+    category: Category | null; // Agar Category ham qo'shib yuborilgan bo'lsa
+}
+
+// ProductAll komponenti uchun props
+export interface ProductAllProps {
+    // statekey o'rniga aniq Category ID ni qabul qilamiz
+    categoryId: number | null;
+    hasPaginate?: boolean;
+}

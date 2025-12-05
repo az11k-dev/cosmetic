@@ -92,29 +92,8 @@ function HeaderOne({cartItems, wishlistItems}: HeaderOneProps) {
                                     {/* Matnni tarjima qilish */}
                                     {t('header.track_order')}
                                 </Link>
-                                {/* */}
-                                {/*<Dropdown className="header-top-lan-curr header-top-lan">*/}
-                                {/*    <Dropdown.Toggle variant="" className="dropdown-toggle" id="dropdown-basic">*/}
-                                {/*        /!* Hozirgi aktiv til nomini tarjima orqali ko'rsatish *!/*/}
-                                {/*        {getCurrentLanguageName(i18n.language)}*/}
-                                {/*    </Dropdown.Toggle>*/}
-                                {/*    <Dropdown.Menu as="ul">*/}
-                                {/*        {availableLanguages.map((lang) => (*/}
-                                {/*            <Dropdown.Item*/}
-                                {/*                as="li"*/}
-                                {/*                key={lang.code}*/}
-                                {/*                onClick={() => changeLanguage(lang.code)}*/}
-                                {/*                className={i18n.language.startsWith(lang.code) ? 'active' : ''}*/}
-                                {/*            >*/}
 
 
-                                {/*                /!* Dropdown menyusidagi tillarning nomini tarjima orqali ko'rsatish *!/*/}
-                                {/*                {t(lang.nameKey)}*/}
-                                {/*            </Dropdown.Item>*/}
-                                {/*        ))}*/}
-                                {/*    </Dropdown.Menu>*/}
-
-                                {/*</Dropdown>*/}
                                 <Dropdown className="header-top-lan-curr header-top-lan">
                                     <Dropdown.Toggle variant="" className="dropdown-toggle" id="dropdown-basic">
                                         {/* Hozirgi aktiv til nomini tarjima orqali ko'rsatish */}

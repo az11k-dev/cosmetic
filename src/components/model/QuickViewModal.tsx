@@ -108,10 +108,11 @@ const QuickViewModal: React.FC<SingleProductContentPageProps> = ({ show, handleC
                                                     setQuantity={setQuantity}
                                                 />
                                             </div>
-                                            <div className="gi-quickview-cart ">
+                                            <div className="gi-quickview-cart " >
                                                 <button
                                                     onClick={() => handleCart(data)}
                                                     className="gi-btn-1"
+                                                    style={{display: "flex", alignItems:"center", gap:"10px"}}
                                                 >
                                                     <i className="fi-rr-shopping-basket"></i>
                                                     {t("addToCartButton")} {/* 💡 Tugma matnini tarjima qilish */}
