@@ -146,8 +146,9 @@ const ItemCard: React.FC<SingleProductContentPageProps> = ({data}: { data: Item 
                                 <span className="qty">{data.weight}</span>
                             </span>
                             <span className="gi-price">
-                                <span className="new-price">${data.price}.00</span>
-                                <span className="old-price">${data.old_price}.00</span>
+                                <span className="new-price">{parseInt(data?.price).toLocaleString("en-US")} so'm</span>
+                                <span
+                                    className="old-price">{parseInt(data?.old_price).toLocaleString("en-US")} so'm</span>
                             </span>
                         </div>
                     </div>

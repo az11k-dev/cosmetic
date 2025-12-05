@@ -22,7 +22,7 @@ interface SingleProductContentPageProps {
 
 const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data, show, handleClose}) => {
     const {t} = useTranslation(["productCard", "itemNames", "categoryNames"]);
-    const { wishlistItems, addWishlistItem, removeWishlistItem } = useWishlist();
+    const {wishlistItems, addWishlistItem, removeWishlistItem} = useWishlist();
     const {addItemToCart} = useCart();
     const [quantity, setQuantity] = useState(1);
     const [nav1, setNav1] = useState<Slider | null>(null);
@@ -68,11 +68,10 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
     const handleWishlist = useCallback((products: Item) => {
         if (!isInWishlist) {
             addWishlistItem(products);
-            showSuccessToast(t("addToWishlistSuccessMsg"), { icon: false });
-        }
-        else {
+            showSuccessToast(t("addToWishlistSuccessMsg"), {icon: false});
+        } else {
             removeWishlistItem(products.id);
-            showSuccessToast(t("removeWishlistSuccessMsg"), { icon: false });
+            showSuccessToast(t("removeWishlistSuccessMsg"), {icon: false});
         }
     }, [isInWishlist, addWishlistItem, removeWishlistItem, t, data]);
 
@@ -159,12 +158,13 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
                                         <div className="gi-single-price">
                                             <div className="final-price">
                                                 <span className="new-price">
-                                            ${(data.price * quantity).toFixed(2)}
+                                            {parseInt(data?.price).toLocaleString("en-US")} so'm
                                         </span>
                                             </div>
                                             <div className="mrp">
                                                 {data.price && (
-                                                    <span className="old-price ">${data?.old_price}</span>
+                                                    <span
+                                                        className="old-price ">{parseInt(data?.old_price).toLocaleString("en-US")} so'm</span>
                                                 )}
                                             </div>
                                         </div>
@@ -172,7 +172,7 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
                                             <span
                                                 className="gi-single-sku"> <span>SKU:</span> {data?.details.sku}</span>
                                             <span
-                                                className="gi-single-ps-title"> <span>{lang==="ru"?"ЗАПАС":"QOLGAN"}:</span> {data?.details?.stock}</span>
+                                                className="gi-single-ps-title"> <span>{lang === "ru" ? "ЗАПАС" : "QOLGAN"}:</span> {data?.details?.stock}</span>
                                         </div>
                                     </div>
                                     <div className="gi-single-desc">
@@ -184,16 +184,17 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
 
 
                                             <li>
-                                                <strong>{lang==="ru"?"Внешний материал:":"Tashqi material:"}</strong> A-Grade Standard Quality
+                                                <strong>{lang === "ru" ? "Внешний материал:" : "Tashqi material:"}</strong> A-Grade
+                                                Standard Quality
                                             </li>
                                             <li>
-                                                <strong>{lang==="ru"?"Категория:":"Kategoriya"}</strong> {lang === "ru" ? data?.category?.name.ru : data?.category?.name.uz}
+                                                <strong>{lang === "ru" ? "Категория:" : "Kategoriya"}</strong> {lang === "ru" ? data?.category?.name.ru : data?.category?.name.uz}
                                             </li>
                                         </ul>
                                     </div>
                                     <div className="gi-pro-variation">
                                         <div className="gi-pro-variation-inner gi-pro-variation-size">
-                                            <span>{lang==="ru"?"Масса":"Og'irligi"}</span>
+                                            <span>{lang === "ru" ? "Масса" : "Og'irligi"}</span>
                                             <div className="gi-pro-variation-content">
                                                 {data?.details?.weight}
                                             </div>
@@ -208,7 +209,7 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
                                             <button
                                                 onClick={() => handleCart(data)}
                                                 className="gi-btn-1"
-                                                style={{display:"flex",alignItems:"center", gap:"6px"}}
+                                                style={{display: "flex", alignItems: "center", gap: "6px"}}
                                             >
                                                 <i className="fi-rr-shopping-basket"></i>
                                                 {t("addToCartButton")}

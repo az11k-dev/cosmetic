@@ -14,13 +14,13 @@ function HeaderManu() {
     const data = [
         {
             id: 1,
-            name: t("contact"),
-            link: "/contact-us",
+            name: t("cart"),
+            link: "/cart",
         },
         {
             id: 2,
-            name: t("about"),
-            link: "/about-us",
+            name: t("contact"),
+            link: "/contact-us",
         },
         {
             id: 3,
@@ -29,8 +29,8 @@ function HeaderManu() {
         },
         {
             id: 4,
-            name: t("cart"),
-            link: "/cart",
+            name: t("about"),
+            link: "/about-us",
         },
         {
             id: 5,

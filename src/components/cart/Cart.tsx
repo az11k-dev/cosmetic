@@ -162,7 +162,7 @@ const Cart = () => {
                                                                     className="gi-cart-pro-price"
                                                                 >
                                     <span className="amount">
-                                      ${item?.price}
+                                      {item?.price.toLocaleString("en-US")} so'm
                                     </span>
                                                                 </td>
                                                                 <td
@@ -182,7 +182,7 @@ const Cart = () => {
                                                                     data-label={t('table.totalHeader')}
                                                                     className="gi-cart-pro-subtotal"
                                                                 >
-                                                                    ${item?.price}
+                                                                    {item?.price.toLocaleString("en-US")} so'm
                                                                 </td>
                                                                 <td
                                                                     onClick={() => handleRemoveFromCart(item?.id)}

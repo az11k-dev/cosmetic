@@ -1,12 +1,12 @@
-import { useCallback } from "react";
+import {useCallback} from "react";
 import SidebarArea from "../shop-sidebar/sidebar-area/SidebarArea";
-import { Swiper, SwiperSlide } from "swiper/react";
+import {Swiper, SwiperSlide} from "swiper/react";
 import StarRating from "../stars/StarRating";
 import ProductTab from "./product-tab/ProductTab";
-import { Col } from "react-bootstrap";
+import {Col} from "react-bootstrap";
 import Spinner from "../button/Spinner";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/store";
 import {
     setRange,
     setSelectedCategory,
@@ -14,7 +14,7 @@ import {
     setSelectedTags,
     setSelectedWeight,
 } from "@/store/reducers/filterReducer";
-import { useSliceData } from "@/hooks/useSliceData";
+import {useSliceData} from "@/hooks/useSliceData";
 import SingleProductContent from "@/components/product-page/single-product-content/SingleProductContent.tsx";
 
 const ProductPage = ({
@@ -32,12 +32,12 @@ const ProductPage = ({
         selectedTags,
     } = useSelector((state: RootState) => state.filter);
 
-    const { data, error } = useSliceData('moreitems');
+    const {data, error} = useSliceData('moreitems');
 
 
     const handlePriceChange = useCallback(
         (min: number, max: number) => {
-            dispatch(setRange({ min, max }));
+            dispatch(setRange({min, max}));
         },
         [dispatch]
     );
@@ -46,40 +46,37 @@ const ProductPage = ({
     if (!data)
         return (
             <div>
-                <Spinner />
+                <Spinner/>
             </div>
         );
 
-    const handleCategoryChange = (category:any) => {
+    const handleCategoryChange = (category: any) => {
         const updatedCategory = selectedCategory.includes(category)
             ? selectedCategory.filter((cat) => cat !== category)
             : [...selectedCategory, category];
         dispatch(setSelectedCategory(updatedCategory));
     };
 
-    const handleWeightChange = (weight:any) => {
+    const handleWeightChange = (weight: any) => {
         const updatedweight = selectedWeight.includes(weight)
             ? selectedWeight.filter((wet) => wet !== weight)
             : [...selectedWeight, weight];
         dispatch(setSelectedWeight(updatedweight));
     };
 
-    const handleColorChange = (color:any) => {
+    const handleColorChange = (color: any) => {
         const updatedcolor = selectedColor.includes(color)
             ? selectedColor.filter((clr) => clr !== color)
             : [...selectedColor, color];
         dispatch(setSelectedColor(updatedcolor));
     };
 
-    const handleTagsChange = (tag:any) => {
+    const handleTagsChange = (tag: any) => {
         const updatedtag = selectedTags.includes(tag)
             ? selectedTags.filter((tg) => tg !== tag)
             : [...selectedTags, tag];
         dispatch(setSelectedTags(updatedtag));
     };
-
-
-
 
 
     return (
@@ -98,7 +95,7 @@ const ProductPage = ({
                 <div className="single-add-more m-tb-40">
                     <Swiper
                         loop={true}
-                        autoplay={{ delay: 1000 }}
+                        autoplay={{delay: 1000}}
                         slidesPerView={3}
                         spaceBetween={20}
                         breakpoints={{
@@ -131,7 +128,7 @@ const ProductPage = ({
                                 spaceBetween: 20,
                             },
                         }}
-                        style={{ overflow: "hidden" }}
+                        style={{overflow: "hidden"}}
                         className="gi-add-more-slider owl-carousel"
                     >
                         {data && data.length > 0 ? data.map((item: any, index: number) => (
@@ -140,25 +137,25 @@ const ProductPage = ({
                                     +
                                 </a>
                                 <div className="add-more-img">
-                                    <img src={item.image} alt="product" />
+                                    <img src={item.image} alt="product"/>
                                 </div>
                                 <div className="add-more-info">
                                     <h5>{item.title}</h5>
                                     <span className="gi-pro-rating">
-                    <StarRating rating={item.rating} />
+                    <StarRating rating={item.rating}/>
                   </span>
                                     <span className="gi-price">
-                    <span className="new-price">${item.newPrice}</span>
-                    <span className="old-price">${item.oldPrice}</span>
+                    <span className="new-price">{item.newPrice.toLocaleString("en-US")} so'm</span>
+                    <span className="old-price">{item.oldPrice.toLocaleString("en-US")} so'm</span>
                   </span>
                                 </div>
                             </SwiperSlide>
-                        )): <></>}
+                        )) : <></>}
                     </Swiper>
                 </div>
 
                 {/* <!-- Single product tab start --> */}
-                <ProductTab />
+                <ProductTab/>
                 {/* <!-- product details description area end --> */}
             </Col>
             {/* <!-- Sidebar Area Start --> */}

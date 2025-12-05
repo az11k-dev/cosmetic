@@ -10,14 +10,9 @@ interface Item {
     id: string | number;
 }
 
-interface HeaderOneProps {
-    cartItems: Item[];
-    wishlistItems: Item[];
-}
-
 // ================================
 
-function HeaderOne({cartItems, wishlistItems}: HeaderOneProps) {
+function HeaderOne() {
     // 1. t (tarjima) va i18n (tilni boshqarish) funksiyalarini olamiz
     const {t, i18n} = useTranslation("headerOne");
 
@@ -88,10 +83,6 @@ function HeaderOne({cartItems, wishlistItems}: HeaderOneProps) {
                                     {/* Matnni tarjima qilish */}
                                     {t('header.help')}
                                 </Link>
-                                <Link className="gi-help" to="/track-order">
-                                    {/* Matnni tarjima qilish */}
-                                    {t('header.track_order')}
-                                </Link>
 
 
                                 <Dropdown className="header-top-lan-curr header-top-lan">
@@ -124,27 +115,26 @@ function HeaderOne({cartItems, wishlistItems}: HeaderOneProps) {
                             <div className="gi-header-bottons">
                                 <div className="right-icons">
                                     <div className="gi-header-btn gi-header-user gi-header-rtl-btn">
-                                    <Dropdown className="header-top-lan-curr header-top-lan  ">
-                                        <Dropdown.Toggle variant="" className="dropdown-toggle" id="dropdown-basic">
-                                            {getCurrentLanguageName2(i18n.language)}
-                                        </Dropdown.Toggle>
-                                        <Dropdown.Menu as="ul">
-                                            {availableLanguages2.map((lang) => (
-                                                <Dropdown.Item
-                                                    as="li"
-                                                    key={lang.code2}
-                                                    onClick={() => changeLanguage(lang.code2)}
-                                                    className={i18n.language.startsWith(lang.code2) ? 'active' : ''}
-                                                >
-                                                    {/* Dropdown menyusidagi tillarning nomini tarjima orqali ko'rsatish */}
-                                                    {t(lang.nameKey2)}
-                                                </Dropdown.Item>
-                                            ))}
-                                        </Dropdown.Menu>
-                                    </Dropdown>
+                                        <Dropdown className="header-top-lan-curr header-top-lan  ">
+                                            <Dropdown.Toggle variant="" className="dropdown-toggle" id="dropdown-basic">
+                                                {getCurrentLanguageName2(i18n.language)}
+                                            </Dropdown.Toggle>
+                                            <Dropdown.Menu as="ul">
+                                                {availableLanguages2.map((lang) => (
+                                                    <Dropdown.Item
+                                                        as="li"
+                                                        key={lang.code2}
+                                                        onClick={() => changeLanguage(lang.code2)}
+                                                        className={i18n.language.startsWith(lang.code2) ? 'active' : ''}
+                                                    >
+                                                        {/* Dropdown menyusidagi tillarning nomini tarjima orqali ko'rsatish */}
+                                                        {t(lang.nameKey2)}
+                                                    </Dropdown.Item>
+                                                ))}
+                                            </Dropdown.Menu>
+                                        </Dropdown>
 
                                     </div>
-
 
 
                                     <Link

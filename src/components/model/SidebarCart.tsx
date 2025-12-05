@@ -98,7 +98,7 @@ const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartO
                                             </Link>
                                             <span className="cart-price">
                                                 {/* Umumiy narxni hisoblaymiz */}
-                                                <span>${(item.price * item.quantity).toFixed(2)}</span>
+                                                <span>{(item.price * item.quantity).toFixed(2)} so'm</span>
                                             </span>
                                             <div className="qty-plus-minus gi-qty-rtl">
                                                 {/* 💡 QuantitySelector komponentiga funksiyani o'tkazamiz */}

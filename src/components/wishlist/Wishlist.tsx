@@ -1,30 +1,31 @@
 // Wishlist.tsx
 
-import React, { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import React, {useEffect, useState} from "react";
+import {Swiper, SwiperSlide} from "swiper/react";
 import ItemCard from "../product-item/ItemCard";
-import { Fade } from "react-awesome-reveal";
-import { Col, Row } from "react-bootstrap";
+import {Fade} from "react-awesome-reveal";
+import {Col, Row} from "react-bootstrap";
 import Spinner from "../button/Spinner";
-import { useSliceData } from "@/hooks/useSliceData";
-import { Item } from "@/types/data.types";
-import { showSuccessToast } from "@/utility/toast";
+import {useSliceData} from "@/hooks/useSliceData";
+import {Item} from "@/types/data.types";
+import {showSuccessToast} from "@/utility/toast";
 
 // Импортируем useTranslation и Trans для локализации
-import { useTranslation, Trans } from "react-i18next";
+import {useTranslation, Trans} from "react-i18next";
 
 // 💡 Context hooklari importi
-import { useWishlist } from "@/context/WishlistContext.tsx";
-import { useCart } from "@/context/CartContext.tsx";
+import {useWishlist} from "@/context/WishlistContext.tsx";
+import {useCart} from "@/context/CartContext.tsx";
+
 const API_URL = "https://admin.beauty-point.uz/api/products";
 const Wishlist = () => {
     // Получаем функцию t (translate)
-    const { t } = useTranslation("wishlist");
+    const {t} = useTranslation("wishlist");
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { wishlistItems, removeWishlistItem } = useWishlist();
-    const { addItemToCart } = useCart();
+    const {wishlistItems, removeWishlistItem} = useWishlist();
+    const {addItemToCart} = useCart();
     const lang = localStorage.getItem("i18nextLng");
     const [currentDate, setCurrentDate] = useState(
         // Здесь можно использовать t('date_format') для форматирования даты,
@@ -32,8 +33,8 @@ const Wishlist = () => {
         new Date().toLocaleDateString("en-GB")
     );
     useEffect(() => {
-        const fetchProducts=async ()=>{
-            try{
+        const fetchProducts = async () => {
+            try {
                 const response = await fetch(API_URL);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -41,11 +42,11 @@ const Wishlist = () => {
                 const result = await response.json();
                 const apiData = result?.data?.data || [];
                 setData(apiData);
-                setError(null);}
-            catch (e){
-                console.error(e,"Failed to fetch categories:");
+                setError(null);
+            } catch (e) {
+                console.error(e, "Failed to fetch categories:");
                 setError("Ne udalos' zagruzit' kategorii.");
-            }finally {
+            } finally {
                 setIsLoading(false);
             }
             setCurrentDate(new Date().toLocaleDateString("en-GB"));
@@ -60,7 +61,7 @@ const Wishlist = () => {
     if (isLoading)
         return (
             <div>
-                <Spinner />
+                <Spinner/>
             </div>
         );
     // useEffect(() => {
@@ -88,7 +89,7 @@ const Wishlist = () => {
                     <div className="section-title-2">
                         <h2 className="gi-title">
                             {/* Перевод главного заголовка с HTML */}
-                            <Trans >
+                            <Trans>
                                 {t("wishlist_main_title")} <span>{t("wishlist_main_title2")}</span>
                             </Trans>
                         </h2>
@@ -125,7 +126,6 @@ const Wishlist = () => {
                                                     <th scope="col">{t("wishlist_col_name")}</th>
                                                     <th scope="col">{t("wishlist_col_date")}</th>
                                                     <th scope="col">{t("wishlist_col_price")}</th>
-                                                    <th scope="col">{t("wishlist_col_status")}</th>
                                                     <th scope="col">{t("wishlist_col_actions")}</th>
                                                 </tr>
                                                 </thead>
@@ -151,19 +151,6 @@ const Wishlist = () => {
                                                         </td>
                                                         <td>
                                                             <span>${data?.price}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span
-                                                                className={
-                                                                    data?.status === "Available" ? "avl" : "out"
-                                                                }
-                                                            >
-                                                                {/* Переводим статус */}
-                                                                {data?.status === "Available"
-                                                                    ? t("status_available")
-                                                                    : t("status_out_of_stock")
-                                                                }
-                                                            </span>
                                                         </td>
                                                         <td>
                                                             <span className="tbl-btn">
@@ -213,7 +200,7 @@ const Wishlist = () => {
                                     delay={200}
                                     className="section-title-2">
                                     <h2 className="gi-title">
-                                            {t("new_arrivals_title")} <span>{t("new_arrivals_title2")}</span>
+                                        {t("new_arrivals_title")} <span>{t("new_arrivals_title2")}</span>
                                     </h2>
                                     <p>{t("new_arrivals_subtitle")}</p>
                                 </div>
@@ -229,7 +216,7 @@ const Wishlist = () => {
                                 >
                                     <Swiper
                                         loop={true}
-                                        autoplay={{ delay: 1000 }}
+                                        autoplay={{delay: 1000}}
                                         slidesPerView={5}
                                         breakpoints={{
                                             0: {

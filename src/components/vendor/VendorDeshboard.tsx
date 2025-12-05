@@ -271,7 +271,7 @@ const VendorDeshboard = () => {
                                 <span>Pending</span>
                               </td>
                               <td>
-                                <span>${data.newPrice}</span>
+                                <span>{data.newPrice.toLocaleString("en-US")} so'm</span>
                               </td>
                             </tr>
                           ))}

@@ -23,8 +23,8 @@ const TopRate = ({ data }: any) => {
             <div className="gi-pro-rat-price">
               <div className="gi-pro-rat-pri-inner">
                 <span className="gi-price">
-                  <span className="new-price">${data.newPrice}</span>
-                  <span className="old-price">${data.oldPrice}</span>
+                  <span className="new-price">{data.newPrice.toLocaleString("en-US")} so'm</span>
+                  <span className="old-price">{data.oldPrice.toLocaleString("en-US")} so'm</span>
                   <span className="qty">- {data.waight}</span>
                 </span>
               </div>

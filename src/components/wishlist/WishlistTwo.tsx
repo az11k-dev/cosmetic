@@ -79,7 +79,7 @@ const WishlistTwo = () => {
                               <span>{currentDate}</span>
                             </td>
                             <td>
-                              <span>${data.newPrice}</span>
+                              <span>{data.newPrice.toLocaleString("en-US")} so'm</span>
                             </td>
                             <td>
                               <span

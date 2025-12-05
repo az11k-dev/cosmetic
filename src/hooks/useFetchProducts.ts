@@ -36,9 +36,9 @@ export const useFetchProducts = () => {
                         id: item.id,
                         // Выбор имени продукта (например, русское)
                         title: item.name.ru || item.name.uz || `Product ${item.id}`,
-                        price: parseFloat(item.price),
-                        newPrice: parseFloat(item.price), // В вашем случае price = newPrice
-                        oldPrice: parseFloat(item.old_price),
+                        price: parseFloat(item.price).toLocaleString("en-US"),
+                        newPrice: parseFloat(item.price).toLocaleString("en-US"), // В вашем случае price = newPrice
+                        oldPrice: parseFloat(item.old_price).toLocaleString("en-US"),
                         rating: item.rating,
                         category: item.category ? item.category.name.ru : 'Uncategorized', // Предполагаем, что category - это объект с name.ru
                         sale: 'Sale', // Заглушка, если нет данных о скидке
