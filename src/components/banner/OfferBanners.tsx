@@ -124,7 +124,7 @@ const OfferBanners = () => {
                             style={{
                                 backgroundColor: '#f00', // Красный цвет для скидки
                                 color: '#fff',
-                                padding: '5px 10px',
+                                padding: '3px 6px',
                                 borderRadius: '4px',
                                 display: 'inline-block',
                                 marginBottom: '10px'

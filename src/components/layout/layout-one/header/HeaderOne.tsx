@@ -138,7 +138,7 @@ function HeaderOne() {
 
 
                                     <Link
-                                        to="/login"
+                                        to="/user-profile"
                                         className="gi-header-btn gi-header-user gi-header-rtl-btn"
                                         title={t('header.login')} // title atributini ham tarjima qilamiz
                                     >
