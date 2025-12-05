@@ -59,11 +59,10 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
                 const response = await fetch(`${SEARCH_API_URL}${query}`);
                 const jsonResponse = await response.json();
 
-                // 💡 ГЛАВНОЕ ИЗМЕНЕНИЕ: Извлекаем массив из data.products
+                // 💡 ИЗВЛЕЧЕНИЕ ДАННЫХ: Извлекаем массив из data.products
                 const productsArray = jsonResponse?.data?.products || [];
 
                 if (Array.isArray(productsArray)) {
-                    // Используем .slice() для ограничения количества отображаемых результатов
                     setSearchResults(productsArray.slice(0, 5) as SearchResult[]);
                 } else {
                     setSearchResults([]);
@@ -99,10 +98,11 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
         setSearchInput("");
     };
 
-    // ... openCart, closeCart, handleLogout (без изменений) ...
     const openCart = () => setIsCartOpen(true);
     const closeCart = () => setIsCartOpen(false);
+
     const handleLogout = () => {
+        // 1. Context Logout: очищает контекст и localStorage
         contextLogout();
         navigate("/");
     };
@@ -113,8 +113,22 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
                 <div className="container position-relative">
                     <div className="row">
                         <div className="gi-flex">
-                            {/* ... Логотип ... */}
-                            {/* ... Поле поиска ... */}
+
+                            {/* 💡 ВОССТАНОВЛЕН: ЛОГОТИП */}
+                            <div className="align-self-center gi-header-logo">
+                                <div className="header-logo">
+                                    <Link to="/">
+                                        <img
+                                            src={
+                                                "/assets/img/logo/logo.png"
+                                            }
+                                            alt="Site Logo"
+                                        />
+                                    </Link>
+                                </div>
+                            </div>
+
+                            {/* ... СЕКЦИЯ ПОИСКА ... */}
                             <div className="align-self-center gi-header-search">
                                 <div className="header-search position-relative">
                                     <form
@@ -142,7 +156,7 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
                                             {!isLoading && searchResults.length > 0 && (
                                                 <ul className="list-group">
                                                     {searchResults.map((result) => (
-                                                        // 💡 КЛАССЫ ИЗМЕНЕНЫ ДЛЯ НОВОГО МАКЕТА
+                                                        // 💡 Используем красивый макет с изображением
                                                         <li key={result.id}
                                                             className="list-group-item search-item-with-image">
                                                             <Link
@@ -150,7 +164,6 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
                                                                 onClick={handleResultClick}
                                                                 className="search-item-link"
                                                             >
-                                                                {/* 💡 СЕКЦИЯ ИЗОБРАЖЕНИЯ */}
 
                                                                 {/* 💡 СЕКЦИЯ ДЕТАЛЕЙ */}
                                                                 <div className="item-details">
@@ -164,7 +177,6 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
                                                             </Link>
                                                         </li>
                                                     ))}
-                                                    {/* Ссылка на полную страницу поиска (без изменений) */}
                                                 </ul>
                                             )}
 
@@ -176,6 +188,98 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
                                             )}
                                         </div>
                                     )}
+                                </div>
+                            </div>
+
+                            {/* 💡 ВОССТАНОВЛЕН: КНОПКИ ДЕЙСТВИЙ (АККАУНТ, ИЗБРАННОЕ, КОРЗИНА) */}
+                            <div className="gi-header-action align-self-center">
+                                <div className="gi-header-bottons">
+                                    {/* Account Dropdown (использует isAuthenticated из Context) */}
+                                    <div className="gi-acc-drop">
+                                        <Link
+                                            to="/"
+                                            className="gi-header-btn gi-header-user dropdown-toggle gi-user-toggle gi-header-rtl-btn"
+                                            title={t("account")}
+                                        >
+                                            <div className="header-icon">
+                                                <i className="fi-rr-user"></i>
+                                            </div>
+                                            <div className="gi-btn-desc">
+                                                <span className="gi-btn-title">{t("account")}</span>
+                                                <span className="gi-btn-stitle">
+                                                    {isAuthenticated ? t("logout") : t("login")}
+                                                </span>
+                                            </div>
+                                        </Link>
+                                        <ul className="gi-dropdown-menu">
+                                            {isAuthenticated ? (
+                                                <>
+                                                    <li>
+                                                        <Link className="dropdown-item" to="/user-profile">
+                                                            {t("myProfile")}
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link className="dropdown-item" to="/orders">
+                                                            {t("orders")}
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        {/* 💡 Используем handleLogout */}
+                                                        <a className="dropdown-item" onClick={handleLogout}>
+                                                            {t("logout")}
+                                                        </a>
+                                                    </li>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <li>
+                                                        <Link className="dropdown-item" to="/register">
+                                                            {t("register")}
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link className="dropdown-item" to="/checkout">
+                                                            {t("checkout")}
+                                                        </Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link className="dropdown-item" to="/login">
+                                                            {t("login")}
+                                                        </Link>
+                                                    </li>
+                                                </>
+                                            )}
+                                        </ul>
+                                    </div>
+                                    {/* Wishlist */}
+                                    <Link
+                                        to="/wishlist"
+                                        className="gi-header-btn gi-wish-toggle gi-header-rtl-btn"
+                                        title={t("wishlist")}
+                                    >
+                                        <div className="header-icon">
+                                            <i className="fi-rr-heart"></i>
+                                        </div>
+                                        <div className="gi-btn-desc">
+                                            <span className="gi-btn-stitle">{t("wishlist")}</span>
+                                        </div>
+                                    </Link>
+                                    {/* Cart */}
+                                    <Link
+                                        onClick={openCart}
+                                        to={{hash: "#"}}
+                                        className="gi-header-btn gi-cart-toggle gi-header-rtl-btn"
+                                        title={t("cart")}
+                                    >
+                                        <div className="header-icon">
+                                            <i className="fi-rr-shopping-bag"></i>
+                                            <span className="main-label-note-new"></span>
+                                        </div>
+                                        <div className="gi-btn-desc">
+                                            <span className="gi-btn-stitle">{t("cart")}</span>
+                                        </div>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

@@ -1,26 +1,26 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, {useState, useCallback, useMemo} from "react";
 // Context hooklari
-import { useCart } from "@/context/CartContext.tsx";
-import { useWishlist } from "@/context/WishlistContext.tsx";
+import {useCart} from "@/context/CartContext.tsx";
+import {useWishlist} from "@/context/WishlistContext.tsx";
 
 import StarRating from "../stars/StarRating";
 import QuickViewModal from "../model/QuickViewModal";
-import { Link } from "react-router-dom";
-import { showSuccessToast } from "@/utility/toast";
-import { Item } from "@/types/data.types";
-import { useTranslation } from "react-i18next";
+import {Link} from "react-router-dom";
+import {showSuccessToast} from "@/utility/toast";
+import {Item} from "@/types/data.types";
+import {useTranslation} from "react-i18next";
 
 
 interface SingleProductContentPageProps {
     products: Item;
 }
 
-const ItemCard: React.FC<SingleProductContentPageProps>  = ({ data  }: { data: Item }) => {
-    const { t } = useTranslation(["productCard", "itemNames"]);
+const ItemCard: React.FC<SingleProductContentPageProps> = ({data}: { data: Item }) => {
+    const {t} = useTranslation(["productCard", "itemNames"]);
 
     // 💡 CONTEXTDAN OLINADI
-    const { addItemToCart } = useCart();
-    const { wishlistItems, addWishlistItem, removeWishlistItem } = useWishlist();
+    const {addItemToCart} = useCart();
+    const {wishlistItems, addWishlistItem, removeWishlistItem} = useWishlist();
 
     const [show, setShow] = useState(false);
     const [quantity, setQuantity] = useState(1);
@@ -30,7 +30,7 @@ const ItemCard: React.FC<SingleProductContentPageProps>  = ({ data  }: { data: I
     const handleCart = useCallback((product: Item) => {
         // Savatga tanlangan miqdorda qo'shish
         addItemToCart(product, quantity);
-        showSuccessToast(t("addToCartSuccessMsg"), { icon: false });
+        showSuccessToast(t("addToCartSuccessMsg"), {icon: false});
     }, [addItemToCart, quantity, t]);
     const isInWishlist = useMemo(() =>
             wishlistItems.some((item: Item) => item.id === data.id),
@@ -41,17 +41,26 @@ const ItemCard: React.FC<SingleProductContentPageProps>  = ({ data  }: { data: I
     const handleWishlist = useCallback((products: Item) => {
         if (!isInWishlist) {
             addWishlistItem(products);
-            showSuccessToast(t("addToWishlistSuccessMsg"), { icon: false });
-        }
-        else {
+            showSuccessToast(t("addToWishlistSuccessMsg"), {icon: false});
+        } else {
             removeWishlistItem(products.id);
-            showSuccessToast(t("removeWishlistSuccessMsg"), { icon: false });
+            showSuccessToast(t("removeWishlistSuccessMsg"), {icon: false});
         }
     }, [isInWishlist, addWishlistItem, removeWishlistItem, t, data]);
 
     // Quick View Modal'ni boshqarish
     const handleClose = useCallback(() => setShow(false), []);
     const handleShow = useCallback(() => setShow(true), []);
+
+    if (!data.images) {
+        return (
+            <div>
+                <p>
+                    NO PRODUCT
+                </p>
+            </div>
+        )
+    }
 
 
     return (
@@ -62,13 +71,14 @@ const ItemCard: React.FC<SingleProductContentPageProps>  = ({ data  }: { data: I
                         <div className="gi-pro-image">
                             <Link
                                 to={`/product-single/${data.id}`}
-                                state={{ productData: data }}
+                                state={{productData: data}}
                                 className="image"
                             >
                                 <span className="label veg">
                                     <span className="dot"></span>
                                 </span>
-                                <img className="main-image" src={data?.images[0]?.upload?.file_url} alt="Product" loading="lazy" />
+                                <img className="main-image" src={data?.images[0]?.upload?.file_url} alt="Product"
+                                     loading="lazy"/>
                                 <img
                                     className="hover-image"
                                     src={data?.images[1]?.upload?.file_url}
@@ -112,8 +122,8 @@ const ItemCard: React.FC<SingleProductContentPageProps>  = ({ data  }: { data: I
                     </div>
                     <div className="gi-pro-content">
                         {/* Kategoriya Link'i */}
-                        <Link to="/shop-left-sidebar-col-3"  >
-                            <h6 className="gi-pro-stitle">{lang === "ru"?data?.category?.name?.ru:data?.category?.name?.uz}</h6>
+                        <Link to="/shop-left-sidebar-col-3">
+                            <h6 className="gi-pro-stitle">{lang === "ru" ? data?.category?.name?.ru : data?.category?.name?.uz}</h6>
                         </Link>
 
                         {/* Sarlavha (ProdTitle) Link'i */}
@@ -121,7 +131,7 @@ const ItemCard: React.FC<SingleProductContentPageProps>  = ({ data  }: { data: I
                             <Link
                                 style={{fontFamily: "\"Roboto\", sans-serif"}}
                                 to={`/product-details/${data.id}`}
-                                state={{ productData: data }}
+                                state={{productData: data}}
                             >
                                 {lang === "ru" ? data?.name?.ru : data?.name?.uz}
                             </Link>
@@ -132,7 +142,7 @@ const ItemCard: React.FC<SingleProductContentPageProps>  = ({ data  }: { data: I
                         </p>
                         <div className="gi-pro-rat-price">
                             <span className="gi-pro-rating">
-                                <StarRating rating={data.rating} />
+                                <StarRating rating={data.rating}/>
                                 <span className="qty">{data.weight}</span>
                             </span>
                             <span className="gi-price">
@@ -142,7 +152,7 @@ const ItemCard: React.FC<SingleProductContentPageProps>  = ({ data  }: { data: I
                         </div>
                     </div>
                 </div>
-                <QuickViewModal data={data} handleClose={handleClose} show={show} />
+                <QuickViewModal data={data} handleClose={handleClose} show={show}/>
             </div>
         </>
     );
