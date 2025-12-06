@@ -21,7 +21,7 @@ Copyright 2025
 03. Layout 
     - Header Section
     - Footer section
-    - Category Section
+    - CategoryFilter Section
     - New product
     - Blog
     - Banner Section
@@ -4552,7 +4552,7 @@ body.gi-menu-open:before {
     }
 }
 
-/*===== Category section css =====*/
+/*===== CategoryFilter section css =====*/
 .gi-category-shop .gi-category-block {
     padding: 0 !important;
     border: 0 !important;

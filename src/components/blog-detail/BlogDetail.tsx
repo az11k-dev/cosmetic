@@ -392,9 +392,9 @@ const BlogDetail = ({ order = "" }: any) => {
             </div>
           </div>
           {/* <!-- Sidebar Recent Blog Block --> */}
-          {/* <!-- Sidebar Category Block --> */}
+          {/* <!-- Sidebar CategoryFilter Block --> */}
           <BlogCategories selectedCategory={selectedCategory} />
-          {/* <!-- Sidebar Category Block --> */}
+          {/* <!-- Sidebar CategoryFilter Block --> */}
         </div>
       </Col>
     </>

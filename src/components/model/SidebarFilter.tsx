@@ -114,7 +114,7 @@ const SidebarFilter = ({
         </div>
         <div id="shop_sidebar">
           <div className="gi-sidebar-wrap">
-            {/* <!-- Sidebar Category Block --> */}
+            {/* <!-- Sidebar CategoryFilter Block --> */}
             <div className="gi-sidebar-block">
               <div className="gi-sb-title">
                 <h3 className="gi-sidebar-title">Category</h3>

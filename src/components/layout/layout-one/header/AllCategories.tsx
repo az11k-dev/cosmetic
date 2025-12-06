@@ -38,7 +38,7 @@ const AllCategories = ({selectedIndex, setSelectedIndex, handleProductClick, t})
     const getCategoryName = (nameObject) => {
         // Логика определения текущего языка
         const currentLang = (localStorage.getItem('i18nextLng') === 'ru' || t('currentLang') === 'ru') ? 'ru' : 'uz';
-        return nameObject[currentLang] || nameObject['ru'] || 'Category Name';
+        return nameObject[currentLang] || nameObject['ru'] || 'CategoryFilter Name';
     };
 
     if (loading) {

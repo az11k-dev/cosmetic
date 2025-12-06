@@ -498,54 +498,103 @@ export interface ProductSidebar {
     image: string;
   }
 
-// src/types/data.types.ts
+/**
+ * src/types/data.types.ts
+ * API'dan keladigan va Komponentlar ishlatadigan tiplar
+ */
 
-// Ikkilangan til maydoni uchun asosiy tur (uz/ru)
-export interface LangField {
+// Kategoriya nomi yoki mahsulot nomi (ko'p tilli)
+interface MultiLangName {
     uz: string;
     ru: string;
 }
 
-// Kategoriya uchun interfeys
+// Upload obyekti (rasm manzili)
+interface Upload {
+    id: number;
+    file_url: string;
+}
+
+// ----------------------------------------
+// 📌 Mahsulotga bog'liq Rasm obyekti
+interface ProductImage {
+    id: number;
+    product_id: number;
+    upload_id: number;
+    is_main: 0 | 1; // Asosiy rasm ekanligi (0 yoki 1)
+    order: number;
+    created_at: string;
+    updated_at: string;
+    upload: Upload; // Rasm manzili obyekti
+}
+
+// 📌 Mahsulotning batafsil ma'lumotlari
+interface ProductDetails {
+    id: number;
+    product_id: number;
+    description: MultiLangName; // Tavsif
+    sku: string; // SKU kodi
+    weight: string;
+    weight_unit: string;
+    stock: number; // Zaxirada borligi
+    rating_count: number;
+    created_at: string;
+    updated_at: string;
+}
+
+// ----------------------------------------
+// 📌 Kategoriya obyekti (Kategoriyalar API'si va Product javobidan)
 export interface Category {
     id: number;
-    name: LangField;
+    name: MultiLangName;
     upload_id: number;
-    // ... boshqa maydonlar
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
+    products_count?: number; // Kategoriyalar API'sida mavjud bo'lishi mumkin
+    upload?: Upload; // Kategoriyalar API'sida mavjud bo'lishi mumkin
 }
 
-// Mahsulot rasmi uchun interfeys
-export interface ProductImage {
-    id: number;
-    upload: {
-        id: number;
-        file_url: string; // Rasmlarni ko'rsatish uchun bu muhim
-    };
-    is_main: number; // Asosiy rasm ekanligi
-    // ... boshqa maydonlar
-}
-
-// Asosiy Mahsulot interfeysi
+// ----------------------------------------
+// 📌 Mahsulot obyekti
 export interface Product {
     id: number;
-    name: LangField;
-    price: string; // float/string kelmoqda
+    name: MultiLangName;
+    price: string;
     old_price: string;
     rating: number;
     parent_id: number | null;
-    category_id: number | null; // Filtrlash uchun asosiy maydon
+    category_id: number | null;
+    created_at: string;
+    updated_at: string;
+    deleted_at: string | null;
     images: ProductImage[];
-    details: {
-        description: LangField;
-        sku: string;
-        // ... boshqa maydonlar
-    };
-    category: Category | null; // Agar Category ham qo'shib yuborilgan bo'lsa
+    details: ProductDetails;
+    category: Category | null;
 }
 
-// ProductAll komponenti uchun props
+// ----------------------------------------
+// 📌 API Umumiy Javob Tiplari
+
+// Kategoriyalar API'sidan keladigan asosiy javob
+export interface CategoryApiResponse {
+    status: boolean;
+    data: {
+        data: Category[];
+    };
+}
+
+// Mahsulotlar API'sidan keladigan asosiy javob
+export interface ProductApiResponse {
+    status: boolean;
+    data: {
+        data: Product[]; // Mahsulotlar massivi shu yerda
+    };
+}
+
+// ----------------------------------------
+// 📌 Komponent Props Tiplari
 export interface ProductAllProps {
-    // statekey o'rniga aniq Category ID ni qabul qilamiz
-    categoryId: number | null;
+    categoryId: number | null; // Filtrlash uchun: null = Barchasi
     hasPaginate?: boolean;
 }

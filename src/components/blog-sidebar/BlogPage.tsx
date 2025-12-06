@@ -132,10 +132,10 @@ const BlogPage = ({ order = "", lg = 12, md }: any) => {
             </div>
           </div>
           {/* <!-- Sidebar Recent Blog Block --> */}
-          {/* <!-- Sidebar Category Block --> */}
+          {/* <!-- Sidebar CategoryFilter Block --> */}
           <BlogCategories selectedCategory={selectedCategory} />
 
-          {/* <!-- Sidebar Category Block --> */}
+          {/* <!-- Sidebar CategoryFilter Block --> */}
         </div>
       </Col>
     </>

@@ -103,7 +103,7 @@ function Footer() {
                                                 onClick={() => toggleDropdown("category")}
                                                 className="gi-footer-heading"
                                             >
-                                                {/* 💡 TARJIMA 2: Category sarlavhasi */}
+                                                {/* 💡 TARJIMA 2: CategoryFilter sarlavhasi */}
                                                 {t("categoryHeading")}
                                                 <div className="gi-heading-res">
                                                     <i

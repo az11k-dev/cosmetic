@@ -178,7 +178,7 @@ const FashionSidebar = ({
               style={{ backgroundColor: "#fff" }}
               className="gi-sidebar-wrap"
             >
-              {/* <!-- Sidebar Category Block --> */}
+              {/* <!-- Sidebar CategoryFilter Block --> */}
               <div className="gi-sidebar-block">
                 <div
                   style={{ display: "flex", justifyContent: "space-evenly" }}

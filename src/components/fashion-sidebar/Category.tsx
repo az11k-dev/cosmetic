@@ -93,7 +93,7 @@ const Category = () => {
               />
             </div>
             <div className="col-lg-9 col-md-12">
-              {/* <!-- Category section --> */}
+              {/* <!-- CategoryFilter section --> */}
               <Fade
                 direction="up"
                 duration={2000}
@@ -106,7 +106,7 @@ const Category = () => {
                   </Row>
                 </div>
               </Fade>
-              {/* <!-- Category section End -->
+              {/* <!-- CategoryFilter section End -->
                     <!-- Product tab Area Start --> */}
               <FashionArrials />
               {/* <!-- Product tab Area End -->

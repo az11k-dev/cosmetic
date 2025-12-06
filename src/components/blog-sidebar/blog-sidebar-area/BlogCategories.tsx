@@ -43,7 +43,7 @@ const BlogCategories = ({
 
   return (
     <>
-      {/* <!-- Sidebar Category Block --> */}
+      {/* <!-- Sidebar CategoryFilter Block --> */}
       <div className="gi-sidebar-block">
         <div className="gi-sb-title">
           <h3 className="gi-sidebar-title">Categories</h3>
@@ -69,7 +69,7 @@ const BlogCategories = ({
           </ul>
         </div>
       </div>
-      {/* <!-- Sidebar Category Block --> */}
+      {/* <!-- Sidebar CategoryFilter Block --> */}
 
       {showButton && (
         <div style={{ display: "flex", justifyContent: "end" }}>

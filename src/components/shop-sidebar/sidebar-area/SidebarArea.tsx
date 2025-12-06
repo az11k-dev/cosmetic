@@ -139,7 +139,7 @@ const SidebarArea = ({
       >
         <div id="shop_sidebar">
           <div className="gi-sidebar-wrap">
-            {/* <!-- Sidebar Category Block --> */}
+            {/* <!-- Sidebar CategoryFilter Block --> */}
             <div className="gi-sidebar-block">
               <div
                 style={{ display: "flex", justifyContent: "space-evenly" }}

@@ -1,12 +1,7 @@
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
-import classic from "@/utility/header/classic";
 import {Link, useNavigate} from "react-router-dom";
-import banner from "@/utility/header/benner";
-import column from "@/utility/header/columns";
-import list from "@/utility/header/list";
-import blog from "@/utility/header/blog";
-import pages from "@/utility/header/pages";
+// Boshqa importlar...
 import SmoothCollapse from "react-smooth-collapse";
 
 const MobileManuSidebar = ({
@@ -54,6 +49,17 @@ const MobileManuSidebar = ({
         }
     ]
 
+    // ** DIQQAT: Style qo'shilgan joylar: **
+
+    // ** 1. gi-mobile-menu uchun yuqoridagi kodda `height:"100vh"` allaqachon bor, bu yaxshi. **
+
+    const menuInnerStyle = {
+        height: "100%", // Ota elementning to'liq balandligini egallashi uchun
+        display: "flex", // Flexbox ni yoqish
+        flexDirection: "column", // Elementlarni ustma-ust taxlash
+        justifyContent: "space-between", // Asosiy kontentni yuqoriga, pastki kontentni pastga itarish uchun
+    };
+
     return (
         <>
             <div
@@ -64,7 +70,7 @@ const MobileManuSidebar = ({
 
 
             {isMobileMenuOpen && (
-                <div id="gi-mobile-menu" className="gi-mobile-menu gi-menu-open">
+                <div id="gi-mobile-menu" className="gi-mobile-menu gi-menu-open" style={{ height:"100vh"}}>
                     <div className="gi-menu-title">
                         {/* ✅ TARJIMA: My Menu */}
                         <span className="menu_title">{t("menuTitle")}</span>
@@ -72,55 +78,55 @@ const MobileManuSidebar = ({
                             ×
                         </button>
                     </div>
-                    <div className="gi-menu-inner">
-                        {data.map((item: any) => (
-                            <div className="gi-menu-content" key={item?.id}>
-                                <ul>
-                                    <li className="dropdown" >
-                                        {/*<span*/}
-                                        {/*    onClick={() => toggleMainMenu("pages")}*/}
-                                        {/*    className="menu-toggle"*/}
-                                        {/*></span>*/}
-                                        <a onClick={()=>{navigate(item?.link)}}>
-                                            {/* ✅ TARJIMA: Pages */}
-                                            {/*{t("menuPages")}*/}
-                                            {item?.name}
-                                        </a>
-                                        <SmoothCollapse
-                                            expanded={activeMainMenu === "pages"}
-                                            heightTransition="1s ease"
-                                        >
+                    {/* ** 2. gi-menu-inner ga yangi stil berildi ** */}
+                    <div className="gi-menu-inner" style={menuInnerStyle}>
 
-                                        </SmoothCollapse>
-                                    </li>
-                                </ul>
-                            </div>
-                        ))}
-                        <div className="header-res-lan-curr">
-                            {/* */}
-                            <div className="header-res-social">
+                        {/* ** 3. Yangi o'ram (wrapper) qo'shildi va unga flex-grow berildi ** */}
+                        <div style={{ flexGrow: 1, overflowY: 'auto' }}>
+                            {data.map((item: any) => (
+                                <div className="gi-menu-content" key={item?.id}>
+                                    <ul>
+                                        <li className="dropdown" >
+                                            <a onClick={()=>{navigate(item?.link)}}>
+                                                {item?.name}
+                                            </a>
+                                            <SmoothCollapse
+                                                expanded={activeMainMenu === "pages"}
+                                                heightTransition="1s ease"
+                                            >
+                                                {/* Sub menyu joyi */}
+                                            </SmoothCollapse>
+                                        </li>
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* ** 4. Ijtimoiy tarmoqlar bloki endi eng pastda qoladi ** */}
+                        <div className="header-res-lan-curr" style={{ padding: '5px 0'}}>
+                            <div className="header-res-social" >
                                 <div className="header-top-social">
                                     <ul className="mb-0">
                                         <li className="list-inline-item">
-                                            <Link to="#">
-                                                <i className="gicon gi-facebook"></i>
+                                            <Link to="tel:+998990996050">
+                                                <i className="gicon gi-phone"></i>
                                             </Link>
                                         </li>
                                         <li className="list-inline-item">
-                                            <Link to="#">
+                                            <Link to="https://t.me/your_beautypoint">
                                                 <i className="gicon gi-telegram"></i>
                                             </Link>
                                         </li>
                                         <li className="list-inline-item">
-                                            <Link to="#">
+                                            <Link to="https://www.instagram.com/beautypoint.uz">
                                                 <i className="gicon gi-instagram"></i>
                                             </Link>
                                         </li>
-                                        <li className="list-inline-item">
-                                            <Link to="#">
-                                                <i className="gicon gi-linkedin"></i>
-                                            </Link>
-                                        </li>
+                                        {/*<li className="list-inline-item">*/}
+                                        {/*    <Link to="#">*/}
+                                        {/*        <i className="gicon gi-linkedin"></i>*/}
+                                        {/*    </Link>*/}
+                                        {/*</li>*/}
                                     </ul>
                                 </div>
                             </div>

@@ -1,113 +1,66 @@
-// src/components/product-item/ProductAll.tsx (Yangilangan versiya)
-
-import { useEffect, useState, useMemo } from "react";
-import { Col } from "react-bootstrap";
+import {useEffect, useState} from "react";
+import {Col} from "react-bootstrap";
 import ItemCard from "./ItemCard";
-import { Product, ProductAllProps } from "@/types/data.types";
+import {ProductContentType} from "@/types/data.types";
 import Spinner from "../button/Spinner";
 
 const API_URL = "https://admin.beauty-point.uz/api/products";
 
-function ProductAll({ categoryId }: ProductAllProps) {
-    const [allProducts, setAllProducts] = useState<Product[]>([]);
-    const [error, setError] = useState<string | null>(null);
+function ProductAll({
+                        statekey,
+                        hasPaginate = false,
+                    }: ProductContentType) {
+    // const { data, error } = useSliceData(statekey);
+    const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [selected, setSelected] = useState(false);
 
-    // [O'zgarish yo'q] Ma'lumotlarni API'dan olib kelish (Fetching data)
+    const handleClick = () => {
+        setSelected(!selected);
+    };
     useEffect(() => {
-        const fetchProducts = async () => {
-            // ... (API chaqiruvi kodi) ...
-            try {
+        const fetchProducts=async ()=>{
+            try{
                 const response = await fetch(API_URL);
                 if (!response.ok) {
-                    throw new Error(`HTTP xatosi! status: ${response.status}`);
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const result = await response.json();
-                const apiData: Product[] = result?.data?.data || [];
-                setAllProducts(apiData);
-                setError(null);
-            } catch (e) {
-                console.error(e, "Mahsulotlarni olishda xato:");
-                setError("Mahsulotlarni yuklashda xato yuz berdi.");
-            } finally {
+                const apiData = result?.data?.data || [];
+                setData(apiData);
+                setError(null);}
+            catch (e){
+                console.error(e,"Failed to fetch categories:");
+                setError("Ne udalos' zagruzit' kategorii.");
+            }finally {
                 setIsLoading(false);
             }
+
         };
         fetchProducts();
     }, []);
 
-
-
-    const filteredProducts = useMemo(() => {
-
-        if (categoryId === null) {
-            return allProducts;
-        }
-        const targetId = categoryId;
-        return allProducts.filter(item => {
-            const itemCategoryId = item.category_id ? Number(item.category_id) : null;
-            return itemCategoryId === targetId;
-        });
-    }, [allProducts, categoryId]);
-
-    //     // const filteredProducts = useMemo(() => {
-    //     // 1. Qaysi kategoriya ID'si kirib kelayotganini tekshirish
-    //     console.log("Qidirilayotgan Category ID:", categoryId);
-    //
-    //     if (categoryId === null) {
-    //         console.log("-> Barcha Mahsulotlar qaytarildi.");
-    //         return allProducts;
-    //     }
-    //
-    //     const targetId = categoryId;
-    //
-    //     const result = allProducts.filter(item => {
-    //         const itemCategoryId = item.category_id ? Number(item.category_id) : null;
-    //
-    //         // 2. Taqqoslashlarni tekshirish
-    //         // Har bir mahsulotni solishtirish natijasini ko'rish
-    //         if(itemCategoryId === targetId) {
-    //             console.log(`MAHSULOT TOPILDI: ID ${item.id} -> Category ID: ${itemCategoryId}`);
-    //         }
-    //
-    //         return itemCategoryId === targetId;
-    //     });
-    //
-    //     // 3. Filtrlashdan keyingi natijani tekshirish
-    //     console.log(`-> Filtrlash natijasi (Topilgan Mahsulotlar soni): ${result.length}`);
-    //
-    //     return result;
-    //
-    // }, [allProducts, categoryId]);
-
-    // ... (Qolgan isLoading va error qismlari o'zgarishsiz) ...
     if (error) {
-        return <div style={{ color: 'red', padding: '20px' }}>Xato: {error}</div>;
+        return <div>Error: {error}</div>;
     }
 
     if (isLoading)
         return (
-            <div style={{ textAlign: 'center', padding: '20px' }}>
+            <div>
                 <Spinner />
             </div>
         );
 
-    if (filteredProducts.length === 0 && !isLoading) {
-        return <p style={{ padding: '20px', textAlign: 'center' }}>Tanlangan kategoriyada mahsulot topilmadi.</p>;
-    }
-
-
-
     return (
         <>
-            {filteredProducts.map((item: Product) => (
+            {data?.map((item: any, index: number) => (
                 <Col
-                    key={item.id}
+                    key={index}
                     md={4}
-                    className="col-sm-6 gi-product-box gi-col-5"
-                    style={{marginTop:"20px"}}
-                >
-                    <ItemCard data={item} />
+                    className={`col-sm-6 gi-product-box gi-col-5 ${selected ? "active" : ""}`}
+                    onClick={handleClick}>
+                    <ItemCard data={item}/>
                 </Col>
             ))}
         </>
