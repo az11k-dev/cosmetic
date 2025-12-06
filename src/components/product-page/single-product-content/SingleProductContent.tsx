@@ -215,15 +215,14 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
                                                 {t("addToCartButton")}
                                             </button>
                                         </div>
-
-                                        <div className="gi-single-wishlist">
-                                            <button
-                                                onClick={() => handleWishlist(data)}
-                                                className={`gi-btn-group wishlist ${isInWishlist ? "active" : ""}`}
-                                                title={t("wishlistTitle")}>
-                                                <i className="fi-rr-heart"></i>
-                                            </button>
-                                        </div>
+                                        {/*<div className="gi-single-wishlist">*/}
+                                        {/*    <button*/}
+                                        {/*        onClick={() => handleWishlist(data)}*/}
+                                        {/*        className={`gi-btn-group wishlist ${isInWishlist ? "active" : ""}`}*/}
+                                        {/*        title={t("wishlistTitle")}>*/}
+                                        {/*        <i className="fi-rr-heart"></i>*/}
+                                        {/*    </button>*/}
+                                        {/*</div>*/}
                                     </div>
                                 </div>
                             </Col>

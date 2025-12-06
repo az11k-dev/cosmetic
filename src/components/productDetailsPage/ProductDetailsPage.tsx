@@ -75,58 +75,11 @@ const ProductDetailsPage: React.FC = ({order = "", none = "none", lg = 12,}: any
                 md={12}
                 className={`gi-pro-rightside gi-common-rightside ${order}`}
             >
-                {/* */}
                 <Container className="py-5">
-                    {/* `productData` mavjudligini tekshirishni unutmang, aks holda tushib ketishi mumkin */}
                     {<SingleProductContent data={productData} handleClose={handleClose} show={show}/>}
                 </Container>
-                {/* */}
-
-                {/* */}
-                {/*<div className="single-add-more m-tb-40">*/}
-                {/*    <Swiper*/}
-                {/*        loop={true}*/}
-                {/*        autoplay={{ delay: 1000 }}*/}
-                {/*        slidesPerView={3}*/}
-                {/*        spaceBetween={20}*/}
-                {/*        breakpoints={{*/}
-                {/*            0: { slidesPerView: 1, spaceBetween: 20 },*/}
-                {/*            320: { slidesPerView: 1, spaceBetween: 20 },*/}
-                {/*            425: { slidesPerView: 1, spaceBetween: 20 },*/}
-                {/*            640: { slidesPerView: 2, spaceBetween: 20 },*/}
-                {/*            768: { slidesPerView: 2, spaceBetween: 20 },*/}
-                {/*            1024: { slidesPerView: 2, spaceBetween: 20 },*/}
-                {/*            1025: { slidesPerView: 3, spaceBetween: 20 },*/}
-                {/*        }}*/}
-                {/*        style={{ overflow: "hidden" }}*/}
-                {/*        className="gi-add-more-slider owl-carousel"*/}
-                {/*    >*/}
-                {/*        {data && data.length > 0 ? data.map((item: any, index: number) => (*/}
-                {/*            <SwiperSlide key={index} className="add-more-item">*/}
-                {/*                <a href="" className="gi-btn-2">*/}
-                {/*                    +*/}
-                {/*                </a>*/}
-                {/*                <div className="add-more-img">*/}
-                {/*                    <img src={item.file_url} alt="product" />*/}
-                {/*                </div>*/}
-                {/*                <div className="add-more-info">*/}
-                {/*                    <h5>{item.name}</h5>*/}
-                {/*                    <span className="gi-pro-rating">*/}
-                {/*                        <StarRating rating={item.rating} />*/}
-                {/*                    </span>*/}
-                {/*                    <span className="gi-price">*/}
-                {/*                        <span className="new-price">${item.price}</span>*/}
-                {/*                        <span className="old-price">${item.old_price}</span>*/}
-                {/*                    </span>*/}
-                {/*                </div>*/}
-                {/*            </SwiperSlide>*/}
-                {/*        )): <></>}*/}
-                {/*    </Swiper>*/}
-                {/*</div>*/}
-
-                {/* */}
                 <ProductTab data={productData}/>
-                {/* */}
+
             </Col>
 
 
