@@ -1,9 +1,6 @@
-import React, {useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import blog from "@/utility/header/blog";
-import pages from "@/utility/header/pages";
-import productpage from "@/utility/header/productpage";
 import AllCategories from "@/components/layout/layout-one/header/AllCategories.tsx";
 
 function HeaderManu() {

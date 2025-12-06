@@ -106,7 +106,7 @@ const FashionSidebar = ({
   const { data: accessoriesData, error: accessoriesError } = useSliceData('fashionaccessories');
 
   useEffect(() => {
-    setShowButton(location.pathname !== "/fashion-shop-left-sidebar-col-3/");
+    setShowButton(location.pathname !== "/fashion-category/");
   }, [location.pathname]);
 
   if (clothesError || footwearError || accessoriesError || brandError)
@@ -141,7 +141,7 @@ const FashionSidebar = ({
   };
 
   const handleFilterBtn = () => {
-    navigate("/fashion-shop-left-sidebar-col-3");
+    navigate("/fashion-category");
   };
 
   const toggleDropdown = (section: any) => {
@@ -345,7 +345,7 @@ const FashionSidebar = ({
                     <a
                       onClick={handleSubmit}
                       key={index}
-                      href="${Link}/shop-left-sidebar-col-3"
+                      href="${Link}/category"
                       className="gi-btn-2"
                     >
                       {data.name}
@@ -380,7 +380,7 @@ const FashionSidebar = ({
                   </div>
                   <a
                     onClick={handleSubmit}
-                    href={`${process.env.VITE_APP_URL}/shop-left-sidebar-col-3`}
+                    href={`${process.env.VITE_APP_URL}/category`}
                     className="gi-btn-2"
                   >
                     Shop Now

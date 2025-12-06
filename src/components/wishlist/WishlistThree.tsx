@@ -157,7 +157,7 @@ const WishlistThree = () => {
                       </div>
                     </div>
                     <div className="gi-pro-content">
-                      <Link to={`/shop-left-sidebar-col-3`}>
+                      <Link to={`/category`}>
                         <h6 className="gi-pro-stitle">{data.brand}</h6>
                       </Link>
                       <h5 className="gi-pro-title">

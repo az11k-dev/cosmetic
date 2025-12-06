@@ -95,7 +95,7 @@ const SidebarCategory = ({
   const { data: tagData, error: tagError } = useSliceData('fashiontags');
 
   useEffect(() => {
-    setShowButton(location.pathname !== "/fashion-shop-left-sidebar-col-3/");
+    setShowButton(location.pathname !== "/fashion-category/");
   }, [location.pathname]);
 
   const toggleDropdown = (section: any) => {
@@ -121,7 +121,7 @@ const SidebarCategory = ({
   if (!tagData) return <div></div>;
 
   const handleFilterBtn = () => {
-    navigate("/fashion-shop-left-sidebar-col-3");
+    navigate("/fashion-category");
   };
 
   const handleSubmit = (e: any) => {
@@ -362,7 +362,7 @@ const SidebarCategory = ({
                 </div>
                 <a
                   onClick={handleSubmit}
-                  href={`${process.env.VITE_APP_URL}/shop-left-sidebar-col-3`}
+                  href={`${process.env.VITE_APP_URL}/category`}
                   className="gi-btn-2"
                 >
                   Shop Now

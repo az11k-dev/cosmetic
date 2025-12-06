@@ -3,23 +3,23 @@ import { LinkAttr } from "@/types/data.types";
   const fruits: LinkAttr[] = [
     {
       name: "Cauliflower",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Bell Peppers",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Broccoli",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Cabbage",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Tomato",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
   ];
   export default fruits;

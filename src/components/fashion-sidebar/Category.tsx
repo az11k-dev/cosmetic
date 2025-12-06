@@ -142,7 +142,7 @@ const Category = () => {
                             <h5>Digital smartwatch</h5>
                             <p>50% OFF</p>
                             <a
-                              href={`${process.env.VITE_APP_URL}/shop-left-sidebar-col-3`}
+                              href={`${process.env.VITE_APP_URL}/category`}
                               className="gi-btn-2"
                             >
                               Shop Now
@@ -173,7 +173,7 @@ const Category = () => {
                             <h5>Men&apos;s Sport Shoes</h5>
                             <p>70% OFF</p>
                             <a
-                              href={`${process.env.VITE_APP_URL}/shop-left-sidebar-col-3`}
+                              href={`${process.env.VITE_APP_URL}/category`}
                               className="gi-btn-2"
                             >
                               Shop Now
@@ -297,7 +297,7 @@ const Category = () => {
                               30% off <span>Hurry up!!!</span>
                             </h3>
                             <a
-                              href={`${process.env.VITE_APP_URL}/shop-left-sidebar-col-3`}
+                              href={`${process.env.VITE_APP_URL}/category`}
                               className="gi-btn-2"
                             >
                               Shop now

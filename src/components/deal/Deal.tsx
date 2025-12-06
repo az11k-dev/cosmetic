@@ -1,8 +1,8 @@
-import { Col, Row } from "react-bootstrap";
+import {Col, Row} from "react-bootstrap";
 import {Swiper, SwiperSlide,} from "swiper/react";
 import "swiper/css";
 import ItemCard from "../product-item/ItemCard";
-import { Fade } from "react-awesome-reveal";
+import {Fade} from "react-awesome-reveal";
 // import DealendTimer from "../dealend-timer/DealendTimer";
 import Spinner from "../button/Spinner";
 // import { useSliceData } from "@/hooks/useSliceData";
@@ -12,14 +12,14 @@ import {useEffect, useState} from "react";
 const API_URL = "https://admin.beauty-point.uz/api/products";
 const lang = localStorage.getItem("i18nextLng");
 const Deal = () => {
-    const { t } = useTranslation("deal1"); // 💡 'deal' namespace'idan foydalanish
+    const {t} = useTranslation("deal1"); // 💡 'deal' namespace'idan foydalanish
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchProducts=async ()=>{
-            try{
+        const fetchProducts = async () => {
+            try {
                 const response = await fetch(API_URL);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -27,11 +27,11 @@ const Deal = () => {
                 const result = await response.json();
                 const apiData = result?.data?.data || [];
                 setData(apiData);
-                setError(null);}
-                catch (e){
-                console.error(e,"Failed to fetch categories:");
+                setError(null);
+            } catch (e) {
+                console.error(e, "Failed to fetch categories:");
                 setError("Ne udalos' zagruzit' kategorii.");
-                }finally {
+            } finally {
                 setIsLoading(false);
             }
 
@@ -46,7 +46,7 @@ const Deal = () => {
     if (isLoading)
         return (
             <div>
-                <Spinner />
+                <Spinner/>
             </div>
         );
     return (
@@ -65,11 +65,11 @@ const Deal = () => {
                                     data-aos-duration="2000"
                                     data-aos-delay="200"
                                 >
-                                    <Fade triggerOnce direction="up" duration={2000} delay={200} >
-                                        <div className="section-detail" >
-                                                <h2 className="gi-title">
-                                                    {t("dealTitle")} <span>{t("dealTitleSpan")}</span>
-                                                </h2>
+                                    <Fade triggerOnce direction="up" duration={2000} delay={200}>
+                                        <div className="section-detail">
+                                            <h2 className="gi-title">
+                                                {t("dealTitle")} <span>{t("dealTitleSpan")}</span>
+                                            </h2>
                                             <p>{t("dealTagline")}</p>
                                         </div>
                                     </Fade>
@@ -81,11 +81,12 @@ const Deal = () => {
                                     delay={200}
                                     className="gi-deal-block m-minus-lr-12"
                                 >
-                                    <div className="deal-slick-carousel gi-product-slider slick-initialized slick-slider">
+                                    <div
+                                        className="deal-slick-carousel gi-product-slider slick-initialized slick-slider">
                                         <div className="slick-list draggable">
                                             <Swiper
                                                 loop={true}
-                                                autoplay={{ delay: 1000 }}
+                                                autoplay={{delay: 1000}}
                                                 slidesPerView={5}
                                                 breakpoints={{
                                                     0: {
@@ -116,9 +117,9 @@ const Deal = () => {
                                                 className="slick-track"
                                             >
                                                 {data?.map((item: any, index: number) => (
-                                                    <div >
-                                                        <SwiperSlide key={item.id || index} >
-                                                            <ItemCard data={item}   />
+                                                    <div>
+                                                        <SwiperSlide key={item.id || index}>
+                                                            <ItemCard data={item}/>
                                                         </SwiperSlide>
                                                     </div>
                                                 ))}

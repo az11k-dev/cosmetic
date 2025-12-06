@@ -3,11 +3,11 @@ import { LinkAttr } from "@/types/data.types";
   const juices: LinkAttr[] = [
     {
       name: "Sunglasses",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Lenses",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
   ];
   export default juices;

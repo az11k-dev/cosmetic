@@ -3,23 +3,23 @@ import { LinkAttr } from "@/types/data.types";
   const bakery: LinkAttr[] = [
     {
       name: "Cake and Pastry",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Rusk Toast",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Bread & Buns",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Chocolate Brownie",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Cream Roll",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
   ];
   export default bakery;

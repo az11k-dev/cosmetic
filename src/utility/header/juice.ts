@@ -3,23 +3,23 @@ import { LinkAttr } from "@/types/data.types";
   const juice: LinkAttr[] = [
     {
       name: "Mango Juice",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Coconut Water",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Tetra Pack",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Apple Juices",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Lychee Juice",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
   ];
   export default juice;

@@ -20,7 +20,7 @@ const SummerBanner = () => {
                           Latest Exclusive <br></br>Summer Collection
                         </h2>
                         <Link
-                          to="/shop-left-sidebar-col-3"
+                          to="/category"
                           className="gi-btn-2"
                         >
                           Shop now

@@ -7,6 +7,7 @@
 @import url("/assets/css/plugins/nouislider.css");
 @import url("/assets/css/style.css");
 @import url("/assets/css/responsive.css");
+
 body {
     font-family: "Roboto", sans-serif !important;
 }
@@ -385,4 +386,20 @@ a {
     padding: 15px;
     text-align: center;
     color: #999;
+}
+
+#special_grid_container {
+    display: grid !important;
+    grid-template-columns: auto auto auto auto !important;
+    justify-items: center !important;
+    align-items: center !important;
+}
+
+@media screen and (max-width: 724px) {
+    #special_grid_container {
+        display: grid !important;
+        grid-template-columns: auto !important;
+        justify-items: center !important;
+        align-items: center !important;
+    }
 }

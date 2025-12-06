@@ -18,7 +18,7 @@ const SellingItem = ({data}: any) => {
                             <Link to="/product-left-sidebar">{data.title}</Link>
                         </h5>
                         <h6 className="gi-pro-stitle">
-                            <Link to="/shop-left-sidebar-col-3">{data.name}</Link>
+                            <Link to="/category">{data.name}</Link>
                         </h6>
                         <div className="gi-pro-rat-price">
                             <div className="gi-pro-rat-pri-inner">

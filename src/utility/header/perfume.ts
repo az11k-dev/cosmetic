@@ -3,19 +3,19 @@ import { LinkAttr } from "@/types/data.types";
   const perfume: LinkAttr[] = [
     {
       name: "Clothes perfume",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "deodorant",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Flower fragrance",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Air Freshener",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
   ];
   export default perfume;

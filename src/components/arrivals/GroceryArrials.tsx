@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import {useState} from "react";
+import {Col, Row} from "react-bootstrap";
 import ProductAll from "../product-item/ProductItem";
-import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import { Fade } from "react-awesome-reveal";
+import {Tab, TabList, TabPanel, Tabs} from "react-tabs";
+import {Fade} from "react-awesome-reveal";
 // 💡 useTranslation importi
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 
 // 💡 Komponent nomi NewArrivals ga o'zgartirildi
 const NewArrivals = () => {
-    const { t } = useTranslation("newArrivals"); // 💡 'newArrivals' namespace'ini yuklaymiz
+    const {t} = useTranslation("newArrivals"); // 💡 'newArrivals' namespace'ini yuklaymiz
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const handleProductClick = (index: number) => {
@@ -27,7 +27,11 @@ const NewArrivals = () => {
                         onSelect={(selectedIndex) => setSelectedIndex(selectedIndex)}
                     >
                         <div className="gi-tab-title">
-                            <div className="gi-main-title">
+                            <div style={{
+                                marginLeft: "auto",
+                                marginRight: "auto",
+                                textAlign: 'center'
+                            }} className="gi-main-title">
                                 <div className="section-title">
                                     <div className="section-detail">
                                         <h2 className="gi-title">
@@ -39,76 +43,6 @@ const NewArrivals = () => {
                                     </div>
                                 </div>
                             </div>
-                            {/* */}
-                            <TabList className="gi-pro-tab">
-                                <ul className="gi-pro-tab-nav nav">
-                                    {/* 1. All (Barchasi) */}
-                                    <Tab
-                                        style={{ outline: "none" }}
-                                        className="nav-item gi-header-rtl-arrival"
-                                        key={"all"}
-                                    >
-                                        <a
-                                            className={`nav-link ${
-                                                selectedIndex == 0 ? "active" : ""
-                                            }`}
-                                            onClick={() => handleProductClick(0)}
-                                            data-bs-toggle="tab"
-                                        >
-                                            {t("tabAll")} {/* 💡 Tarjima kaliti */}
-                                        </a>
-                                    </Tab>
-                                    {/* 2. Face Care (Snack & Spices o'rniga) */}
-                                    <Tab
-                                        style={{ outline: "none" }}
-                                        className="nav-item gi-header-rtl-arrival"
-                                        key={"facecare"}
-                                    >
-                                        <a
-                                            className={`nav-link ${
-                                                selectedIndex == 1 ? "active" : ""
-                                            }`}
-                                            data-bs-toggle="tab"
-                                            onClick={() => handleProductClick(1)}
-                                        >
-                                            {t("tabFaceCare")} {/* 💡 Tarjima kaliti */}
-                                        </a>
-                                    </Tab>
-                                    {/* 3. Makeup (Fruits o'rniga) */}
-                                    <Tab
-                                        style={{ outline: "none" }}
-                                        className="nav-item gi-header-rtl-arrival"
-                                        key={"makeup"}
-                                    >
-                                        <a
-                                            className={`nav-link ${
-                                                selectedIndex == 2 ? "active" : ""
-                                            }`}
-                                            data-bs-toggle="tab"
-                                            onClick={() => handleProductClick(2)}
-                                        >
-                                            {t("tabMakeup")} {/* 💡 Tarjima kaliti */}
-                                        </a>
-                                    </Tab>
-                                    {/* 4. Perfumes (Vegetables o'rniga) */}
-                                    <Tab
-                                        style={{ outline: "none" }}
-                                        className="nav-item"
-                                        key={"perfumes"}
-                                    >
-                                        <a
-                                            className={`nav-link ${
-                                                selectedIndex == 3 ? "active" : ""
-                                            }`}
-                                            data-bs-toggle="tab"
-                                            onClick={() => handleProductClick(3)}
-                                        >
-                                            {t("tabPerfumes")} {/* 💡 Tarjima kaliti */}
-                                        </a>
-                                    </Tab>
-                                </ul>
-                            </TabList>
-                            {/* */}
                         </div>
                         {/* */}
                         <Row className="m-b-minus-24px">
@@ -124,7 +58,8 @@ const NewArrivals = () => {
                                             }`}
                                         >
                                             <Row>
-                                                <ProductAll statekey="face-care-slug" /> {/* 💡 Замени "snack" на реальный slug */}
+                                                <ProductAll
+                                                    statekey="face-care-slug"/> {/* 💡 Замени "snack" на реальный slug */}
                                             </Row>
                                         </Fade>
                                     </TabPanel>
@@ -137,7 +72,7 @@ const NewArrivals = () => {
                                             }`}
                                         >
                                             <Row>
-                                                <ProductAll statekey="snack" /> {/* 💡 statekey o'zgartirildi */}
+                                                <ProductAll statekey="snack"/> {/* 💡 statekey o'zgartirildi */}
                                             </Row>
                                         </Fade>
                                     </TabPanel>
@@ -150,7 +85,7 @@ const NewArrivals = () => {
                                             }`}
                                         >
                                             <Row>
-                                                <ProductAll statekey="fruits" /> {/* 💡 statekey o'zgartirildi */}
+                                                <ProductAll statekey="fruits"/> {/* 💡 statekey o'zgartirildi */}
                                             </Row>
                                         </Fade>
                                     </TabPanel>
@@ -163,7 +98,7 @@ const NewArrivals = () => {
                                             }`}
                                         >
                                             <Row>
-                                                <ProductAll statekey="vegetables" /> {/* 💡 statekey o'zgartirildi */}
+                                                <ProductAll statekey="vegetables"/> {/* 💡 statekey o'zgartirildi */}
                                             </Row>
                                         </Fade>
                                     </TabPanel>

@@ -41,7 +41,7 @@ const OrderPage = () => {
                 <div className="gi-vendor-card-header">
                   <h5>Panding Orders</h5>
                   <div className="gi-header-btn">
-                    <Link className="gi-btn-2" to="/shop-left-sidebar-col-3">
+                    <Link className="gi-btn-2" to="/category">
                       Shop Now
                     </Link>
                   </div>

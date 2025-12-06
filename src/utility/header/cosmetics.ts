@@ -3,19 +3,19 @@ import { LinkAttr } from "@/types/data.types";
   const cosmetics: LinkAttr[] = [
     {
       name: "shampoo",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Sunscreen",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "body wash",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "makeup kit",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
   ];
   export default cosmetics;

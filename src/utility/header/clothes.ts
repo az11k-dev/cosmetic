@@ -3,19 +3,19 @@ import { LinkAttr } from "@/types/data.types";
   const clothe: LinkAttr[] = [
     {
       name: "Shirt",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "shorts",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "jacket",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "dress & frock",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
   ];
   export default clothe;

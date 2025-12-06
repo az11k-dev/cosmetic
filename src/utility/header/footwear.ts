@@ -3,19 +3,19 @@ import { LinkAttr } from "@/types/data.types";
   const footwear: LinkAttr[] = [
     {
       name: "Sports",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Formal",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Casual",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "safety shoes",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
   ];
   export default footwear;

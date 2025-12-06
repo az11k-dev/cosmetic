@@ -3,23 +3,23 @@ import { LinkAttr } from "@/types/data.types";
   const snacks: LinkAttr[] = [
     {
       name: "French fries",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "potato chips",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Biscuits & Cookies",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Popcorn",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Rice Cakes",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
   ];
   export default snacks;

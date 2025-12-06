@@ -3,7 +3,7 @@ import { LinkAttr } from "@/types/data.types";
 const classic: LinkAttr[] = [
   {
     name: "Left sidebar 3 column",
-    href: "/shop-left-sidebar-col-3",
+    href: "/category",
   },
   {
     name: "Left sidebar 4 column",

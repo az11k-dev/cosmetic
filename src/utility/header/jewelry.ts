@@ -3,15 +3,15 @@ import { LinkAttr } from "@/types/data.types";
   const jewelry: LinkAttr[] = [
     {
       name: "Earrings",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Couple Rings",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Necklace",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
   ];
   export default jewelry;

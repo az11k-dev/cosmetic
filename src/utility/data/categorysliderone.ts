@@ -5,7 +5,7 @@ const categorysliderone: Category[] = [
     {
         percentage: "30%",
         icon: "fi fi-tr-spa", // Yuz parvarishi
-        image:  "/shop-left-sidebar-col-3.html",
+        image:  "/category.html",
         name: "catFaceCare", // 💡 Tarjima kaliti
         item: 320,
         num: 1,
@@ -13,7 +13,7 @@ const categorysliderone: Category[] = [
     {
         percentage: "",
         icon: "fi fi-tr-lipstick", // Makiyaj
-        image:  "/shop-left-sidebar-col-3.html",
+        image:  "/category.html",
         name: "catMakeup", // 💡 Tarjima kaliti
         item: 652,
         num: 2,
@@ -21,7 +21,7 @@ const categorysliderone: Category[] = [
     {
         percentage: "15%",
         icon: "fi fi-tr-hair-dryer", // Soch parvarishi
-        image:  "/shop-left-sidebar-col-3.html",
+        image:  "/category.html",
         name: "catHairCare", // 💡 Tarjima kaliti
         item: 548,
         num: 3,
@@ -29,7 +29,7 @@ const categorysliderone: Category[] = [
     {
         percentage: "10%",
         icon: "fi fi-tr-soap", // Tana parvarishi
-        image:  "/shop-left-sidebar-col-3.html",
+        image:  "/category.html",
         name: "catBodyCare", // 💡 Tarjima kaliti
         item: 48,
         num: 4,
@@ -37,7 +37,7 @@ const categorysliderone: Category[] = [
     {
         percentage: "",
         icon: "fi fi-tr-perfume", // Parfyumeriya
-        image:  "/shop-left-sidebar-col-3.html",
+        image:  "/category.html",
         name: "catPerfumes", // 💡 Tarjima kaliti
         item: 59,
         num: 5,
@@ -45,7 +45,7 @@ const categorysliderone: Category[] = [
     {
         percentage: "",
         icon: "fi fi-tr-nail-polish", // Tirnoqlar
-        image:  "/shop-left-sidebar-col-3.html",
+        image:  "/category.html",
         name: "catNails", // 💡 Tarjima kaliti
         item: 845,
         num: 6,
@@ -53,7 +53,7 @@ const categorysliderone: Category[] = [
     {
         percentage: "",
         icon: "fi fi-tr-brush", // Asboblar
-        image:  "/shop-left-sidebar-col-3.html",
+        image:  "/category.html",
         name: "catTools", // 💡 Tarjima kaliti
         item: 652,
         num: 1,
@@ -61,7 +61,7 @@ const categorysliderone: Category[] = [
     {
         percentage: "20%",
         icon: "fi fi-tr-jewelry", // Aksessuarlar
-        image:  "/shop-left-sidebar-col-3.html",
+        image:  "/category.html",
         name: "catAccessories", // 💡 Tarjima kaliti
         item: 320,
         num: 2,
@@ -69,7 +69,7 @@ const categorysliderone: Category[] = [
     {
         percentage: "",
         icon: "fi fi-tr-razor", // Erkaklar parvarishi
-        image:  "/shop-left-sidebar-col-3.html",
+        image:  "/category.html",
         name: "catMenGrooming", // 💡 Tarjima kaliti
         item: 154,
         num: 3,

@@ -3,7 +3,8 @@ import {Swiper, SwiperSlide} from "swiper/react";
 import "swiper/css";
 import CategoryItem from "../product-item/CategoryItem";
 import Spinner from "../button/Spinner";
-import {useEffect, useState} from "react"; // Import React Hooks
+import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom"; // Import React Hooks
 
 // URL Vashego API (Ne izmenyayte)
 const API_URL = "https://admin.beauty-point.uz/api/categories";
@@ -16,6 +17,8 @@ const CategorySliderOne = ({
     const [categories, setCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
 
     // Opredelyayem yazyk dlya otobrazheniya (Mozhet byt' dinamicheskim)
     const lang = localStorage.getItem("i18nextLng") || "ru";
@@ -119,6 +122,9 @@ const CategorySliderOne = ({
 
                                 return (
                                     <SwiperSlide
+                                        onClick={() => {
+                                            navigate(`/category/${item.id}`)
+                                        }}
                                         key={item.id || index} // Unikal'nyy key
                                         className={`gi-cat-box gi-cat-box-${formattedItem.num}`}
                                     >

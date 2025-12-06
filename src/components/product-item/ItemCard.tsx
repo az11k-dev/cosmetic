@@ -65,7 +65,9 @@ const ItemCard: React.FC<SingleProductContentPageProps> = ({data}: { data: Item 
 
     return (
         <>
-            <div className="gi-product-content">
+            <div style={{
+                maxWidth: "400px"
+            }} className="gi-product-content">
                 <div className="gi-product-inner">
                     <div className="gi-pro-image-outer">
                         <div className="gi-pro-image">
@@ -122,7 +124,7 @@ const ItemCard: React.FC<SingleProductContentPageProps> = ({data}: { data: Item 
                     </div>
                     <div className="gi-pro-content">
                         {/* Kategoriya Link'i */}
-                        <Link to="/shop-left-sidebar-col-3">
+                        <Link to={`/category/${data?.category?.id}`}>
                             <h6 className="gi-pro-stitle">{lang === "ru" ? data?.category?.name?.ru : data?.category?.name?.uz}</h6>
                         </Link>
 

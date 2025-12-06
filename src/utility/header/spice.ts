@@ -3,23 +3,23 @@ import { LinkAttr } from "@/types/data.types";
   const spice: LinkAttr[] = [
     {
       name: "Cinnamon Powder",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Cumin Powder",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Fenugreek Powder",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Pepper Powder",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
     {
       name: "Long Pepper",
-      href: "/shop-left-sidebar-col-3",
+      href: "/category",
     },
   ];
   export default spice;

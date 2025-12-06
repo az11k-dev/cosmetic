@@ -114,7 +114,7 @@ const SidebarArea = ({
   };
 
   const handleFilterBtn = () => {
-    navigate("/shop-left-sidebar-col-3");
+    navigate("/category");
   };
 
   const toggleDropdown = (section: any) => {

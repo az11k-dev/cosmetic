@@ -1,5 +1,6 @@
 import {Tab, TabList, Tabs} from "react-tabs";
 import {useState, useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 
 const API_URL = "https://admin.beauty-point.uz/api/categories";
 
@@ -7,6 +8,7 @@ const AllCategories = ({selectedIndex, setSelectedIndex, handleProductClick, t})
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     // Загрузка данных из API
     useEffect(() => {
@@ -98,8 +100,7 @@ const AllCategories = ({selectedIndex, setSelectedIndex, handleProductClick, t})
                                             // При клике на вкладку вызываем обработчик
                                             onClick={() => {
                                                 handleProductClick(index);
-                                                // Опционально: здесь можно выполнить навигацию
-                                                // navigate(`/category/${category.id}`);
+                                                navigate(`/category/${category.id}`);
                                             }}
                                             id={`v-pills-tab-${category.id}`}
                                             type="button"

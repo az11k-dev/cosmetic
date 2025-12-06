@@ -59,12 +59,8 @@ function Footer() {
         setDropdownState((menu) => (menu === dropdown ? null : dropdown));
     };
 
-    const handleCategoryChange = (category: any) => {
-        const updatedCategory = selectedCategory.includes(category)
-            ? selectedCategory.filter((cat) => cat !== category)
-            : [...selectedCategory, category];
-        dispatch(setSelectedCategory(updatedCategory));
-        navigate("/shop-left-sidebar-col-3");
+    const handleCategoryChange = (category: number) => {
+        navigate(`/category/${category}`);
     };
 
     return (
@@ -134,7 +130,7 @@ function Footer() {
                                                             <a
                                                                 style={{textTransform: "capitalize"}}
                                                                 onClick={() =>
-                                                                    handleCategoryChange(data.category)
+                                                                    handleCategoryChange(data?.id)
                                                                 }
                                                             >
                                                                 {lang === "ru" ? data?.name?.ru : data?.name?.uz}

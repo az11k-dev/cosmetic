@@ -39,7 +39,7 @@ const FashionTwoBanners = () => {
                     <div className="gi-bnr-detail">
                       <h5>Women&apos;s Collection</h5>
                       <Link
-                        to="/shop-left-sidebar-col-3"
+                        to="/category"
                         className="gi-btn-2"
                       >
                         Shop Now
@@ -66,7 +66,7 @@ const FashionTwoBanners = () => {
                     <div className="gi-bnr-detail">
                       <h5>Kid&apos;s Collection</h5>
                       <Link
-                        to="/shop-left-sidebar-col-3"
+                        to="/category"
                         className="gi-btn-2"
                       >
                         Shop Now
@@ -98,7 +98,7 @@ const FashionTwoBanners = () => {
                     <div className="gi-bnr-detail">
                       <h5>Men&apos;s Collection</h5>
                       <Link
-                        to="/shop-left-sidebar-col-3"
+                        to="/category"
                         className="gi-btn-2"
                       >
                         Shop Now
