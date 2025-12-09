@@ -122,12 +122,13 @@ const OfferBanners = () => {
                         <span
                             className="lbl"
                             style={{
-                                backgroundColor: '#f00', // Красный цвет для скидки
+                                backgroundColor: '#5caf90', // Красный цвет для скидки
                                 color: '#fff',
                                 padding: '3px 6px',
                                 borderRadius: '4px',
                                 display: 'inline-block',
-                                marginBottom: '10px'
+                                marginBottom: '10px',
+                                fontSize: '13px',
                             }}
                         >
                             {banner.discounts}% {lang === "ru" ? "скидка" : "chegirma"}

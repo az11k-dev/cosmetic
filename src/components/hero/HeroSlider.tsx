@@ -116,9 +116,9 @@ function HeroSlider() {
                                                 <span
                                                     className="lbl"
                                                     style={{
-                                                        backgroundColor: '#f00', // Красный цвет для скидки
+                                                        backgroundColor: '#5caf90',
                                                         color: '#fff',
-                                                        padding: '3px 6px',
+                                                        padding: '3px 0px',
                                                         borderRadius: '4px',
                                                         display: 'flex',
                                                         justifyContent:"center",

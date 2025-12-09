@@ -221,7 +221,6 @@ const Contact = () => {
                                         id="phone"
                                         name="phone" // Добавлено поле `name`
                                         placeholder={t("phone")}
-                                        pattern="^\d{10,12}$"
                                         required
                                         value={formData.phone} // Привязка к состоянию
                                         onChange={handleChange} // Обработка изменений

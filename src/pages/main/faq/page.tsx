@@ -1,7 +1,7 @@
 import Breadcrumb from '@/components/breadcrumb/Breadcrumb'
 import Faq from '@/components/faq/Faq'
 
-const lang =localStorage.getItem("i18nextLng");
+const lang =localStorage.getItem("i18nextLng`");
 
 
 
