@@ -152,7 +152,8 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
                                         <div className="gi-single-rating">
                                             <StarRating rating={data.rating}/>
                                         </div>
-                                        <span className="gi-read-review">|&nbsp;&nbsp;<a href="#gi-spt-nav-review">992 Ratings</a></span>
+                                        <span className="gi-read-review">|&nbsp;&nbsp;<a
+                                            href="#gi-spt-nav-review">{data?.details?.rating_count} Ratings</a></span>
                                     </div>
                                     <div className="gi-single-price-stoke">
                                         <div className="gi-single-price">
@@ -171,8 +172,6 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
                                         <div className="gi-single-stoke">
                                             <span
                                                 className="gi-single-sku"> <span>SKU:</span> {data?.details.sku}</span>
-                                            <span
-                                                className="gi-single-ps-title"> <span>{lang === "ru" ? "ЗАПАС" : "QOLGAN"}:</span> {data?.details?.stock}</span>
                                         </div>
                                     </div>
                                     <div className="gi-single-desc">
@@ -181,24 +180,10 @@ const SingleProductContentPage: React.FC<SingleProductContentPageProps> = ({data
 
                                     <div className="gi-single-list">
                                         <ul>
-
-
-                                            <li>
-                                                <strong>{lang === "ru" ? "Внешний материал:" : "Tashqi material:"}</strong> A-Grade
-                                                Standard Quality
-                                            </li>
                                             <li>
                                                 <strong>{lang === "ru" ? "Категория:" : "Kategoriya"}</strong> {lang === "ru" ? data?.category?.name.ru : data?.category?.name.uz}
                                             </li>
                                         </ul>
-                                    </div>
-                                    <div className="gi-pro-variation">
-                                        <div className="gi-pro-variation-inner gi-pro-variation-size">
-                                            <span>{lang === "ru" ? "Масса" : "Og'irligi"}</span>
-                                            <div className="gi-pro-variation-content">
-                                                {data?.details?.weight}
-                                            </div>
-                                        </div>
                                     </div>
                                     <div className="gi-single-qty">
                                         <div className="qty-plus-minus ">

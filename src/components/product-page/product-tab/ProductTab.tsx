@@ -107,21 +107,21 @@ const ProductTab = ({data}) => {
                                     {lang === "ru" ? "Технические характеристики" : "Texnik xususiyatlari"}
                                 </button>
                             </Tab>
-                            <Tab className="nav-item" role="presentation" key={"review"}>
-                                <button
-                                    className={`nav-link ${selectedIndex == 3 ? "active" : ""}`}
-                                    onClick={() => handleProductClick(3)}
-                                    id="review-tab"
-                                    data-bs-toggle="tab"
-                                    data-bs-target="#gi-spt-nav-review"
-                                    type="button"
-                                    role="tab"
-                                    aria-controls="gi-spt-nav-review"
-                                    aria-selected="false"
-                                >
-                                    {lang === "ru" ? "Отзывы" : "Sharhlar"}
-                                </button>
-                            </Tab>
+                            {/*<Tab className="nav-item" role="presentation" key={"review"}>*/}
+                            {/*    <button*/}
+                            {/*        className={`nav-link ${selectedIndex == 3 ? "active" : ""}`}*/}
+                            {/*        onClick={() => handleProductClick(3)}*/}
+                            {/*        id="review-tab"*/}
+                            {/*        data-bs-toggle="tab"*/}
+                            {/*        data-bs-target="#gi-spt-nav-review"*/}
+                            {/*        type="button"*/}
+                            {/*        role="tab"*/}
+                            {/*        aria-controls="gi-spt-nav-review"*/}
+                            {/*        aria-selected="false"*/}
+                            {/*    >*/}
+                            {/*        {lang === "ru" ? "Отзывы" : "Sharhlar"}*/}
+                            {/*    </button>*/}
+                            {/*</Tab>*/}
                         </ul>
                     </TabList>
                     <div className="tab-content  gi-single-pro-tab-content">
@@ -149,28 +149,17 @@ const ProductTab = ({data}) => {
                             >
                                 <div className="gi-single-pro-tab-moreinfo">
                                     <p>
-                                        Lorem Ipsum is simply dummy text of the printing and
-                                        typesetting industry. Lorem Ipsum has been the industry`s
-                                        standard dummy text ever since the 1500s, when an unknown
-                                        printer took a galley of type and scrambled it to make a type
-                                        specimen book. It has survived not only five centuries.
+                                        {lang === "ru" ? data?.details?.description?.ru : data?.details?.description?.uz}
                                     </p>
                                     <ul>
                                         <li>
-                                            <span>{lang==="ru"?"Модель":"Model"}</span> SKU{data.details.sku}
+                                            <span>{lang === "ru" ? "Артикул:" : "Artikul:"}</span>{data.details.sku}
                                         </li>
                                         <li>
-                                            <span>{lang==="ru"?"Масса":"Og'irligi"}</span>{data?.details?.weight}
-
+                                            <span>{lang === "ru" ? "Масса:" : "Og'irligi:"}</span>{parseInt(data?.details?.weight)}{data?.details?.weight_unit}
                                         </li>
                                         <li>
-                                            <span>Dimensions</span> 35 × 30 × 7 cm
-                                        </li>
-                                        <li>
-                                            <span>Color</span> Black, Pink, Red, White
-                                        </li>
-                                        <li>
-                                            <span>Size</span> 10 X 20
+                                            <span>{lang === "ru" ? "Осталось:" : "Qoldiq:"}</span>{data?.details?.stock}
                                         </li>
                                     </ul>
                                 </div>
