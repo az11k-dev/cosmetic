@@ -8,6 +8,7 @@ const DiscountCoupon = ({onDiscountApplied}: any) => {
     const [couponCode, setCouponCode] = useState("");
     const [discount, setDiscount] = useState(0);
     const [errorMessage, setErrorMessage] = useState("");
+    const lang = localStorage.getItem("i18nextLng");
 
     useEffect(() => {
         onDiscountApplied(discount);
@@ -45,10 +46,15 @@ const DiscountCoupon = ({onDiscountApplied}: any) => {
 
     return (
         <>
-            <div>
-                <span className="text-left">Coupan Discount</span>
+            <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
+            }}>
+                <span className="text-left">{lang === "ru" ? "Промокод:" : "Promokod:"}</span>
                 <span className="text-right"><a className="gi-cart-coupan"
-                                                onClick={toggleCoupon}>Apply Coupan</a></span>
+                                                onClick={toggleCoupon}>{lang === "ru" ? "Ввести" : "Kiritish"}</a></span>
             </div>
 
             <AnimatePresence>
@@ -62,9 +68,10 @@ const DiscountCoupon = ({onDiscountApplied}: any) => {
                         <form className="gi-cart-coupan-form" name="gi-cart-coupan-form" method="post" action="#">
                             <input className="gi-coupan" type="text" value={couponCode}
                                    onChange={(e) => setCouponCode(e.target.value)} required
-                                   placeholder="Enter Your Coupan Code" name="gi-coupan"/>
+                                   placeholder={lang === "ru" ? "Введите промокод" : "Promokodni kiriting"}
+                                   name="gi-coupan"/>
                             <button className="gi-btn-2" type="button" name="apply"
-                                    onClick={handleApplyDiscount}>Apply
+                                    onClick={handleApplyDiscount}>{lang === "ru" ? "Подтвердить" : "Tasdiqlash"}
                             </button>
                         </form>
                     </motion.div>

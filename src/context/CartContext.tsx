@@ -7,7 +7,7 @@ import React, {
     ReactNode
 } from 'react';
 // Item tipini import qilish juda muhim
-import { Item } from "@/types/data.types";
+import {Item} from "@/types/data.types";
 
 // 💡 LOCAL_STORAGE kaliti
 const LOCAL_STORAGE_KEY = 'shoppingCart';
@@ -62,7 +62,7 @@ interface CartProviderProps {
     children: ReactNode;
 }
 
-export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
+export const CartProvider: React.FC<CartProviderProps> = ({children}) => {
     // 💡 Boshlang'ich holatni localStorage'dan yuklaymiz
     const [cartItems, setCartItems] = useState<CartItem[]>(initializeCart);
 
@@ -132,12 +132,17 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         setCartItems(prevItems => prevItems.filter(i => i.id !== id));
     }, []);
 
+    const clearCart = useCallback((id: string) => {
+        setCartItems([]);
+    }, []);
+
     // Context qiymati
     const contextValue: CartContextType = {
         cartItems,
         addItemToCart,
         updateItemQuantity,
         removeItemFromCart,
+        clearCart
     };
 
     return (

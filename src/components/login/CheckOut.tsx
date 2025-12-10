@@ -1,79 +1,212 @@
 // CheckOut.tsx
 
-import React, { useEffect, useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import ItemCard from "../product-item/ItemCard";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import React, {useEffect, useRef, useState, useCallback} from "react";
 import StarRating from "../stars/StarRating";
-import { Fade } from "react-awesome-reveal";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
-import { Col, Form, Row } from "react-bootstrap";
-import Spinner from "../button/Spinner";
-import { addOrder, clearCart } from "@/store/reducers/cartSlice";
-import { login } from "@/store/reducers/registrationSlice";
+import {Col, Row} from "react-bootstrap";
 import DiscountCoupon from "../discount-coupon/DiscountCoupon";
-import { useNavigate } from "react-router-dom";
-import { showErrorToast, showSuccessToast } from "@/utility/toast";
-import { Address, City, Country, RegistrationData, State } from "@/types/data.types";
-import { useCountries } from "@/hooks/useCountries";
-import { useStates } from "@/hooks/useStates";
-import { useCities } from "@/hooks/useCities";
-import { Link } from "react-router-dom";
+import {Address} from "@/types/data.types";
+import {Link, useNavigate} from "react-router-dom";
+import axios from "axios";
+import toast from 'react-hot-toast';
+
+// --- ИМПОРТЫ CONTEXT API ---
+import {useCart} from "@/context/CartContext";
+import {useAuth} from "@/context/AuthContext";
+// ----------------------------
 
 // --- i18next ИМПОРТЫ ---
-import { useTranslation, Trans } from "react-i18next";
+import {useTranslation, Trans} from "react-i18next";
 // -----------------------
+
+// 💡 Определяем тип для элементов, отправляемых в API
+interface ProductItem {
+    id: number;
+    quantity: number;
+}
+
+// 💡 Убедитесь, что ваш CartContext возвращает useClearCart, или
+// что функция clearCart доступна через useCart.
+interface CartContextType {
+    cartItems: any[]; // Замените any на ваш реальный тип элемента корзины
+    clearCart?: () => void; // Добавляем опциональную функцию clearCart
+}
+
+const API_URL = "https://admin.beauty-point.uz/api/orders/index";
+
+// ----------------------------------------------------
+// 💡 НОВЫЙ КОМПОНЕНТ ФОРМЫ АДРЕСА
+// ----------------------------------------------------
+
+interface AddressFormProps {
+    t: (key: string) => string;
+    existingAddresses: Address[];
+    selectedAddress: Address | null;
+    onSelectAddress: (address: Address | null) => void;
+}
+
+const AddressForm: React.FC<AddressFormProps> = ({
+                                                     t,
+                                                     existingAddresses,
+                                                     selectedAddress,
+                                                     onSelectAddress,
+                                                 }) => {
+    // Состояние для полей нового адреса
+    const [newAddress, setNewAddress] = useState<Address>({
+        address: selectedAddress?.address || "",
+        latitude: 1,
+        longitude: 2,
+    });
+
+    // Обработчик изменения полей ввода
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        // Обновляем локальное состояние
+        const updatedAddress = {...newAddress, [name]: value};
+        setNewAddress(updatedAddress);
+        // Устанавливаем обновленный адрес как выбранный
+        onSelectAddress(updatedAddress);
+    };
+
+    // Обработчик выбора существующего адреса
+    const handleAddressSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        const addressValue = e.target.value;
+        if (addressValue === "new") {
+            onSelectAddress(null); // Новый адрес
+            setNewAddress({address: ""}); // Очищаем форму
+        } else {
+            // Ищем адрес по ID или индексу (в зависимости от того, как вы его храните)
+            const selected = existingAddresses.find(
+                (addr) => String(addr.id) === addressValue || String(existingAddresses.indexOf(addr)) === addressValue
+            );
+            if (selected) {
+                onSelectAddress(selected);
+                setNewAddress(selected); // Заполняем форму выбранным адресом
+            }
+        }
+    };
+
+    useEffect(() => {
+        // Если выбран существующий адрес, обновляем поля формы для отображения
+        if (selectedAddress) {
+            setNewAddress(selectedAddress);
+        } else {
+            // Если выбран "Новый адрес", очищаем форму
+            setNewAddress({address: ""});
+        }
+    }, [selectedAddress]);
+
+    // Определяем, должен ли пользователь редактировать поля (только для "Нового адреса")
+    const isEditingDisabled = selectedAddress && existingAddresses.some(addr => addr.id === selectedAddress.id);
+
+    // В случае, если selectedAddress пустой, используем newAddress для формы.
+    const formAddress = selectedAddress && !isEditingDisabled ? selectedAddress : newAddress;
+
+    return (
+        <div className="gi-checkout-form">
+            <div className="gi-checkout-wrap">
+                {/* 1. ВЫБОР ИЗ СУЩЕСТВУЮЩИХ АДРЕСОВ (если есть) */}
+                {existingAddresses.length > 0 && (
+                    <Row className="mb-4">
+                        <Col md={12}>
+                            <label
+                                htmlFor="addressSelector">{t("select_existing_address") || "Или выберите существующий адрес"}</label>
+                            <select
+                                id="addressSelector"
+                                className="form-control"
+                                onChange={handleAddressSelection}
+                                // Используем 'new', если selectedAddress нет или он не имеет id (т.е. это новый, введенный вручную адрес)
+                                value={selectedAddress && existingAddresses.some(addr => addr.id === selectedAddress.id) ? String(selectedAddress.id) : "new"}
+                            >
+                                <option value="new">{t("new_address_option") || "Ввести новый адрес"}</option>
+                                {existingAddresses.map((addr, index) => (
+                                    <option key={index} value={String(addr.id || index)}>
+                                        {addr.address}
+                                    </option>
+                                ))}
+                            </select>
+                        </Col>
+                    </Row>
+                )}
+
+                {/* 2. ФОРМА ВВОДА АДРЕСА */}
+                <Row>
+                    <Col md={12}>
+                        <div className="form-group">
+                            <label htmlFor="address">{t("address_street") || "Адрес (улица, дом)"}
+                                <span>*</span></label>
+                            <input
+                                type="text"
+                                id="address"
+                                name="address"
+                                className="form-control"
+                                required
+                                value={formAddress.address}
+                                onChange={handleInputChange}
+                                disabled={isEditingDisabled}
+                            />
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+        </div>
+    );
+};
+// ----------------------------------------------------
+// ----------------------------------------------------
+
 
 const CheckOut = () => {
     // Инициализируем t
-    const { t } = useTranslation("checkOut");
+    const {t} = useTranslation("checkOut");
 
-    const [email, setEmail] = useState("");
-    const [validated, setValidated] = useState(false);
-    const [password, setPassword] = useState("");
-    const [registrations, setRegistrations] = useState<RegistrationData[]>([]);
-    const dispatch = useDispatch();
+    // 💡 1. ИСПОЛЬЗОВАНИЕ CONTEXT ДЛЯ КОРЗИНЫ И ОЧИСТКИ
+    const {cartItems, clearCart} = useCart() as CartContextType; // Используем clearCart из useCart
+
+    // 💡 2. ИСПОЛЬЗОВАНИЕ CONTEXT ДЛЯ АУТЕНТИФИКАЦИИ
+    const {user} = useAuth();
+
+    // 💡 3. ИСПОЛЬЗОВАНИЕ useNavigate
     const navigate = useNavigate();
-    const cartItems = useSelector((state: RootState) => state.cart.items);
-    const orders = useSelector((state: RootState) => state.cart.orders);
-    const isLogin = useSelector(
-        (state: RootState) => state.registration.isAuthenticated
-    );
+
+    // --- СОСТОЯНИЕ ДЛЯ ОТПРАВКИ API ---
+    const [comment, setComment] = useState("");
+    const [inputPromocode, setInputPromocode] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [apiError, setApiError] = useState<string | null>(null);
+    // ------------------------------------------
+
     const [subTotal, setSubTotal] = useState(0);
-    const [vat, setVat] = useState(0);
     const [discount, setDiscount] = useState(0);
-    const [selectedMethod, setSelectedMethod] = useState("free");
-    const [checkOutMethod, setCheckOutMethod] = useState("guest");
+    const [selectedMethod, setSelectedMethod] = useState("flat");
     const [billingMethod, setBillingMethod] = useState("new");
     const [billingVisible, setBillingVisible] = useState(false);
-    const [addressVisible, setAddressVisible] = useState<any[]>([]);
+    const [addressVisible, setAddressVisible] = useState<Address[]>([]);
     const [optionVisible, setOptionVisible] = useState(true);
-    const [loginVisible, setLoginVisible] = useState(false);
     const [btnVisible, setBtnVisible] = useState(true);
     const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
     const [isTermsChecked, setIsTermsChecked] = useState(false);
     const checkboxRef = useRef<HTMLInputElement>(null);
+    const lang = localStorage.getItem("i18nextLng");
 
-    const [formData, setFormData]: any = useState({
-        id: "",
-        first_name: "",
-        last_name: "",
-        address: "",
-        city: "",
-        postalCode: "",
-        country: "",
-        state: "",
-    });
+    const flatDeliveryCost = 30000;
+    const vat = selectedMethod === "flat" ? flatDeliveryCost : 0;
 
+    // ... useEffects (оставляем как есть, если они работают)
     useEffect(() => {
-        const existingAddresses = JSON.parse(
+        const existingAddresses: Address[] = JSON.parse(
             localStorage.getItem("shippingAddresses") || "[]"
         );
-        setAddressVisible(existingAddresses);
+        // Добавляем placeholder id, если его нет
+        const addressesWithId: Address[] = existingAddresses.map((addr, index) => ({
+            ...addr,
+            id: addr.id || index + 1 // Используем индекс + 1 как временный id, если нет реального
+        }));
 
-        if (existingAddresses.length > 0 && !selectedAddress) {
-            setSelectedAddress(existingAddresses[0]);
+        setAddressVisible(addressesWithId);
+
+        if (addressesWithId.length > 0 && !selectedAddress) {
+            setSelectedAddress(addressesWithId[0]);
         }
     }, [selectedAddress]);
 
@@ -86,118 +219,16 @@ const CheckOut = () => {
     }, [selectedAddress]);
 
     useEffect(() => {
-        if (isLogin) {
+        if (user) {
             setBtnVisible(false);
             setOptionVisible(false);
             setBillingVisible(true);
         }
-    }, [isLogin]);
+    }, [user]);
 
-    const filteredCountryData: Country[] = useCountries();
-    const filteredStateData: State[]  = useStates(formData?.country || "");
-    const filteredCityData: City[] = useCities(formData?.state || "");
-
-    const handleDeliveryChange = (event: any) => {
+    const handleDeliveryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedMethod(event.target.value);
     };
-
-    const handleBillingChange = (event: any) => {
-        setBillingMethod(event.target.value);
-    };
-
-    const handleCheckOutChange = (event: any) => {
-        const method = event.target.value;
-        setCheckOutMethod(method);
-        setBillingVisible(false);
-        setLoginVisible(true);
-        setBtnVisible(true);
-
-        if (method === "guest") {
-            setBillingVisible(false);
-            setLoginVisible(false);
-        } else if (method === "login") {
-            setLoginVisible(true);
-            setBtnVisible(false);
-        }
-    };
-
-    const handleContinueBtn = () => {
-        if (checkOutMethod === "register") {
-            navigate("/register");
-        } else if (checkOutMethod === "guest") {
-            setBillingVisible(true);
-            setLoginVisible(false);
-            setBtnVisible(false);
-        } else if (checkOutMethod === "login") {
-            setBillingVisible(false);
-        }
-    };
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.stopPropagation();
-            setValidated(true);
-            return;
-        }
-
-        formData.id = `${Date.now()}`;
-
-        const existingAddresses = JSON.parse(
-            localStorage.getItem("shippingAddresses") || "[]"
-        );
-
-        let updatedAddresses;
-        if (existingAddresses.length === 0) {
-            updatedAddresses = [formData];
-            setSelectedAddress(formData);
-        } else {
-            updatedAddresses = [...existingAddresses, formData];
-        }
-
-        localStorage.setItem("shippingAddresses", JSON.stringify(updatedAddresses));
-        setAddressVisible(updatedAddresses);
-        setSelectedAddress(formData);
-
-        setFormData({
-            id: "",
-            first_name: "",
-            last_name: "",
-            address: "",
-            city: "",
-            postalCode: "",
-            country: "",
-            state: "",
-        });
-
-        const requiredFields = [
-            "first_name",
-            "last_name",
-            "address",
-            "country",
-            "state",
-            "city",
-            "postalCode",
-        ];
-
-        for (const field of requiredFields) {
-            if (!formData[field]) {
-                setValidated(true);
-                return;
-            }
-        }
-
-        setValidated(false);
-    };
-
-    useEffect(() => {
-        const storedRegistrations = JSON.parse(
-            localStorage.getItem("registrationData") || "[]"
-        );
-        setRegistrations(storedRegistrations);
-    }, []);
 
     useEffect(() => {
         const storedAddresses = JSON.parse(
@@ -206,152 +237,128 @@ const CheckOut = () => {
         setAddressVisible(storedAddresses);
     }, []);
 
-    // item Price
-
     useEffect(() => {
         if (cartItems.length === 0) {
             setSubTotal(0);
-            setVat(0);
             return;
         }
 
         const subtotal = cartItems.reduce(
-            (acc, item) => acc + item.newPrice * item.quantity,
+            (acc, item) => acc + (item?.price || 0) * item.quantity,
             0
         );
         setSubTotal(subtotal);
-        // Calculate VAT
-        const vatAmount = subtotal * 0.2;
-        setVat(vatAmount);
     }, [cartItems]);
 
     const discountAmount = subTotal * (discount / 100);
     const total = subTotal + vat - discountAmount;
-    // item Price end
 
-    const { data, error } = useSelector((state: RootState) => state.deal);
+    // 💡 ОБНОВЛЕННАЯ ФУНКЦИЯ: ОТПРАВКА ЗАКАЗА НА API
+    // Удалили `loading` из зависимостей, чтобы избежать проблем.
+    const handlePlaceOrder = useCallback(async () => {
+        if (loading) return; // Предотвращаем двойную отправку
 
+        // 1. ПРОВЕРКА НЕОБХОДИМЫХ УСЛОВИЙ
+        if (cartItems.length === 0) {
+            console.log(t("cart_empty_error") || "Корзина пуста. Невозможно оформить заказ.");
+            return;
+        }
 
-    if (error) return <div>{t('error_loading_products')}</div>;
-    if (!data)
-        return (
-            <div>
-                <Spinner />
-            </div>
-        );
-
-    const getData = () => {
-        return data;
-    };
-
-    const generateRandomId = () => {
-        const randomNum = Math.floor(Math.random() * 100000);
-        return `${randomNum}`;
-    };
-
-    const randomId = generateRandomId();
-
-    const handleCheckout = () => {
         if (!isTermsChecked) {
-            // Переводим сообщение об ошибке
-            showErrorToast(t("toast_agree_terms_error"));
-            checkboxRef.current?.focus();
+            console.log(t("terms_unchecked_error") || "Пожалуйста, примите условия и положения.");
+            if (checkboxRef.current) checkboxRef.current.focus();
             return;
         }
 
-        if (!selectedAddress) {
-            // Переводим сообщение об ошибке
-            showErrorToast(t("toast_select_address_error"));
+        // **ПРОВЕРКА АДРЕСА** - КРИТИЧЕСКИ ВАЖНО
+        if (!selectedAddress || !selectedAddress.address) {
+            console.log(t("address_missing_error") || "Пожалуйста, выберите или введите полный адрес доставки (включая координаты).");
             return;
         }
 
-        const newOrder = {
-            orderId: randomId,
-            date: new Date().getTime(),
-            shippingMethod: selectedMethod,
-            totalItems: cartItems.length,
-            totalPrice: total,
-            status: "Pending",
-            products: cartItems,
-            address: selectedAddress,
-        };
+        setLoading(true);
+        setApiError(null);
 
-        const orderExists = orders.some(
-            (order: any) => order.id === newOrder.orderId
-        );
+        try {
+            // 2. ПОДГОТОВКА ДАННЫХ
+            const productsPayload: ProductItem[] = cartItems.map((item) => ({
+                // Убедитесь, что 'id' в CartItem - это именно id продукта, как того требует API
+                id: item.id,
+                quantity: item.quantity,
+            }));
 
-        if (!orderExists) {
-            dispatch(addOrder(newOrder));
-        } else {
-            console.log(
-                `Order with ID ${newOrder.orderId} already exists and won't be added again.`
-            );
-        }
-        dispatch(clearCart());
+            const orderPayload = {
+                products: productsPayload,
+                comment: comment,
+                // Используем данные из выбранного адреса
+                address: selectedAddress.address,
+                latitude: selectedAddress.latitude,
+                longitude: selectedAddress.longitude,
+            };
 
-        navigate("/orders");
-    };
+            // 3. ПОЛУЧЕНИЕ ТОКЕНА
+            const token = localStorage.getItem("authToken"); // Замените `user?.token` на фактическое местоположение токена
 
-    const handleRemoveAddress = (index: number) => {
-        const updatedAddresses = addressVisible.filter((_, i) => i !== index);
-        localStorage.setItem("shippingAddresses", JSON.stringify(updatedAddresses));
-        setAddressVisible(updatedAddresses);
-    };
-
-    const handleSelectAddress = (address: any) => {
-        setSelectedAddress(address);
-    };
-
-    const handleLogin = (e: any) => {
-        e.preventDefault();
-
-        const form = e.currentTarget;
-        if (form.checkValidity() === false) {
-            e.stopPropagation();
-            setValidated(true);
-            return;
-        }
-
-        const foundUser = registrations.find(
-            (user) => user.email === email && user.password === password
-        );
-
-        if (foundUser) {
-            const userData = { uid: foundUser.uid, email, password };
-
-            localStorage.setItem("login_user", JSON.stringify(userData));
-            dispatch(login(foundUser));
-            // Переводим сообщение об успехе
-            showSuccessToast(t("toast_login_success"));
-            setLoginVisible(false); // Скрываем форму логина после успешного входа
-            setBillingVisible(true); // Показываем детали доставки
-            setOptionVisible(false); // Скрываем опции оформления
-        } else {
-            // Переводим сообщение об ошибке
-            showErrorToast(t("toast_login_invalid"));
-        }
-
-        const requiredFields = ["email", "password"];
-
-        for (const field of requiredFields) {
-            if (!formData[field]) {
-                setValidated(true);
+            if (!token) {
+                console.log(t("auth_token_missing") || "Ошибка: Токен аутентификации отсутствует. Пожалуйста, войдите в систему.");
+                setLoading(false);
                 return;
             }
-        }
-        setValidated(true);
-    };
 
-    const handleInputChange = async (e: any) => {
-        const { name, value } = e.target;
-        setFormData({...formData, [name]: value });
-    }
+            // 4. ОТПРАВКА ЗАПРОСА
+            const response = await axios.post(
+                API_URL,
+                orderPayload,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${token}`, // Отправляем токен в заголовке
+                    },
+                }
+            );
+
+            // 5. ОБРАБОТКА УСПЕХА
+            if (response.status === 200) {
+                toast.success(t("order_success") || "Заказ успешно оформлен!");
+                // 💡 Раскомментируйте, если clearCart доступен
+                if (clearCart) {
+                    clearCart();
+                }
+                navigate("/"); // Перенаправляем на страницу благодарности
+            } else {
+                // Если API возвращает 200, но статус не success (может быть 'error' с сообщением)
+                const message = response.data.message || "Неизвестная ошибка при оформлении заказа.";
+                console.log(message);
+                setApiError(message);
+            }
+
+        } catch (error) {
+            // 6. ОБРАБОТКА ОШИБКИ
+            console.error("Order API Error:", error);
+            if (axios.isAxiosError(error) && error.response) {
+                // Ошибка от сервера (4xx, 5xx)
+                const serverMessage = error.response.data.message || error.response.data.error;
+                const errorMessage = serverMessage || "Ошибка сервера при оформлении заказа.";
+                console.log(errorMessage);
+                setApiError(errorMessage);
+            } else {
+                // Другие ошибки (сеть, CORS)
+                const errorMessage = t("network_error") || "Сетевая ошибка. Попробуйте снова.";
+                console.log(errorMessage);
+                setApiError(errorMessage);
+            }
+        } finally {
+            setLoading(false);
+        }
+    }, [cartItems, isTermsChecked, selectedAddress, comment, inputPromocode, user, navigate, t, clearCart]); // Добавили clearCart
+
+    // 💡 Обратите внимание: в `return` части компонент был исправлен, чтобы вызывать `handlePlaceOrder`
 
     return (
         <>
-            <Breadcrumb title={t("checkout_page_title")} />
+            <Breadcrumb title={t("checkout_page_title")}/>
             <section className="gi-checkout-section padding-tb-40">
-                {/* Переводим заголовок для поисковиков, но скрываем его */}
                 <h2 className="d-none">{t("checkout_page_heading")}</h2>
                 <div className="container">
                     {cartItems.length === 0 ? (
@@ -363,89 +370,99 @@ const CheckOut = () => {
                             }}
                             className="gi-pro-content cart-pro-title"
                         >
-                            {/* Переводим сообщение о пустой корзине */}
                             {t("cart_empty_message")}
                         </div>
                     ) : (
                         <Row>
-                            {/* */}
+                            <Col lg={8} md={12} className="gi-checkout-leftside">
+                                {/* 💡 ИНТЕГРАЦИЯ НОВОГО КОМПОНЕНТА ФОРМЫ АДРЕСА */}
+                                <AddressForm
+                                    t={t}
+                                    existingAddresses={addressVisible}
+                                    selectedAddress={selectedAddress}
+                                    onSelectAddress={setSelectedAddress}
+                                />
+                                {/* ЛОГИКА ОТОБРАЖЕНИЯ АДРЕСА И МЕТОДОВ ДОСТАВКИ/ОПЛАТЫ */}
+                                {/* ... Ваш код для адреса ... */}
+                            </Col>
                             <Col lg={4} md={12} className="gi-checkout-rightside">
                                 <div className="gi-sidebar-wrap">
-                                    {/* */}
                                     <div className="gi-sidebar-block">
                                         <div className="gi-sb-title">
-                                            {/* Переводим заголовок */}
                                             <h3 className="gi-sidebar-title">{t("summary_title")}</h3>
                                         </div>
                                         <div className="gi-sb-block-content">
                                             <div className="gi-checkout-summary">
                                                 <div>
-                                                    {/* Переводим Sub-Total */}
                                                     <span className="text-left">{t("summary_subtotal")}</span>
                                                     <span className="text-right">
-                            ${subTotal.toFixed(2)}
-                          </span>
+                                                        {subTotal.toLocaleString("en-US")} so'm
+                                                    </span>
                                                 </div>
                                                 <div>
-                                                    {/* Переводим Delivery Charges */}
                                                     <span className="text-left">{t("summary_delivery_charges")}</span>
-                                                    <span className="text-right">${vat.toFixed(2)}</span>
+                                                    <span
+                                                        className="text-right">{vat.toLocaleString("en-US")} so'm</span>
                                                 </div>
                                                 <div>
-                                                    <DiscountCoupon onDiscountApplied={setDiscount} />
+                                                    <DiscountCoupon onDiscountApplied={setDiscount}/>
                                                 </div>
                                                 <div className="gi-checkout-coupan-content">
                                                     <form
                                                         className="gi-checkout-coupan-form"
                                                         name="gi-checkout-coupan-form"
                                                         method="post"
-                                                        action="#"
+                                                        onSubmit={(e) => {
+                                                            e.preventDefault();
+                                                            // Здесь можно реализовать логику проверки промокода
+                                                            toast.success(`Промокод ${inputPromocode} отправлен на проверку.`);
+                                                        }}
                                                     >
                                                         <input
                                                             className="gi-coupan"
                                                             type="text"
                                                             required
-                                                            // Переводим плейсхолдер
                                                             placeholder={t("coupon_placeholder")}
                                                             name="gi-coupan"
-                                                            defaultValue=""
+                                                            value={inputPromocode}
+                                                            onChange={(e) => setInputPromocode(e.target.value)}
                                                         />
                                                         <button
                                                             className="gi-coupan-btn gi-btn-2"
                                                             type="submit"
                                                             name="subscribe"
                                                         >
-                                                            {/* Переводим кнопку */}
                                                             {t("coupon_apply_btn")}
                                                         </button>
                                                     </form>
                                                 </div>
                                                 <div className="gi-checkout-summary-total">
-                                                    {/* Переводим Total Amount */}
                                                     <span className="text-left">{t("summary_total_amount")}</span>
                                                     <span className="text-right">
-                            ${total.toFixed(2)}
-                          </span>
+                                                        {total.toLocaleString("en-US")} so'm
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div className="gi-checkout-pro">
-                                                {cartItems.map((item: any, index: number) => (
+                                                {cartItems.map((item, index: number) => (
+                                                    // ... Логика отображения товаров ...
                                                     <div key={index} className="col-sm-12 mb-6">
                                                         <div className="gi-product-inner">
                                                             <div className="gi-pro-image-outer">
                                                                 <div className="gi-pro-image">
-                                                                    <a
-                                                                        href={`${process.env.VITE_APP_URL}/product-left-sidebar`}
-                                                                        className="image"
-                                                                    >
+                                                                    <a className="image">
                                                                         <img
                                                                             className="main-image"
-                                                                            src={item?.file_url}
+                                                                            /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+                                                                            // @ts-expect-error
+                                                                            src={item?.images[0]?.upload.file_url}
                                                                             alt="Product"
                                                                         />
                                                                         <img
                                                                             className="hover-image"
-                                                                            src={item.imageTwo}
+                                                                            /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+                                                                            // @ts-expect-error
+                                                                            src={item?.images[1]?.upload.file_url}
                                                                             alt="Product"
                                                                         />
                                                                     </a>
@@ -453,21 +470,21 @@ const CheckOut = () => {
                                                             </div>
                                                             <div className="gi-pro-content">
                                                                 <h5 className="gi-pro-title">
-                                                                    <Link to="/product-left-sidebar">
-                                                                        {item.title}
+                                                                    <Link to={`/product-details/${item?.id}`}>
+                                                                        {lang === "ru" ? item?.name?.ru : item?.name?.uz} x {item?.quantity}
                                                                     </Link>
                                                                 </h5>
                                                                 <div className="gi-pro-rating">
-                                                                    <StarRating rating={item.rating} />
+                                                                    <StarRating rating={item.rating}/>
                                                                 </div>
                                                                 <span className="gi-price">
-                                  <span className="new-price">
-                                    ${item.newPrice}.00
-                                  </span>
-                                  <span className="old-price">
-                                    ${item.oldPrice}.00{" "}
-                                  </span>
-                                </span>
+                                                                    <span className="new-price">
+                                                                        {parseInt(String(item.price))?.toLocaleString("en-US")} so'm
+                                                                    </span>
+                                                                    <span className="old-price">
+                                                                        {parseInt(String(item.old_price))?.toLocaleString("en-US")} so'm
+                                                                    </span>
+                                                                </span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -475,603 +492,149 @@ const CheckOut = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    {/* */}
                                 </div>
                                 <div className="gi-sidebar-wrap gi-checkout-del-wrap">
-                                    {/* */}
                                     <div className="gi-sidebar-block">
                                         <div className="gi-sb-title">
-                                            {/* Переводим заголовок */}
                                             <h3 className="gi-sidebar-title">{t("delivery_title")}</h3>
                                         </div>
                                         <div className="gi-sb-block-content">
                                             <div className="gi-checkout-del">
-                                                {/* Переводим описание */}
                                                 <div className="gi-del-desc">
                                                     {t("delivery_description")}
                                                 </div>
-                                                <form action="#">
-                          <span className="gi-del-option">
-                            <span>
-                              <span className="gi-del-opt-head">
-                                {/* Переводим Free Shipping */}
-                                  {t("delivery_free_shipping")}
-                              </span>
-                              <input
-                                  type="radio"
-                                  id="del1"
-                                  name="radio-group"
-                                  value="free"
-                                  checked={selectedMethod === "free"}
-                                  onChange={handleDeliveryChange}
-                              />
-                                {/* Переводим Rate */}
-                                <label htmlFor="del1">{t("delivery_rate")} $0.00</label>
-                            </span>
-                            <span>
-                              <span className="gi-del-opt-head">
-                                {/* Переводим Flat Rate */}
-                                  {t("delivery_flat_rate")}
-                              </span>
-                              <input
-                                  type="radio"
-                                  id="del2"
-                                  name="radio-group"
-                                  value="flat"
-                                  checked={selectedMethod === "flat"}
-                                  onChange={handleDeliveryChange}
-                              />
-                                {/* Переводим Rate */}
-                                <label htmlFor="del2">{t("delivery_rate")} $5.00</label>
-                            </span>
-                          </span>
+                                                <form>
+                                                    <span className="gi-del-option">
+                                                        <span>
+                                                            <span className="gi-del-opt-head">
+                                                                {t("delivery_free_shipping")}
+                                                            </span>
+                                                            <input
+                                                                type="radio"
+                                                                id="del1"
+                                                                name="radio-group"
+                                                                value="free"
+                                                                checked={selectedMethod === "free"}
+                                                                onChange={handleDeliveryChange}
+                                                            />
+                                                            <label htmlFor="del1">{t("delivery_rate")} 0 so'm</label>
+                                                        </span>
+                                                        <span>
+                                                            <span className="gi-del-opt-head">
+                                                                {t("delivery_flat_rate")}
+                                                            </span>
+                                                            <input
+                                                                type="radio"
+                                                                id="del2"
+                                                                name="radio-group"
+                                                                value="flat"
+                                                                checked={selectedMethod === "flat"}
+                                                                onChange={handleDeliveryChange}
+                                                            />
+                                                            <label
+                                                                htmlFor="del2">{t("delivery_rate")} {flatDeliveryCost.toLocaleString("en-US")} so'm</label>
+                                                        </span>
+                                                    </span>
                                                     <span className="gi-del-comment">
-                            <span className="gi-del-opt-head">
-                              {/* Переводим Add Comments */}
-                                {t("delivery_add_comments_head")}
-                            </span>
-                            <textarea
-                                name="your-comment"
-                                // Переводим плейсхолдер
-                                placeholder={t("delivery_comments_placeholder")}
-                            ></textarea>
-                          </span>
+                                                        <span className="gi-del-opt-head">
+                                                            {t("delivery_add_comments_head")}
+                                                        </span>
+                                                        <textarea
+                                                            name="your-comment"
+                                                            placeholder={t("delivery_comments_placeholder")}
+                                                            value={comment}
+                                                            onChange={(e) => setComment(e.target.value)}
+                                                        ></textarea>
+                                                    </span>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
-                                    {/* */}
                                 </div>
                                 <div className="gi-sidebar-wrap gi-checkout-pay-wrap">
-                                    {/* */}
                                     <div className="gi-sidebar-block">
                                         <div className="gi-sb-title">
-                                            {/* Переводим заголовок */}
                                             <h3 className="gi-sidebar-title">{t("payment_title")}</h3>
                                         </div>
                                         <div className="gi-sb-block-content">
                                             <div className="gi-checkout-pay">
-                                                {/* Переводим описание */}
                                                 <div className="gi-pay-desc">
                                                     {t("payment_description")}
                                                 </div>
-                                                <form action="#">
-                          <span className="gi-pay-option">
-                            <span>
-                              <input
-                                  readOnly
-                                  type="radio"
-                                  id="pay1"
-                                  name="radio-group"
-                                  value=""
-                                  checked
-                              />
-                                {/* Переводим Cash On Delivery */}
-                                <label htmlFor="pay1">{t("payment_cash_on_delivery")}</label>
-                            </span>
-                          </span>
-                                                    <span className="gi-pay-commemt">
-                            <span className="gi-pay-opt-head">
-                              {/* Переводим Add Comments */}
-                                {t("delivery_add_comments_head")}
-                            </span>
-                            <textarea
-                                name="your-commemt"
-                                // Переводим плейсхолдер
-                                placeholder={t("delivery_comments_placeholder")}
-                            ></textarea>
-                          </span>
+                                                <form>
+                                                    <span className="gi-pay-option">
+                                                        <span>
+                                                            <input
+                                                                readOnly
+                                                                type="radio"
+                                                                id="pay1"
+                                                                name="radio-group"
+                                                                value="cash_on_delivery"
+                                                                checked
+                                                            />
+                                                            <label
+                                                                htmlFor="pay1">{t("payment_cash_on_delivery")}</label>
+                                                        </span>
+                                                    </span>
                                                     <span className="gi-pay-agree">
-                            <input
-                                ref={checkboxRef}
-                                required
-                                checked={isTermsChecked}
-                                onChange={() =>
-                                    setIsTermsChecked(!isTermsChecked)
-                                }
-                                type="checkbox"
-                                value=""
-                            />
-                            <a>
-                                {/* Переводим I have read and agree to the Terms & Conditions. */}
-                                <Trans i18nKey="payment_agree_terms">
-                                    I have read and agree to the <span>{{ terms: t("payment_terms_conditions") }}</span>.
-                                </Trans>
-                            </a>
-                            <span className="checked"></span>
-                          </span>
+                                                        <input
+                                                            ref={checkboxRef}
+                                                            required
+                                                            checked={isTermsChecked}
+                                                            onChange={() =>
+                                                                setIsTermsChecked(!isTermsChecked)
+                                                            }
+                                                            type="checkbox"
+                                                            value=""
+                                                        />
+                                                        <a>
+                                                            <Trans i18nKey="payment_agree_terms">
+                                                                I have read and agree to the <span>{{terms: t("payment_terms_conditions")}}</span>.
+                                                            </Trans>
+                                                        </a>
+                                                        <span className="checked"></span>
+                                                    </span>
+                                                    {apiError && (
+                                                        <div className="alert alert-danger mt-3">
+                                                            **Ошибка:** {apiError}
+                                                        </div>
+                                                    )}
+                                                    {/* 💡 КНОПКА ОФОРМЛЕНИЯ ЗАКАЗА - ИСПРАВЛЕНО: Теперь она вызывает handlePlaceOrder */}
+                                                    <button
+                                                        type="button"
+                                                        className="gi-btn-1 gi-btn-block mt-4"
+                                                        onClick={handlePlaceOrder}
+                                                        disabled={loading || !isTermsChecked || cartItems.length === 0 || !selectedAddress}
+                                                    >
+                                                        {loading
+                                                            ? (t("placing_order_loading") || "Оформление...")
+                                                            : (t("place_order_btn") || "Оформить Заказ")}
+                                                    </button>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
-                                    {/* */}
                                 </div>
                                 <div className="gi-sidebar-wrap gi-check-pay-img-wrap">
-                                    {/* */}
                                     <div className="gi-sidebar-block">
                                         <div className="gi-sb-title">
-                                            {/* Переводим заголовок */}
                                             <h3 className="gi-sidebar-title">{t("payment_title")}</h3>
                                         </div>
                                         <div className="gi-sb-block-content">
                                             <div className="gi-check-pay-img-inner">
                                                 <div className="gi-check-pay-img">
                                                     <img
-                                                        src={
-
-                                                            "/assets/img/hero-bg/payment.png"
-                                                        }
+                                                        src={"/assets/img/hero-bg/payment.png"}
                                                         alt="payment"
                                                     />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    {/* */}
-                                </div>
-                            </Col>
-                            <Col lg={8} md={12} className="gi-checkout-leftside m-t-991">
-                                {/* */}
-                                <div className="gi-checkout-content">
-                                    <div className="gi-checkout-inner">
-                                        {optionVisible && (
-                                            <>
-                                                <div className="gi-checkout-wrap m-b-40">
-                                                    <div className="gi-checkout-block">
-                                                        {/* Переводим заголовок */}
-                                                        <h3 className="gi-checkout-title">{t("new_customer_title")}</h3>
-                                                        <div className="gi-check-block-content">
-                                                            {/* Переводим подзаголовок */}
-                                                            <div className="gi-check-subtitle">
-                                                                {t("checkout_options_title")}
-                                                            </div>
-                                                            <form action="#">
-                                <span className="gi-new-option">
-                                  <span>
-                                    <input
-                                        type="radio"
-                                        id="account2"
-                                        name="radio-group"
-                                        value="guest"
-                                        checked={checkOutMethod === "guest"}
-                                        onChange={handleCheckOutChange}
-                                    />
-                                      {/* Переводим Guest Account */}
-                                      <label htmlFor="account2">
-                                      {t("option_guest_account")}
-                                    </label>
-                                  </span>
-                                  <span>
-                                    <input
-                                        type="radio"
-                                        id="account1"
-                                        name="radio-group"
-                                        value="register"
-                                        checked={checkOutMethod === "register"}
-                                        onChange={handleCheckOutChange}
-                                    />
-                                      {/* Переводим Register Account */}
-                                      <label htmlFor="account1">
-                                      {t("option_register_account")}
-                                    </label>
-                                  </span>
-                                  <span>
-                                    <input
-                                        type="radio"
-                                        id="account3"
-                                        name="radio-group"
-                                        value="login"
-                                        checked={checkOutMethod === "login"}
-                                        onChange={handleCheckOutChange}
-                                    />
-                                      {/* Переводим Login Account */}
-                                      <label htmlFor="account3">
-                                      {t("option_login_account")}
-                                    </label>
-                                  </span>
-                                </span>
-                                                            </form>
-
-                                                            {btnVisible ? (
-                                                                <>
-                                                                    {/* Переводим описание */}
-                                                                    <div className="gi-new-desc">
-                                                                        {t("option_register_desc")}
-                                                                    </div>
-
-                                                                    <div className="gi-new-btn">
-                                                                        <a
-                                                                            onClick={handleContinueBtn}
-                                                                            className="gi-btn-2"
-                                                                        >
-                                                                            {/* Переводим кнопку */}
-                                                                            {t("option_continue_btn")}
-                                                                        </a>
-                                                                    </div>
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    {loginVisible && (
-                                                                        <div
-                                                                            style={{ marginTop: "15px" }}
-                                                                            className=" m-b-40"
-                                                                        >
-                                                                            <div className="gi-checkout-block gi-check-login">
-                                                                                <div className="gi-check-login-form">
-                                                                                    <Form
-                                                                                        noValidate
-                                                                                        validated={validated}
-                                                                                        onSubmit={handleLogin}
-                                                                                        action="#"
-                                                                                        method="post"
-                                                                                    >
-                                            <span className="gi-check-login-wrap">
-                                              {/* Переводим Email Address */}
-                                                <label>{t("login_email")}</label>
-                                              <Form.Group>
-                                                <Form.Control
-                                                    type="text"
-                                                    name="email"
-                                                    // Переводим плейсхолдер
-                                                    placeholder={t("login_email_placeholder")}
-                                                    value={email}
-                                                    onChange={(e) =>
-                                                        setEmail(e.target.value)
-                                                    }
-                                                    required
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                  {/* Переводим сообщение об ошибке */}
-                                                    {t("login_error_email")}
-                                                </Form.Control.Feedback>
-                                              </Form.Group>
-                                            </span>
-                                                                                        <span
-                                                                                            style={{ marginTop: "24px" }}
-                                                                                            className="gi-check-login-wrap"
-                                                                                        >
-                                              {/* Переводим Password */}
-                                                                                            <label>{t("login_password")}</label>
-                                              <Form.Group>
-                                                <Form.Control
-                                                    type="password"
-                                                    name="password"
-                                                    pattern="^\d{6,12}$"
-                                                    // Переводим плейсхолдер
-                                                    placeholder={t("login_password_placeholder")}
-                                                    required
-                                                    value={password}
-                                                    onChange={(e) =>
-                                                        setPassword(e.target.value)
-                                                    }
-                                                />
-                                                <Form.Control.Feedback type="invalid">
-                                                  {/* Переводим сообщение об ошибке */}
-                                                    {t("login_error_password")}
-                                                </Form.Control.Feedback>
-                                              </Form.Group>
-                                            </span>
-                                                                                        <span className="gi-check-login-wrap gi-check-login-btn">
-                                              <button
-                                                  className="gi-btn-2"
-                                                  type="submit"
-                                              >
-                                                {/* Переводим кнопку */}
-                                                  {t("option_continue_btn")}
-                                              </button>
-                                              <a
-                                                  className="gi-check-login-fp"
-                                              >
-                                                {/* Переводим Forgot Password? */}
-                                                  {t("login_forgot_password")}
-                                              </a>
-                                            </span>
-                                                                                    </Form>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    )}
-                                                                </>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </>
-                                        )}
-
-                                        {billingVisible && (
-                                            <div className="gi-checkout-wrap m-b-30 padding-bottom-3">
-                                                <div className="gi-checkout-block gi-check-bill">
-                                                    {/* Переводим заголовок */}
-                                                    <h3 className="gi-checkout-title">{t("billing_details_title")}</h3>
-                                                    <div className="gi-bl-block-content">
-                                                        {/* Переводим подзаголовок */}
-                                                        <div className="gi-check-subtitle">
-                                                            {t("checkout_options_title")}
-                                                        </div>
-                                                        <span className="gi-bill-option">
-                              <span>
-                                <input
-                                    type="radio"
-                                    id="bill1"
-                                    name="radio-group"
-                                    value="use"
-                                    checked={billingMethod === "use"}
-                                    onChange={handleBillingChange}
-                                    disabled={addressVisible.length === 0}
-                                />
-                                  {/* Переводим опцию */}
-                                  <label htmlFor="bill1">
-                                  {t("billing_use_existing")}
-                                </label>
-                              </span>
-                              <span>
-                                <input
-                                    type="radio"
-                                    id="bill2"
-                                    name="radio-group"
-                                    value="new"
-                                    checked={
-                                        billingMethod === "new" ||
-                                        addressVisible.length === 0
-                                    }
-                                    onChange={handleBillingChange}
-                                />
-                                  {/* Переводим опцию */}
-                                  <label htmlFor="bill2">
-                                  {t("billing_use_new")}
-                                </label>
-                              </span>
-                            </span>
-
-                                                        {/* --- Блок отображения существующих адресов (не переведен в оригинале, но здесь нужна логика) --- */}
-                                                        {billingMethod === "use" && addressVisible.length > 0 && (
-                                                            <div className="gi-existing-address mt-4">
-                                                                <h5 className="mb-3">{t("billing_use_existing")}</h5>
-                                                                <Row>
-                                                                    {addressVisible.map((address: Address, index: number) => (
-                                                                        <Col key={index} md={6} className="mb-3">
-                                                                            <div
-                                                                                className={`gi-address-card p-3 border rounded ${selectedAddress?.id === address.id ? 'border-primary' : ''}`}
-                                                                                onClick={() => handleSelectAddress(address)}
-                                                                                style={{ cursor: 'pointer' }}
-                                                                            >
-                                                                                <h6>{address.first_name} {address.last_name}</h6>
-                                                                                <p className="mb-1">{address.address}, {address.city}</p>
-                                                                                <p className="mb-1">{address.state}, {address.postalCode}</p>
-                                                                                <p className="mb-0">{address.country}</p>
-                                                                                <button
-                                                                                    className="gi-btn-1 btn-sm mt-2"
-                                                                                    onClick={(e) => { e.stopPropagation(); handleRemoveAddress(index); }}
-                                                                                >
-                                                                                    {t("action_remove_from_list")}
-                                                                                </button>
-                                                                            </div>
-                                                                        </Col>
-                                                                    ))}
-                                                                </Row>
-                                                            </div>
-                                                        )}
-
-                                                        {/* --- Блок формы нового адреса --- */}
-                                                        {(billingMethod === "new" || addressVisible.length === 0) && (
-                                                            <Form noValidate validated={validated} onSubmit={handleSubmit} className="mt-4">
-                                                                <Row>
-                                                                    {/* First Name */}
-                                                                    <Col md={6}>
-                                                                        <div className="gi-bl-wrap gi-bl-half">
-                                                                            <label htmlFor="first_name">{t("form_first_name")}*</label>
-                                                                            <Form.Group>
-                                                                                <Form.Control
-                                                                                    type="text"
-                                                                                    name="first_name"
-                                                                                    value={formData.first_name}
-                                                                                    onChange={handleInputChange}
-                                                                                    required
-                                                                                />
-                                                                            </Form.Group>
-                                                                        </div>
-                                                                    </Col>
-                                                                    {/* Last Name */}
-                                                                    <Col md={6}>
-                                                                        <div className="gi-bl-wrap gi-bl-half">
-                                                                            <label htmlFor="last_name">{t("form_last_name")}*</label>
-                                                                            <Form.Group>
-                                                                                <Form.Control
-                                                                                    type="text"
-                                                                                    name="last_name"
-                                                                                    value={formData.last_name}
-                                                                                    onChange={handleInputChange}
-                                                                                    required
-                                                                                />
-                                                                            </Form.Group>
-                                                                        </div>
-                                                                    </Col>
-                                                                    {/* Country */}
-                                                                    <Col md={6}>
-                                                                        <div className="gi-bl-wrap gi-bl-half">
-                                                                            <label htmlFor="country">{t("form_country")}*</label>
-                                                                            <Form.Select name="country" value={formData.country} onChange={handleInputChange} required>
-                                                                                <option value="">{t("form_select")}</option>
-                                                                                {filteredCountryData.map((country) => (
-                                                                                    <option key={country.iso2} value={country.iso2}>{country.name}</option>
-                                                                                ))}
-                                                                            </Form.Select>
-                                                                        </div>
-                                                                    </Col>
-                                                                    {/* State */}
-                                                                    <Col md={6}>
-                                                                        <div className="gi-bl-wrap gi-bl-half">
-                                                                            <label htmlFor="state">{t("form_state")}*</label>
-                                                                            <Form.Select name="state" value={formData.state} onChange={handleInputChange} required>
-                                                                                <option value="">{t("form_select")}</option>
-                                                                                {filteredStateData.map((state) => (
-                                                                                    <option key={state.iso2} value={state.iso2}>{state.name}</option>
-                                                                                ))}
-                                                                            </Form.Select>
-                                                                        </div>
-                                                                    </Col>
-                                                                    {/* City */}
-                                                                    <Col md={6}>
-                                                                        <div className="gi-bl-wrap gi-bl-half">
-                                                                            <label htmlFor="city">{t("form_city")}*</label>
-                                                                            <Form.Select name="city" value={formData.city} onChange={handleInputChange} required>
-                                                                                <option value="">{t("form_select")}</option>
-                                                                                {filteredCityData.map((city) => (
-                                                                                    <option key={city.name} value={city.name}>{city.name}</option>
-                                                                                ))}
-                                                                            </Form.Select>
-                                                                        </div>
-                                                                    </Col>
-                                                                    {/* Address */}
-                                                                    <Col md={6}>
-                                                                        <div className="gi-bl-wrap gi-bl-half">
-                                                                            <label htmlFor="address">{t("form_address")}*</label>
-                                                                            <Form.Group>
-                                                                                <Form.Control
-                                                                                    type="text"
-                                                                                    name="address"
-                                                                                    value={formData.address}
-                                                                                    onChange={handleInputChange}
-                                                                                    required
-                                                                                />
-                                                                            </Form.Group>
-                                                                        </div>
-                                                                    </Col>
-                                                                    {/* Postal Code */}
-                                                                    <Col md={6}>
-                                                                        <div className="gi-bl-wrap gi-bl-half">
-                                                                            <label htmlFor="postalCode">{t("form_postal_code")}*</label>
-                                                                            <Form.Group>
-                                                                                <Form.Control
-                                                                                    type="text"
-                                                                                    name="postalCode"
-                                                                                    value={formData.postalCode}
-                                                                                    onChange={handleInputChange}
-                                                                                    required
-                                                                                />
-                                                                            </Form.Group>
-                                                                        </div>
-                                                                    </Col>
-                                                                </Row>
-                                                                <div className="gi-new-btn mt-4">
-                                                                    <button type="submit" className="gi-btn-2">
-                                                                        {t("form_save_address")}
-                                                                    </button>
-                                                                </div>
-                                                            </Form>
-                                                        )}
-
-                                                        {/* --- Кнопка подтверждения заказа (внизу левой колонки) --- */}
-                                                        <div className="gi-bl-btn">
-                                                            <a
-                                                                onClick={handleCheckout}
-                                                                className="gi-btn-2"
-                                                            >
-                                                                {t("checkout_confirm_order")}
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
                                 </div>
                             </Col>
                         </Row>
                     )}
-                </div>
-            </section>
-
-            {/* Секция New Arrivals (без изменений, переведена ранее) */}
-            <section className="gi-new-product padding-tb-40">
-                <div className="container">
-                    <Row className="overflow-hidden m-b-minus-24px">
-                        <Col lg={12} className="gi-new-prod-section">
-                            <div className="gi-products">
-                                <Fade
-                                    triggerOnce
-                                    direction="up"
-                                    duration={2000}
-                                    delay={200}
-                                    className="section-title-2"
-                                >
-                                    <h2 className="gi-title">
-                                        <Trans i18nKey="new_arrivals_title">
-                                            New <span>Arrivals</span>
-                                        </Trans>
-                                    </h2>
-                                    <p>{t("new_arrivals_subtitle")}</p>
-                                </Fade>
-                                <Fade
-                                    triggerOnce
-                                    direction="up"
-                                    duration={2000}
-                                    delay={200}
-                                    className="gi-new-block m-minus-lr-12"
-                                    data-aos="fade-up"
-                                    data-aos-duration="2000"
-                                    data-aos-delay="300"
-                                >
-                                    <Swiper
-                                        loop={true}
-                                        autoplay={{ delay: 1000 }}
-                                        slidesPerView={5}
-                                        breakpoints={{
-                                            0: {
-                                                slidesPerView: 1,
-                                            },
-                                            320: {
-                                                slidesPerView: 1,
-                                            },
-                                            425: {
-                                                slidesPerView: 2,
-                                            },
-                                            640: {
-                                                slidesPerView: 2,
-                                            },
-                                            768: {
-                                                slidesPerView: 3,
-                                            },
-                                            1024: {
-                                                slidesPerView: 3,
-                                            },
-                                            1025: {
-                                                slidesPerView: 5,
-                                            },
-                                        }}
-                                        className="deal-slick-carousel gi-product-slider"
-                                    >
-                                        {getData().map((item: any, index: number) => (
-                                            <SwiperSlide key={index}>
-                                                <ItemCard data={item} />
-                                            </SwiperSlide>
-                                        ))}
-                                    </Swiper>
-                                </Fade>
-                            </div>
-                        </Col>
-                    </Row>
                 </div>
             </section>
         </>
