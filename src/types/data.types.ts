@@ -1,5 +1,4 @@
-import { RootState } from "@/store";
-import {array} from "yup";
+import {RootState} from "@/store";
 
 export interface moreItem {
     rating: number;
@@ -19,46 +18,47 @@ export interface Facts {
     counter: string;
     discription: string;
     item: number;
-  }
+}
 
- export interface Team {
+export interface Team {
     name: string;
     image: string;
     title: string;
-  }
-  export interface Testimonials {
+}
+
+export interface Testimonials {
     name: string;
     image: string;
     subimage: string;
     category: string;
     description: string;
     subimagetwo: string;
-  }
+}
 
-   export interface FashionBanner {
+export interface FashionBanner {
     name: string;
     image: string;
-    num : number
-  }
+    num: number
+}
 
-  export interface Blog {
+export interface Blog {
     name: string;
     image: string;
     date: string;
     title: string;
     month?: string;
 
-  }
+}
 
-  export interface BlogContent {
+export interface BlogContent {
     category: string;
     image: string;
     date: string;
     title: string;
     description: string;
-  }
-  
-  export interface Deal {
+}
+
+export interface Deal {
     category: string;
     sale: string;
     images: [];
@@ -74,9 +74,9 @@ export interface Facts {
     sku: number;
     quantity: number;
     id: number;
-    is_main:number;
-    file_url:string
-  }
+    is_main: number;
+    file_url: string
+}
 
 export interface ProductSidebar {
     category1: string;
@@ -96,16 +96,7 @@ export interface ProductSidebar {
     id: number;
 }
 
-  export interface Category {
-    name: string;
-    percentage: string;
-    icon?: string;
-    image: string;
-    item: number;
-    num?: number;
-  }
-
-  export interface ProductCategory {
+export interface ProductCategory {
     category: string;
     sale: string;
     image: string;
@@ -119,20 +110,20 @@ export interface ProductSidebar {
     brand: string;
     sku: number;
     quantity: number;
-    color1 : any;
-    color2 : any;
-    color3 : any;
+    color1: any;
+    color2: any;
+    color3: any;
     size1: string;
     size2: string;
     id: number;
-  }
+}
 
-   export interface Questions {
+export interface Questions {
     questions: string;
     ans: string;
-  }
+}
 
-   export interface FashionDeal {
+export interface FashionDeal {
     category: string;
     sale: string;
     image: string;
@@ -153,9 +144,9 @@ export interface ProductSidebar {
     size1: string;
     size2: string;
     id: number
-  }
+}
 
-  export interface Fashion {
+export interface Fashion {
     name: string;
     image: string;
     title: string;
@@ -163,24 +154,13 @@ export interface ProductSidebar {
     newPrice: number;
     quantity: number;
     id: number;
-  }
+}
 
-  export interface Policy {
+export interface Policy {
     questions: string;
-  }
+}
 
-  export interface ProductImage {
-    image: string;
-  }
-
-  export interface Product {
-    id: string;
-    title: string;
-    image: string;
-    newPrice: number;
-  }
-
-  export interface ProductItem {
+export interface ProductItem {
     category: string;
     sale: string;
     image: string;
@@ -196,17 +176,17 @@ export interface ProductSidebar {
     brand: string;
     sku: number;
     quantity: number;
-    id : number;
+    id: number;
     tags?: string;
-  }
+}
 
-  export interface Service {
+export interface Service {
     name: string;
     icon: string;
     title: string;
-  }
+}
 
-  export interface Selling {
+export interface Selling {
     name: string;
     image: string;
     title: string;
@@ -215,9 +195,9 @@ export interface ProductSidebar {
     waight: string
     quantity: number;
     id: number;
-  }
+}
 
-  export interface Rated {
+export interface Rated {
     name: string;
     image: string;
     title: string;
@@ -226,9 +206,9 @@ export interface ProductSidebar {
     waight: string
     quantity: number;
     id: number;
-  }
+}
 
-  export interface Trending {
+export interface Trending {
     name: string;
     image: string;
     title: string;
@@ -237,9 +217,9 @@ export interface ProductSidebar {
     waight: string
     quantity: number;
     id: number;
-  }
+}
 
-  export interface VendorList {
+export interface VendorList {
     id: number;
     name: string;
     description: string;
@@ -249,9 +229,9 @@ export interface ProductSidebar {
     products: number;
     month_since: number;
     year_since: number;
-  }
+}
 
-  export interface VendorListTwo {
+export interface VendorListTwo {
     id: number;
     name: string;
     description: string;
@@ -259,21 +239,21 @@ export interface ProductSidebar {
     level: number;
     levelOutOf: number;
     products: number;
-  }
+}
 
-  export interface Term {
+export interface Term {
     questions: string;
-  }
+}
 
-  export interface WrapperAnimationFCProps {
+export interface WrapperAnimationFCProps {
     children: React.ReactNode | React.ReactNode[];
     triggerOnce: boolean;
     className: string;
     index?: any;
     postData?: any;
-  }
-  
-  export type ProductType = {
+}
+
+export type ProductType = {
     id: number;
     name: string;
     thumb: string;
@@ -281,9 +261,9 @@ export interface ProductSidebar {
     count: number;
     color: string;
     size: string;
-  };
-  
-  export type ProductStoreType = {
+};
+
+export type ProductStoreType = {
     id: number;
     name: string;
     thumb: string;
@@ -291,14 +271,14 @@ export interface ProductSidebar {
     count: number;
     color: string;
     size: string;
-  };
-  
-  export enum TemplateEnum {
+};
+
+export enum TemplateEnum {
     THEME = "theme",
     TEMPLATE = "template",
-  }
-  
-  export type ProductContentType<> = {
+}
+
+export type ProductContentType = {
     url?: string;
     statekey: keyof RootState;
     postData?: any;
@@ -312,9 +292,9 @@ export interface ProductSidebar {
     onError?: (data: any) => void;
     view?: any;
     itemColClass?: any;
-  };
-  
-  export interface Order {
+};
+
+export interface Order {
     orderId: string;
     date: string;
     shippingMethod: string;
@@ -322,21 +302,22 @@ export interface ProductSidebar {
     totalPrice: number;
     status: string;
     products: Product[];
-  }
+}
 
-  export interface RecentBlog {
+export interface RecentBlog {
     category: string;
     image: string;
     date: string;
     title: string;
     description: string
-  }
+}
 
-  export interface Shop {
+export interface Shop {
     category: string;
     icon: string;
-  }
-  export interface Item {
+}
+
+export interface Item {
     id: number;
     name?: string;
     category?: string;
@@ -366,48 +347,48 @@ export interface ProductSidebar {
     size2?: string;
     price?: number;
 
-  }
+}
 
-  export interface Weight {
+export interface Weight {
     color: string;
-  }
+}
 
-  export interface Shoptags{
+export interface Shoptags {
     tags: string,
     count: number,
-  }
+}
 
-  export interface GroupCategory {
+export interface GroupCategory {
     category: string,
     count: number,
-  }
+}
 
-  export interface GroupTags {
+export interface GroupTags {
     tags: string,
     count: number,
-  }
+}
 
-  export interface GroupBrand  {
+export interface GroupBrand {
     brand: string,
     count: number,
-  }
+}
 
-  export interface GroupColor  {
+export interface GroupColor {
     color: string,
     count: number,
-  }
+}
 
-  export interface GroupWeight {
+export interface GroupWeight {
     weight: string,
     count: number,
-  }
+}
 
-  export interface Option {
+export interface Option {
     value: string;
     tooltip: string;
-  }
-  
-  export interface RegistrationData {
+}
+
+export interface RegistrationData {
     first_name: string;
     last_name: string;
     email: string;
@@ -421,9 +402,9 @@ export interface ProductSidebar {
     description: string;
     password?: string;
     uid?: any;
-  }
+}
 
-  export interface VendorData {
+export interface VendorData {
     email: string;
     phone_number: string;
     home_address: string;
@@ -436,67 +417,69 @@ export interface ProductSidebar {
     businessType?: string;
     bankName?: string;
     bankAccountNo?: string;
-  }
+}
 
-  export interface Wishlist {
+export interface Wishlist {
     title: string;
     newPrice: number;
     waight: any;
     image: string;
     date: string;
     status: string;
-  }
+}
 
-  export interface Address {
-    id: string;
-    first_name: string;
-    last_name: string;
+export interface DiscountState {
+    value: number; // Значение скидки
+    type: "amount" | "percentage"; // Тип скидки
+    code?: string; // Промокод (опционально)
+    errorMessage: string;
+}
+
+export interface Address {
+    longitude: number;
     address: string;
-    city: string;
-    postalCode: string;
-    country: string;
-    state: string;
-  }
-    
-  export interface Country {
+    latitude: number;
+}
+
+export interface Country {
     id: number;
     name: any;
     iso2: string;
-  }
-  
-  export interface State {
+}
+
+export interface State {
     id: number;
     name: any;
     state_code: string;
-    country_code: string; 
-  }
-  
-  export interface City {
+    country_code: string;
+}
+
+export interface City {
     id: number;
     name: any;
     iso2: string;
-  }
+}
 
-  export interface Tag {
+export interface Tag {
     name: string;
-  }
-  
-  export interface LinkAttr {
+}
+
+export interface LinkAttr {
     name: string;
     href: string;
     slug?: string;
-  }
+}
 
-  export interface MenuLinkAttr {
+export interface MenuLinkAttr {
     name: string;
     href: string;
     subname?: LinkAttr[];
-  }
+}
 
-  export interface VendorImage {
+export interface VendorImage {
     index: number;
     image: string;
-  }
+}
 
 /**
  * src/types/data.types.ts

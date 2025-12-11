@@ -5,7 +5,7 @@ import StarRating from "../stars/StarRating";
 import Breadcrumb from "../breadcrumb/Breadcrumb";
 import {Col, Row} from "react-bootstrap";
 import DiscountCoupon from "../discount-coupon/DiscountCoupon";
-import {Address} from "@/types/data.types";
+import {Address, DiscountState} from "@/types/data.types";
 import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 import toast from 'react-hot-toast';
@@ -13,9 +13,6 @@ import toast from 'react-hot-toast';
 // --- ИМПОРТЫ CONTEXT API ---
 import {useCart} from "@/context/CartContext";
 import {useAuth} from "@/context/AuthContext";
-// ----------------------------
-
-// --- i18next ИМПОРТЫ ---
 import {useTranslation, Trans} from "react-i18next";
 // -----------------------
 
@@ -33,10 +30,6 @@ interface CartContextType {
 }
 
 const API_URL = "https://admin.beauty-point.uz/api/orders/index";
-
-// ----------------------------------------------------
-// 💡 НОВЫЙ КОМПОНЕНТ ФОРМЫ АДРЕСА
-// ----------------------------------------------------
 
 interface AddressFormProps {
     t: (key: string) => string;
@@ -58,26 +51,16 @@ const AddressForm: React.FC<AddressFormProps> = ({
         longitude: 2,
     });
 
-    // Обработчик изменения полей ввода
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
-        // Обновляем локальное состояние
-        const updatedAddress = {...newAddress, [name]: value};
-        setNewAddress(updatedAddress);
-        // Устанавливаем обновленный адрес как выбранный
-        onSelectAddress(updatedAddress);
-    };
-
     // Обработчик выбора существующего адреса
     const handleAddressSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const addressValue = e.target.value;
         if (addressValue === "new") {
             onSelectAddress(null); // Новый адрес
-            setNewAddress({address: ""}); // Очищаем форму
+            setNewAddress({address: "", latitude: 1, longitude: 2}); // Очищаем форму
         } else {
             // Ищем адрес по ID или индексу (в зависимости от того, как вы его храните)
             const selected = existingAddresses.find(
-                (addr) => String(addr.id) === addressValue || String(existingAddresses.indexOf(addr)) === addressValue
+                (addr, index) => String(index) === addressValue || String(existingAddresses.indexOf(addr)) === addressValue
             );
             if (selected) {
                 onSelectAddress(selected);
@@ -92,15 +75,25 @@ const AddressForm: React.FC<AddressFormProps> = ({
             setNewAddress(selectedAddress);
         } else {
             // Если выбран "Новый адрес", очищаем форму
-            setNewAddress({address: ""});
+            setNewAddress({address: "", longitude: 1, latitude: 2});
         }
     }, [selectedAddress]);
 
     // Определяем, должен ли пользователь редактировать поля (только для "Нового адреса")
-    const isEditingDisabled = selectedAddress && existingAddresses.some(addr => addr.id === selectedAddress.id);
+    const isEditingDisabled = selectedAddress && existingAddresses.some(addr => addr.address === selectedAddress.address);
 
     // В случае, если selectedAddress пустой, используем newAddress для формы.
     const formAddress = selectedAddress && !isEditingDisabled ? selectedAddress : newAddress;
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        // Обновляем локальное состояние
+        const updatedAddress = {...newAddress, [name]: value};
+        setNewAddress(updatedAddress);
+        // Устанавливаем обновленный адрес как выбранный
+        onSelectAddress(updatedAddress);
+    };
+
 
     return (
         <div className="gi-checkout-form">
@@ -115,12 +108,11 @@ const AddressForm: React.FC<AddressFormProps> = ({
                                 id="addressSelector"
                                 className="form-control"
                                 onChange={handleAddressSelection}
-                                // Используем 'new', если selectedAddress нет или он не имеет id (т.е. это новый, введенный вручную адрес)
-                                value={selectedAddress && existingAddresses.some(addr => addr.id === selectedAddress.id) ? String(selectedAddress.id) : "new"}
+                                value={selectedAddress && existingAddresses.some(addr => addr.address === selectedAddress.address) ? String(selectedAddress.address) : "new"}
                             >
                                 <option value="new">{t("new_address_option") || "Ввести новый адрес"}</option>
                                 {existingAddresses.map((addr, index) => (
-                                    <option key={index} value={String(addr.id || index)}>
+                                    <option key={index} value={String(index)}>
                                         {addr.address}
                                     </option>
                                 ))}
@@ -143,6 +135,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
                                 required
                                 value={formAddress.address}
                                 onChange={handleInputChange}
+                                /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+                                // @ts-expect-error
                                 disabled={isEditingDisabled}
                             />
                         </div>
@@ -153,8 +147,6 @@ const AddressForm: React.FC<AddressFormProps> = ({
     );
 };
 // ----------------------------------------------------
-// ----------------------------------------------------
-
 
 const CheckOut = () => {
     // Инициализируем t
@@ -177,6 +169,12 @@ const CheckOut = () => {
     // ------------------------------------------
 
     const [subTotal, setSubTotal] = useState(0);
+    const [discountState, setDiscountState] = useState<DiscountState>({
+        value: 0,
+        type: "amount",
+        errorMessage: "",
+        code: undefined,
+    });
     const [discount, setDiscount] = useState(0);
     const [selectedMethod, setSelectedMethod] = useState("flat");
     const [billingMethod, setBillingMethod] = useState("new");
@@ -190,7 +188,28 @@ const CheckOut = () => {
     const lang = localStorage.getItem("i18nextLng");
 
     const flatDeliveryCost = 30000;
+
+    console.log(discountState)
     const vat = selectedMethod === "flat" ? flatDeliveryCost : 0;
+
+    const calculateFinalTotal = useCallback(() => {
+        let currentTotal = subTotal + vat;
+        const {value, type} = discountState;
+
+        if (value > 0) {
+            if (type === "percentage") {
+                // Вычитаем процент
+                currentTotal -= currentTotal * (value / 100);
+            } else if (type === "amount") {
+                // Вычитаем фиксированную сумму
+                currentTotal -= value;
+            }
+        }
+        // Убеждаемся, что итоговая сумма не отрицательна
+        return Math.max(0, currentTotal);
+    }, [subTotal, vat, discountState]);
+
+    const finalTotal = calculateFinalTotal();
 
     // ... useEffects (оставляем как есть, если они работают)
     useEffect(() => {
@@ -200,7 +219,7 @@ const CheckOut = () => {
         // Добавляем placeholder id, если его нет
         const addressesWithId: Address[] = existingAddresses.map((addr, index) => ({
             ...addr,
-            id: addr.id || index + 1 // Используем индекс + 1 как временный id, если нет реального
+            id: index + 1 // Используем индекс + 1 как временный id, если нет реального
         }));
 
         setAddressVisible(addressesWithId);
@@ -250,11 +269,8 @@ const CheckOut = () => {
         setSubTotal(subtotal);
     }, [cartItems]);
 
-    const discountAmount = subTotal * (discount / 100);
-    const total = subTotal + vat - discountAmount;
 
     // 💡 ОБНОВЛЕННАЯ ФУНКЦИЯ: ОТПРАВКА ЗАКАЗА НА API
-    // Удалили `loading` из зависимостей, чтобы избежать проблем.
     const handlePlaceOrder = useCallback(async () => {
         if (loading) return; // Предотвращаем двойную отправку
 
@@ -270,7 +286,7 @@ const CheckOut = () => {
             return;
         }
 
-        // **ПРОВЕРКА АДРЕСА** - КРИТИЧЕСКИ ВАЖНО
+        // ПРОВЕРКА АДРЕСА - КРИТИЧЕСКИ ВАЖНО
         if (!selectedAddress || !selectedAddress.address) {
             console.log(t("address_missing_error") || "Пожалуйста, выберите или введите полный адрес доставки (включая координаты).");
             return;
@@ -294,6 +310,7 @@ const CheckOut = () => {
                 address: selectedAddress.address,
                 latitude: selectedAddress.latitude,
                 longitude: selectedAddress.longitude,
+                promocode: discountState.value > 0 ? discountState.code : undefined,
             };
 
             // 3. ПОЛУЧЕНИЕ ТОКЕНА
@@ -351,7 +368,7 @@ const CheckOut = () => {
         } finally {
             setLoading(false);
         }
-    }, [cartItems, isTermsChecked, selectedAddress, comment, inputPromocode, user, navigate, t, clearCart]); // Добавили clearCart
+    }, [cartItems, isTermsChecked, selectedAddress, comment, inputPromocode, user, navigate, t, clearCart, discountState]); // Добавили clearCart
 
     // 💡 Обратите внимание: в `return` части компонент был исправлен, чтобы вызывать `handlePlaceOrder`
 
@@ -405,7 +422,31 @@ const CheckOut = () => {
                                                         className="text-right">{vat.toLocaleString("en-US")} so'm</span>
                                                 </div>
                                                 <div>
-                                                    <DiscountCoupon onDiscountApplied={setDiscount}/>
+                                                    {/* Передаем функцию, которая обновит наш discountState */}
+                                                    <DiscountCoupon onDiscountApplied={(data: DiscountState) => {
+                                                        setDiscountState(data);
+                                                    }}/>
+                                                </div>
+                                                {discountState.value > 0 && (
+                                                    <div className="text-success" style={{fontWeight: 600}}>
+                                                        <span
+                                                            className="text-left">{t("summary_discount") || "Скидка"}</span>
+                                                        <span className="text-right">
+                                                            {discountState.type === "percentage"
+                                                                ? `${discountState.value}%`
+                                                                : `- ${discountState.value.toLocaleString("en-US")} so'm`}
+                                                        </span>
+                                                    </div>
+                                                )}
+                                                <div style={{
+                                                    width: "100%",
+                                                }}>
+                                                    <p style={{
+                                                        textAlign: "end",
+                                                        color: "red"
+                                                    }}>
+                                                        {discountState?.errorMessage}
+                                                    </p>
                                                 </div>
                                                 <div className="gi-checkout-coupan-content">
                                                     <form
@@ -439,7 +480,7 @@ const CheckOut = () => {
                                                 <div className="gi-checkout-summary-total">
                                                     <span className="text-left">{t("summary_total_amount")}</span>
                                                     <span className="text-right">
-                                                        {total.toLocaleString("en-US")} so'm
+                                        {finalTotal.toLocaleString("en-US")} so'm
                                                     </span>
                                                 </div>
                                             </div>
@@ -453,15 +494,11 @@ const CheckOut = () => {
                                                                     <a className="image">
                                                                         <img
                                                                             className="main-image"
-                                                                            /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-                                                                            // @ts-expect-error
                                                                             src={item?.images[0]?.upload.file_url}
                                                                             alt="Product"
                                                                         />
                                                                         <img
                                                                             className="hover-image"
-                                                                            /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-                                                                            // @ts-expect-error
                                                                             src={item?.images[1]?.upload.file_url}
                                                                             alt="Product"
                                                                         />
@@ -596,7 +633,7 @@ const CheckOut = () => {
                                                     </span>
                                                     {apiError && (
                                                         <div className="alert alert-danger mt-3">
-                                                            **Ошибка:** {apiError}
+                                                            Ошибка: {apiError}
                                                         </div>
                                                     )}
                                                     {/* 💡 КНОПКА ОФОРМЛЕНИЯ ЗАКАЗА - ИСПРАВЛЕНО: Теперь она вызывает handlePlaceOrder */}

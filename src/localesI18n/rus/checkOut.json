@@ -3,6 +3,7 @@
   "checkout_page_heading": "Страница Оформления Заказа",
   "place_order_btn": "Оформить",
   "address_street": "Адрес (улица, дом)",
+  "summary_discount": "Скидка",
   "cart_empty_message": "Ваша корзина пуста. Пожалуйста, добавьте товары, чтобы продолжить.",
   "summary_title": "Сводка",
   "summary_subtotal": "Промежуточная сумма",

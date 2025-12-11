@@ -1,5 +1,10 @@
 # Things That I Did
 
+## General
+
+* Created repository and uploaded to GitHub.
+* Created project on Vercel and published it.
+
 ## Login Page
 
 * Переработал дизайн формы, включая расположение элементов и визуальные правки.
