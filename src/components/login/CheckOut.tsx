@@ -306,7 +306,12 @@ const CheckOut = () => {
                     clearCart();
                 }
                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                paymentMethod === "payme" ? navigate(res?.data?.payment?.payme || "/") : navigate(res?.data?.payment?.click || "/");
+                if (paymentMethod === "payme") {
+    window.location.href = res?.data?.payment?.payme || "/";
+} else {
+    window.location.href = res?.data?.payment?.click || "/";
+                }
+            
             } else {
                 // Если API возвращает 200, но статус не success (может быть 'error' с сообщением)
                 const message = response.data.message || "Неизвестная ошибка при оформлении заказа.";
@@ -662,5 +667,6 @@ const CheckOut = () => {
         </>
     );
 };
+
 
 export default CheckOut;
