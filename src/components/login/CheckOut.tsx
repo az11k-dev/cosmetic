@@ -306,6 +306,7 @@ const CheckOut = () => {
                     clearCart();
                 }
                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                navigate("/");
                 if (paymentMethod === "payme") {
     window.location.href = res?.data?.payment?.payme || "/";
 } else {
@@ -670,3 +671,4 @@ const CheckOut = () => {
 
 
 export default CheckOut;
+
