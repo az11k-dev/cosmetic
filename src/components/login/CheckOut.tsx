@@ -14,6 +14,7 @@ import toast from 'react-hot-toast';
 import {useCart} from "@/context/CartContext";
 import {useAuth} from "@/context/AuthContext";
 import {useTranslation, Trans} from "react-i18next";
+import {showErrorToast} from "@/utility/toast.ts";
 // -----------------------
 
 // 💡 Определяем тип для элементов, отправляемых в API
@@ -176,11 +177,8 @@ const CheckOut = () => {
         code: undefined,
     });
     const [selectedMethod, setSelectedMethod] = useState("flat");
-    const [billingMethod, setBillingMethod] = useState("new");
-    const [billingVisible, setBillingVisible] = useState(false);
+    const [paymentMethod, setPaymentMethod] = useState("click");
     const [addressVisible, setAddressVisible] = useState<Address[]>([]);
-    const [optionVisible, setOptionVisible] = useState(true);
-    const [btnVisible, setBtnVisible] = useState(true);
     const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
     const [isTermsChecked, setIsTermsChecked] = useState(false);
     const checkboxRef = useRef<HTMLInputElement>(null);
@@ -189,8 +187,6 @@ const CheckOut = () => {
     const flatDeliveryCost = 30000;
 
     const vat = selectedMethod === "flat" ? flatDeliveryCost : 0;
-
-    console.log(discountState)
 
     const calculateFinalTotal = useCallback(() => {
         let currentTotal = subTotal + vat;
@@ -210,40 +206,6 @@ const CheckOut = () => {
     }, [subTotal, vat, discountState]);
 
     const finalTotal = calculateFinalTotal();
-
-    // ... useEffects (оставляем как есть, если они работают)
-    useEffect(() => {
-        const existingAddresses: Address[] = JSON.parse(
-            localStorage.getItem("shippingAddresses") || "[]"
-        );
-        // Добавляем placeholder id, если его нет
-        const addressesWithId: Address[] = existingAddresses.map((addr, index) => ({
-            ...addr,
-            id: index + 1 // Используем индекс + 1 как временный id, если нет реального
-        }));
-
-        setAddressVisible(addressesWithId);
-
-        if (addressesWithId.length > 0 && !selectedAddress) {
-            setSelectedAddress(addressesWithId[0]);
-        }
-    }, [selectedAddress]);
-
-    useEffect(() => {
-        if (selectedAddress) {
-            setBillingMethod("use");
-        } else {
-            setBillingMethod("new");
-        }
-    }, [selectedAddress]);
-
-    useEffect(() => {
-        if (user) {
-            setBtnVisible(false);
-            setOptionVisible(false);
-            setBillingVisible(true);
-        }
-    }, [user]);
 
     const handleDeliveryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedMethod(event.target.value);
@@ -276,19 +238,19 @@ const CheckOut = () => {
 
         // 1. ПРОВЕРКА НЕОБХОДИМЫХ УСЛОВИЙ
         if (cartItems.length === 0) {
-            console.log(t("cart_empty_error") || "Корзина пуста. Невозможно оформить заказ.");
+            showErrorToast(t("cart_empty_error") || "Корзина пуста. Невозможно оформить заказ.");
             return;
         }
 
         if (!isTermsChecked) {
-            console.log(t("terms_unchecked_error") || "Пожалуйста, примите условия и положения.");
+            showErrorToast(t("terms_unchecked_error") || "Пожалуйста, примите условия и положения.");
             if (checkboxRef.current) checkboxRef.current.focus();
             return;
         }
 
         // ПРОВЕРКА АДРЕСА - КРИТИЧЕСКИ ВАЖНО
         if (!selectedAddress || !selectedAddress.address) {
-            console.log(t("address_missing_error") || "Пожалуйста, выберите или введите полный адрес доставки (включая координаты).");
+            showErrorToast(t("address_missing_error") || "Пожалуйста, выберите или введите полный адрес доставки (включая координаты).");
             return;
         }
 
@@ -317,7 +279,7 @@ const CheckOut = () => {
             const token = localStorage.getItem("authToken"); // Замените `user?.token` на фактическое местоположение токена
 
             if (!token) {
-                console.log(t("auth_token_missing") || "Ошибка: Токен аутентификации отсутствует. Пожалуйста, войдите в систему.");
+                showErrorToast(t("auth_token_missing") || "Ошибка: Токен аутентификации отсутствует. Пожалуйста, войдите в систему.");
                 setLoading(false);
                 return;
             }
@@ -334,6 +296,7 @@ const CheckOut = () => {
                     },
                 }
             );
+            const res = response.data;
 
             // 5. ОБРАБОТКА УСПЕХА
             if (response.status === 200) {
@@ -342,7 +305,8 @@ const CheckOut = () => {
                 if (clearCart) {
                     clearCart();
                 }
-                navigate("/"); // Перенаправляем на страницу благодарности
+                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                paymentMethod === "payme" ? navigate(res?.data?.payment?.payme || "/") : navigate(res?.data?.payment?.click || "/");
             } else {
                 // Если API возвращает 200, но статус не success (может быть 'error' с сообщением)
                 const message = response.data.message || "Неизвестная ошибка при оформлении заказа.";
@@ -597,18 +561,40 @@ const CheckOut = () => {
                                                 </div>
                                                 <form>
                                                     <span className="gi-pay-option">
-                                                        <span>
-                                                            <input
-                                                                readOnly
-                                                                type="radio"
-                                                                id="pay1"
-                                                                name="radio-group"
-                                                                value="cash_on_delivery"
-                                                                checked
-                                                            />
-                                                            <label
-                                                                htmlFor="pay1">{t("payment_cash_on_delivery")}</label>
-                                                        </span>
+                                                  <p>
+    <input
+        type="radio"
+        id="pay_click"
+        name="radio-group"
+        value="click"
+        checked={paymentMethod === "click"}
+        onChange={(e) => setPaymentMethod(e.target.value)}
+    />
+    <label style={{
+        marginRight: 0,
+        marginTop: 0,
+        marginLeft: 0,
+        marginBottom: 0
+    }} htmlFor="pay_click">Click</label>
+</p>
+
+<p>
+    <input
+        type="radio"
+        id="pay_payme"
+        name="radio-group"
+        value="payme"
+        checked={paymentMethod === "payme"}
+        onChange={(e) => setPaymentMethod(e.target.value)}
+    />
+    <label style={{
+        marginRight: 0,
+        marginTop: 0,
+        marginLeft: 0,
+        marginBottom: 0
+    }} htmlFor="pay_payme">Payme</label>
+</p>
+
                                                     </span>
                                                     <span className="gi-pay-agree">
                                                         <input
@@ -624,6 +610,8 @@ const CheckOut = () => {
                                                         <a>
                                                             <Trans i18nKey="payment_agree_terms">
                                                                 {lang === "ru" ? "Я прочитал(а) и согласен(на) " : "Men o'qidim va roziman "}
+                                                                {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                                                                {/*@ts-expect-error*/}
                                                                 <span>{{terms: t("payment_terms_conditions")}}</span>.
                                                             </Trans>
                                                         </a>
@@ -639,7 +627,6 @@ const CheckOut = () => {
                                                         type="button"
                                                         className="gi-btn-1 gi-btn-block mt-4"
                                                         onClick={handlePlaceOrder}
-                                                        disabled={loading || !isTermsChecked || cartItems.length === 0 || !selectedAddress}
                                                     >
                                                         {loading
                                                             ? (t("placing_order_loading") || "Оформление...")
