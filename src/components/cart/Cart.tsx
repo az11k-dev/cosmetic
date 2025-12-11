@@ -84,7 +84,6 @@ const Cart = () => {
     const filteredCityData: City[] = useCities(formData?.state || "") || [];
     const handleInputChange = async (e: any) => {
         const {name, value} = e.target;
-        console.log("{ name, value }", {name, value})
         if (name === 'country') {
             setFormData({
                 country: value,

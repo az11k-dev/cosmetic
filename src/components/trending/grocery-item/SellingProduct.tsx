@@ -71,7 +71,6 @@ const SellingProduct = () => {
     const getData = () => {
         return [...data].sort((a: any, b: any) => b?.stock - a?.stock);
     };
-    console.log(data);
 
     return (
         <>

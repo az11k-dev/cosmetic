@@ -75,7 +75,6 @@ const VendorUpload = () => {
       };
       reader.readAsDataURL(file);
 
-      console.log("prevFormData", {...formData})
 
       setFormData((prevFormData: any) => ({
         ...prevFormData,

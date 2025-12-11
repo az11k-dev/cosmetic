@@ -175,7 +175,6 @@ const CheckOut = () => {
         errorMessage: "",
         code: undefined,
     });
-    const [discount, setDiscount] = useState(0);
     const [selectedMethod, setSelectedMethod] = useState("flat");
     const [billingMethod, setBillingMethod] = useState("new");
     const [billingVisible, setBillingVisible] = useState(false);
@@ -189,8 +188,9 @@ const CheckOut = () => {
 
     const flatDeliveryCost = 30000;
 
-    console.log(discountState)
     const vat = selectedMethod === "flat" ? flatDeliveryCost : 0;
+
+    console.log(discountState)
 
     const calculateFinalTotal = useCallback(() => {
         let currentTotal = subTotal + vat;
@@ -346,7 +346,6 @@ const CheckOut = () => {
             } else {
                 // Если API возвращает 200, но статус не success (может быть 'error' с сообщением)
                 const message = response.data.message || "Неизвестная ошибка при оформлении заказа.";
-                console.log(message);
                 setApiError(message);
             }
 
@@ -357,12 +356,10 @@ const CheckOut = () => {
                 // Ошибка от сервера (4xx, 5xx)
                 const serverMessage = error.response.data.message || error.response.data.error;
                 const errorMessage = serverMessage || "Ошибка сервера при оформлении заказа.";
-                console.log(errorMessage);
                 setApiError(errorMessage);
             } else {
                 // Другие ошибки (сеть, CORS)
                 const errorMessage = t("network_error") || "Сетевая ошибка. Попробуйте снова.";
-                console.log(errorMessage);
                 setApiError(errorMessage);
             }
         } finally {
@@ -626,7 +623,8 @@ const CheckOut = () => {
                                                         />
                                                         <a>
                                                             <Trans i18nKey="payment_agree_terms">
-                                                                I have read and agree to the <span>{{terms: t("payment_terms_conditions")}}</span>.
+                                                                {lang === "ru" ? "Я прочитал(а) и согласен(на) " : "Men o'qidim va roziman "}
+                                                                <span>{{terms: t("payment_terms_conditions")}}</span>.
                                                             </Trans>
                                                         </a>
                                                         <span className="checked"></span>

@@ -1,6 +1,7 @@
-import {useEffect, useState, useCallback} from "react";
+import {useState} from "react";
 import Badge from "react-bootstrap/Badge";
 import {motion, AnimatePresence} from "framer-motion";
+import {Check, Clock} from "lucide-react";
 
 // Базовый URL для API
 const API_BASE_URL = "https://admin.beauty-point.uz/api/promocode/check";
@@ -21,36 +22,40 @@ const DiscountCoupon = ({onDiscountApplied}: any) => {
 
     // Получение языка из localStorage
     const lang = localStorage.getItem("i18nextLng");
+    const token = localStorage.getItem("authToken");
 
-    // Мемоизированный колбэк для применения скидки
-    const applyDiscount = useCallback(() => {
-        // Мы передаем объект с типом и значением, чтобы родительский компонент мог
-        // правильно рассчитать итоговую скидку (сумма или процент)
-        onDiscountApplied({
-            value: discountValue,
-            type: discountType,
-            errorMessage: errorMessage,
-            code: couponCode
-        });
-    }, [onDiscountApplied, discountValue, discountType]);
-
-    // Эффект для вызова колбэка при изменении скидки
-    useEffect(() => {
-        applyDiscount();
-    }, [applyDiscount]);
+    // Удалены applyDiscount (useCallback) и useEffect для устранения бесконечного цикла.
+    // onDiscountApplied теперь вызывается явно в обработчиках.
 
     const toggleCoupon = () => {
         setIsVisible(prev => !prev);
     };
-    const token = localStorage.getItem("authToken");
+
+    /**
+     * Вспомогательная функция для вызова колбэка
+     * @param value - значение скидки
+     * @param type - тип скидки ('amount' или 'percentage')
+     * @param error - сообщение об ошибке
+     * @param code - примененный код
+     */
+    const callOnDiscountApplied = (value: number, type: string, error: string, code: string) => {
+        onDiscountApplied({
+            value: value,
+            type: type,
+            errorMessage: error,
+            code: code
+        });
+    };
 
     /**
      * Обработчик применения скидки - отправка запроса на API
      */
     const handleApplyDiscount = async () => {
         if (couponCode === "") {
-            setErrorMessage(lang === "ru" ? "Поле промокода не может быть пустым" : "Promokod bo'sh bo'lishi mumkin emas");
+            const msg = lang === "ru" ? "Поле промокода не может быть пустым" : "Promokod bo'sh bo'lishi mumkin emas";
+            setErrorMessage(msg);
             setDiscountValue(0);
+            callOnDiscountApplied(0, "amount", msg, "");
             return;
         }
 
@@ -64,82 +69,98 @@ const DiscountCoupon = ({onDiscountApplied}: any) => {
             });
 
             const data = await response.json();
-            // Проверка на ошибки HTTP (например, 404, 500)
+
+            // ----------------------------------------------------
+            // 1. Обработка HTTP ошибок
+            // ----------------------------------------------------
             if (!response.ok) {
                 let errorMsg = lang === "ru" ? "Неизвестная ошибка сервера" : "Noma'lum server xatosi";
 
                 if (response.status === 422 && data && data.message) {
-                    // Если статус 422 и в теле ответа есть сообщение (message),
-                    // используем его как текст ошибки.
-                    // Если API возвращает ошибки валидации в другом поле (например, 'errors'),
-                    // то нужно адаптировать эту часть.
                     errorMsg = data.message;
                 } else if (response.status === 422) {
-                    // Случай 422, но без поля 'message'
                     errorMsg = lang === "ru" ? "Неверный или недействительный промокод" : "Noto'g'ri yoki yaroqsiz promokod";
                 } else {
-                    // Другие HTTP ошибки (404, 500 и т.д.)
                     errorMsg = `${lang === "ru" ? "Ошибка HTTP" : "HTTP xatosi"}! Status: ${response.status}`;
                 }
 
                 setErrorMessage(errorMsg);
                 setDiscountValue(0);
                 setIsBtnVisible(true);
-                setIsLoading(false); // Завершаем загрузку здесь
-                return; // Прерываем выполнение, если ответ неуспешный
+                setIsLoading(false);
+
+                // Уведомляем родителя о сбросе скидки и ошибке
+                callOnDiscountApplied(0, "amount", errorMsg, couponCode);
+                return;
             }
 
+            // ----------------------------------------------------
+            // 2. Обработка успешного HTTP ответа
+            // ----------------------------------------------------
             if (data.status === true && data.data && data.data.promocode) {
                 const promo = data.data.promocode;
 
-                // Проверяем, что промокод еще действителен
+                // Проверка на срок действия
                 const expiresAt = promo.expires_at ? new Date(promo.expires_at) : null;
                 if (expiresAt && expiresAt < new Date()) {
-                    setErrorMessage(lang === "ru" ? "Срок действия промокода истёк" : "Promokodning amal qilish muddati tugagan");
+                    const expiredMsg = lang === "ru" ? "Срок действия промокода истёк" : "Promokodning amal qilish muddati tugagan";
+                    setErrorMessage(expiredMsg);
                     setIsBtnVisible(true);
+                    callOnDiscountApplied(0, "amount", expiredMsg, couponCode);
                     return;
                 }
 
-                // Определяем тип и значение скидки
                 let newDiscountValue = 0;
-                let newDiscountType = "amount"; // По умолчанию 'amount'
+                let newDiscountType = "amount";
 
                 if (promo.discount_percentage !== null) {
-                    // Если есть процентная скидка
                     newDiscountValue = parseFloat(promo.discount_percentage);
                     newDiscountType = "percentage";
                 } else if (promo.discount_amount !== null) {
-                    // Иначе используем фиксированную сумму
                     newDiscountValue = parseFloat(promo.discount_amount);
                     newDiscountType = "amount";
                 }
 
                 if (newDiscountValue > 0) {
+                    // Успешное применение
                     setDiscountValue(newDiscountValue);
                     setDiscountType(newDiscountType);
                     setErrorMessage("");
                     setIsBtnVisible(false);
+
+                    // Уведомляем родителя о примененной скидке
+                    callOnDiscountApplied(newDiscountValue, newDiscountType, "", couponCode);
+
                 } else {
                     // Промокод действителен, но скидка 0
-                    setErrorMessage(lang === "ru" ? "Промокод не дает скидку" : "Promokod chegirma bermaydi");
+                    const zeroDiscountMsg = lang === "ru" ? "Промокод не дает скидку" : "Promokod chegirma bermaydi";
+                    setErrorMessage(zeroDiscountMsg);
                     setDiscountValue(0);
                     setIsBtnVisible(true);
+
+                    // Уведомляем родителя о нулевой скидке и предупреждении
+                    callOnDiscountApplied(0, "amount", zeroDiscountMsg, couponCode);
                 }
 
             } else {
                 // Сервер ответил, но status: false (промокод не найден/недействителен)
-                // Предполагаем, что сервер должен возвращать осмысленное сообщение в случае ошибки,
-                // но в данном случае выводим общее сообщение.
-                setErrorMessage(lang === "ru" ? "Неверный или недействительный промокод" : "Noto'g'ri yoki yaroqsiz promokod");
+                const invalidCodeMsg = lang === "ru" ? "Неверный или недействительный промокод" : "Noto'g'ri yoki yaroqsiz promokod";
+                setErrorMessage(invalidCodeMsg);
                 setDiscountValue(0);
                 setIsBtnVisible(true);
+
+                // Уведомляем родителя о сбросе скидки и ошибке
+                callOnDiscountApplied(0, "amount", invalidCodeMsg, couponCode);
             }
         } catch (error) {
             console.error("Error applying discount:", error);
-            // Ошибка сети или другая техническая ошибка
-            setErrorMessage(lang === "ru" ? "Ошибка подключения к серверу. Попробуйте позже." : "Serverga ulanishda xato. Keyinroq urinib ko'ring.");
+            const connectionErrorMsg = lang === "ru" ? "Ошибка подключения к серверу. Попробуйте позже." : "Serverga ulanishda xato. Keyinroq urinib ko'ring.";
+            setErrorMessage(connectionErrorMsg);
             setDiscountValue(0);
             setIsBtnVisible(true);
+
+            // Уведомляем родителя о сбросе скидки и ошибке
+            callOnDiscountApplied(0, "amount", connectionErrorMsg, couponCode);
         } finally {
             setIsLoading(false);
         }
@@ -151,10 +172,13 @@ const DiscountCoupon = ({onDiscountApplied}: any) => {
     const handleRemoveCoupon = () => {
         setCouponCode("");
         setDiscountValue(0);
-        setDiscountType("amount"); // Сброс типа скидки
+        setDiscountType("amount");
         setIsVisible(false);
         setIsBtnVisible(true);
         setErrorMessage("");
+
+        // Уведомляем родителя о полном сбросе скидки
+        callOnDiscountApplied(0, "amount", "", "");
     };
 
     return (
@@ -201,8 +225,8 @@ const DiscountCoupon = ({onDiscountApplied}: any) => {
                                     disabled={isLoading} // Блокируем кнопку во время загрузки
                             >
                                 {isLoading
-                                    ? (lang === "ru" ? "Загрузка..." : "Yuklanmoqda...")
-                                    : (lang === "ru" ? "Подтвердить" : "Tasdiqlash")}
+                                    ? <Clock/>
+                                    : <Check/>}
                             </button>
                         </form>
                     </motion.div>
@@ -214,31 +238,19 @@ const DiscountCoupon = ({onDiscountApplied}: any) => {
                                  exit={{height: 0, opacity: 0}}
                                  transition={{duration: 0.4}}
                     >
-                        <Badge bg="success"> {/* Изменил цвет на success, т.к. купон применен */}
+                        <Badge bg="success">
                             {couponCode}
                             <a onClick={handleRemoveCoupon}
                                style={{
                                    color: "white",
                                    paddingLeft: "5px",
                                    fontSize: "12px",
-                                   cursor: "pointer", // Добавил курсор
+                                   cursor: "pointer",
                                }}
                                className="gi-select-cancel"
                             >×</a>
                         </Badge>
                     </motion.span>
-                )}
-            </AnimatePresence>
-
-            {/* Сообщения */}
-            <AnimatePresence>
-                {discountValue > 0 && (
-                    <motion.div className="text-success mt-2" // Используем Bootstrap класс для успеха
-                                initial={{opacity: 0}}
-                                animate={{opacity: 1}}
-                                exit={{opacity: 0}}
-                    >
-                    </motion.div>
                 )}
             </AnimatePresence>
         </>

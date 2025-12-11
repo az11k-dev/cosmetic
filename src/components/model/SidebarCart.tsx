@@ -1,20 +1,20 @@
-import { useEffect, useState, useCallback } from "react";
+import {useEffect, useState, useCallback} from "react";
 // 💡 useCart'dan kerakli funksiyalarni import qilish
-import { useCart } from "@/context/CartContext.tsx";
+import {useCart} from "@/context/CartContext.tsx";
 
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import QuantitySelector from "../quantity-selector/QuantitySelector";
-import { useTranslation } from "react-i18next";
-import { Item } from "@/types/data.types";
+import {useTranslation} from "react-i18next";
+import {Item} from "@/types/data.types";
 
 // CartItem turini bu yerda ham e'lon qilishimiz kerak, agar Item'dan foydalanmasa
 interface CartItem extends Item {
     quantity: number;
 }
 
-const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartOpen: boolean; }) => {
+const SidebarCart = ({closeCart, isCartOpen}: { closeCart: () => void; isCartOpen: boolean; }) => {
 
-    const { t } = useTranslation("sidebarCart");
+    const {t} = useTranslation("sidebarCart");
     const lang = localStorage.getItem("i18nextLng");
     // 💡 CONTEXTDAN KERAKLI HOLAT VA FUNKSIYALARNI OLISH
     const {
@@ -24,13 +24,11 @@ const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartO
     } = useCart();
 
     const [subTotal, setSubTotal] = useState(0);
-    const [vat, setVat] = useState(0);
 
     // Umumiy summani hisoblash (useEffect)
     useEffect(() => {
         if (cartItems.length === 0) {
             setSubTotal(0);
-            setVat(0);
             return;
         }
 
@@ -41,13 +39,9 @@ const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartO
             0
         );
         setSubTotal(subtotal);
-
-        // QQS (VAT) hisoblash (20%)
-        const vatAmount = subtotal * 0.2;
-        setVat(vatAmount);
     }, [cartItems]);
 
-    const total = subTotal + vat;
+    const total = subTotal;
 
     const handleSubmit = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
@@ -68,7 +62,7 @@ const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartO
         <>
             {isCartOpen && (
                 <div
-                    style={{ display: isCartOpen ? "block" : "none" }}
+                    style={{display: isCartOpen ? "block" : "none"}}
                     className="gi-side-cart-overlay"
                     onClick={closeCart}
                 ></div>
@@ -90,7 +84,7 @@ const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartO
                                             to="/"
                                             className="gi-pro-img"
                                         >
-                                            <img src={item?.images[0]?.upload?.file_url} alt="product" />
+                                            <img src={item?.images[0]?.upload?.file_url} alt="product"/>
                                         </Link>
                                         <div className="gi-pro-content">
                                             <Link to="/" className="cart-pro-title">
@@ -98,7 +92,7 @@ const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartO
                                             </Link>
                                             <span className="cart-price">
                                                 {/* Umumiy narxni hisoblaymiz */}
-                                                <span>{(item.price * item.quantity).toFixed(2)} so'm</span>
+                                                <span>{(item.price * item.quantity).toLocaleString("en-US")} so'm</span>
                                             </span>
                                             <div className="qty-plus-minus gi-qty-rtl">
                                                 {/* 💡 QuantitySelector komponentiga funksiyani o'tkazamiz */}
@@ -128,27 +122,40 @@ const SidebarCart = ({ closeCart, isCartOpen }: { closeCart: () => void; isCartO
                                 <table className="table cart-table">
                                     <tbody>
                                     <tr>
-                                        <td className="text-left">{t('subTotal')} :</td>
-                                        <td className="text-right">${subTotal.toFixed(2)}</td>
-                                    </tr>
-                                    <tr>
-                                        <td className="text-left">{t('vat')} (20%) :</td>
-                                        <td className="text-right">${vat.toFixed(2)}</td>
-                                    </tr>
-                                    <tr>
                                         <td className="text-left">{t('total')} :</td>
                                         <td className="text-right primary-color">
-                                            ${total.toFixed(2)}
+                                            {total.toLocaleString("en-US")} so'm
                                         </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div className="cart_btn" style={{display: "flex", justifyContent: "space-between" ,gap:"10px"}} >
-                                <Link  to="/cart" className="gi-btn-1" style={{display:"flex" ,justifyContent:"center",alignItems:"center",fontSize:"12px",width:"250px" , height:"50px",  padding:"10px",textAlign:"center",lineHeight:"20px"}}  onClick={closeCart} >
+                            <div className="cart_btn"
+                                 style={{display: "flex", justifyContent: "space-between", gap: "10px"}}>
+                                <Link to="/cart" className="gi-btn-1" style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    fontSize: "12px",
+                                    width: "250px",
+                                    height: "50px",
+                                    padding: "10px",
+                                    textAlign: "center",
+                                    lineHeight: "20px"
+                                }} onClick={closeCart}>
                                     {t('viewCartButton')}
                                 </Link>
-                                <Link to="/checkout" className="gi-btn-2" style={{display:"flex",justifyContent:"center",alignItems:"center",fontSize:"12px",width:"250px" , height:"50px",  padding:"10px",textAlign:"center",lineHeight:"20px"}}  onClick={closeCart}>
+                                <Link to="/checkout" className="gi-btn-2" style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    fontSize: "12px",
+                                    width: "250px",
+                                    height: "50px",
+                                    padding: "10px",
+                                    textAlign: "center",
+                                    lineHeight: "20px"
+                                }} onClick={closeCart}>
                                     {t('checkoutButton')}
                                 </Link>
                             </div>

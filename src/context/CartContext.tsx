@@ -72,7 +72,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({children}) => {
         if (typeof window !== 'undefined') {
             try {
                 localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cartItems));
-                console.log("Savat localStorage'ga saqlandi.");
             } catch (error) {
                 console.error("localStorage'ga saqlashda xatolik:", error);
             }

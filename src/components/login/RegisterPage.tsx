@@ -113,7 +113,6 @@ const RegisterPage = () => {
                 // --- ЛОГИКА УСПЕШНОЙ РЕГИСТРАЦИИ ---
                 const {user, token} = (data as RegisterSuccessResponse).data;
 
-                // console.log("Registration successful:", message);
 
                 login(token, user);
                 navigate("/");
