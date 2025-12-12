@@ -10,5 +10,10 @@
   "items": "товаров",
   "cart": "Корзина",
   "searchProducts": "Поиск товаров...",
-  "noResultsFound": "Продукты не найдены"
+  "noResultsFound": "Продукты не найдены",
+  "common": {
+    "uzbek_language": "Узбекский",
+    "russian_language": "Русский",
+    "select_language": "Выбрать язык"
+  }
 }

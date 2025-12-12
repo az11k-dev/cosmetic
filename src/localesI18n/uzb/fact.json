@@ -1,13 +1,20 @@
 {
-  "facts_name_1": "Yetkazib beruvchilar",
-  "facts_description_1": "Keng tarqalgan fikrga zid ravishda, Lorem shunchaki tasodifiy matn emas, ular bizning asosiy hamkorlarimizdir.",
-
-  "facts_name_2": "Daromad",
-  "facts_description_2": "Bizning yillik daromadimiz mijozlarning sifatli mahsulotlarga bo'lgan ishonchini isbotlaydi.",
-
-  "facts_name_3": "Sotilgan",
-  "facts_description_3": "Butun dunyo bo'ylab mamnun mijozlarimizga sotilgan mahsulotlarning umumiy soni.",
-
-  "facts_name_4": "Mahsulotlar",
-  "facts_description_4": "Parvarish uchun noyob kosmetika vositalarining keng assortimenti."
+  "stats": {
+    "item1": {
+      "name": "Sotuvlar",
+      "description": "Umumiy sotilgan mahsulotlar soni"
+    },
+    "item2": {
+      "name": "Mijozlar",
+      "description": "Bizga ishonch bildirgan mijozlar soni"
+    },
+    "item3": {
+      "name": "Tajriba",
+      "description": "Bozorda faoliyat yuritayotgan yillar"
+    },
+    "item4": {
+      "name": "Ijobiy fikrlar",
+      "description": "Mamnun mijozlar tomonidan qoldirilgan sharhlar"
+    }
+  }
 }

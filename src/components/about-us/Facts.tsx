@@ -1,40 +1,40 @@
 // Facts.tsx
-
 import {Col, Row} from "react-bootstrap";
 import Spinner from "../button/Spinner";
-import {useSliceData} from "@/hooks/useSliceData";
-// Импортируем useTranslation
+// import {useSliceData} from "@/hooks/useSliceData"; // Bu hook hozir ishlatilmagan
 import {useTranslation} from "react-i18next";
 
+// Data massivini o'zgartirmaymiz, faqat uni ishlatamiz.
 const data = [
     {
         id: 1,
         counter: "100K+",
-        name: "Sotuvlar",
-        description: "Umumiy sotilgan mahsulotlar soni",
+        nameKey: "stats.item1.name",
+        descriptionKey: "stats.item1.description",
     },
     {
         id: 2,
         counter: "20K+",
-        name: "Mijozlar",
-        description: "Bizga ishonch bildirgan mijozlar soni",
+        nameKey: "stats.item2.name",
+        descriptionKey: "stats.item2.description",
     },
     {
         id: 3,
         counter: "6+",
-        name: "Tajriba",
-        description: "Bozorda faoliyat yuritayotgan yillar",
+        nameKey: "stats.item3.name",
+        descriptionKey: "stats.item3.description",
     },
     {
         id: 4,
         counter: "10K+",
-        name: "Ijobiy fikrlar",
-        description: "Mamnun mijozlar tomonidan qoldirilgan sharhlar",
+        nameKey: "stats.item4.name",
+        descriptionKey: "stats.item4.description",
     },
-]
+];
 
 const Facts = () => {
-    // Инициализируем t (translate)
+    // 🎉 1. useTranslation ni komponentning ichida chaqiramiz
+    // 'fact' - bu sizning tarjima namespace'ingiz, masalan: fact.json
     const {t} = useTranslation("facts");
 
     if (!data)
@@ -44,6 +44,7 @@ const Facts = () => {
             </div>
         );
 
+    // getData funksiyasi ma'lumotlarni qaytaradi
     const getData = () => {
         return data;
     };
@@ -66,10 +67,9 @@ const Facts = () => {
                                         <span className="counter">{item.counter}</span>
                                     </div>
                                     <div className="gi-facts-desc">
-                                        {/* Переводим ключ name */}
-                                        <h4>{item.name}</h4>
-                                        {/* Переводим ключ description */}
-                                        <p>{item.description}</p>
+                                        {/* 🎉 2. nameKey va descriptionKey orqali t() funksiyasiga murojaat qilamiz */}
+                                        <h4>{t(item.nameKey)}</h4>
+                                        <p>{t(item.descriptionKey)}</p>
                                     </div>
                                 </div>
                             </Col>

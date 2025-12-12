@@ -3,7 +3,9 @@ import {Link, useNavigate} from "react-router-dom";
 import SidebarCart from "../../../model/SidebarCart";
 import {useAuth} from "@/context/AuthContext";
 import {useTranslation} from "react-i18next";
-import useDebounce from "@/hooks/useDebounce"; // Используем хук, созданный ранее
+import useDebounce from "@/hooks/useDebounce";
+import Dropdown from "react-bootstrap/Dropdown";
+import {changeLanguage} from "i18next"; // Используем хук, созданный ранее
 
 // 💡 НОВЫЕ ТИПЫ ДЛЯ ЛОКАЛИЗАЦИИ И РЕЗУЛЬТАТА
 interface LocalizedString {
@@ -20,6 +22,8 @@ interface SearchResult {
 }
 
 const SEARCH_API_URL = "https://admin.beauty-point.uz/api/search?q=";
+
+
 
 function HeaderTwo({cartItems, wishlistItems}: any) {
     // 💡 Получаем i18n instance для доступа к текущему языку
@@ -106,6 +110,22 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
         contextLogout();
         navigate("/");
     };
+
+    const changeLanguage = (lng: string) => {
+        i18n.changeLanguage(lng);
+        window.location.reload();
+    };
+
+    const getCurrentLanguageName = (lngCode: string) => {
+        if (lngCode.startsWith('uz')) return t('common.uzbek_language');
+        if (lngCode.startsWith('ru')) return t('common.russian_language');
+        // Agar til sozlamalarda topilmasa
+        return t('common.select_language');
+    };
+    const availableLanguages = [
+        {code: 'uz', nameKey: 'common.uzbek_language'},
+        {code: 'ru', nameKey: 'common.russian_language'},
+    ];
 
     return (
         <>
@@ -265,6 +285,28 @@ function HeaderTwo({cartItems, wishlistItems}: any) {
                                             <span className="gi-btn-stitle">{t("wishlist")}</span>
                                         </div>
                                     </Link>
+                                    <Dropdown className="header-top-lan-curr header-top-lan gi-header-btn gi-header-user dropdown-toggle gi-user-toggle gi-header-rtl-btn">
+                                        <Dropdown.Toggle variant="" className="gi-btn-stitle" id="dropdown-basic">
+                                            {/* Hozirgi aktiv til nomini tarjima orqali ko'rsatish */}
+                                            {getCurrentLanguageName(i18n.language)}
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu as="ul">
+                                            {availableLanguages.map((lang) => (
+                                                <Dropdown.Item
+                                                    as="li"
+                                                    key={lang.code}
+                                                    onClick={() => changeLanguage(lang.code)}
+                                                    className={i18n.language.startsWith(lang.code) ? 'active' : ''}
+                                                >
+
+
+                                                    {/* Dropdown menyusidagi tillarning nomini tarjima orqali ko'rsatish */}
+                                                    {t(lang.nameKey)}
+                                                </Dropdown.Item>
+                                            ))}
+                                        </Dropdown.Menu>
+
+                                    </Dropdown>
                                     {/* Cart */}
                                     <Link
                                         onClick={openCart}

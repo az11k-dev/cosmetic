@@ -10,5 +10,10 @@
   "items": "ta element",
   "cart": "Savat",
   "searchProducts": "Mahsulotlarni qidirish...",
-  "noResultsFound": "Mahsulotlar topilmadi"
+  "noResultsFound": "Mahsulotlar topilmadi",
+  "common": {
+    "uzbek_language": "O‘zbekcha",
+    "russian_language": "Russcha",
+    "select_language": "Tilni tanlang"
+  }
 }

@@ -4,23 +4,35 @@ import {Link, useNavigate} from "react-router-dom";
 // Boshqa importlar...
 import SmoothCollapse from "react-smooth-collapse";
 
+// MobileManuSidebar komponenti uchun TypeScript interfeysi
+interface MobileManuSidebarProps {
+    isMobileMenuOpen: boolean;
+    closeMobileManu: () => void; // Menyuni yopish funksiyasi
+    toggleMainMenu: (menu: string) => void;
+    activeMainMenu: string | null;
+}
+
 const MobileManuSidebar = ({
                                isMobileMenuOpen,
-                               closeMobileManu,
+                               closeMobileManu, // Funksiyani propslardan qabul qilamiz
                                toggleMainMenu,
                                activeMainMenu,
-                           }: any) => {
-    // 'headerMenu' nom maydonidan tarjima funksiyasini chaqiramiz
+                           }: MobileManuSidebarProps) => {
 
+    // 'headerMenu' nom maydonidan tarjima funksiyasini chaqiramiz
     const {t} = useTranslation("headerManu");
     const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
 
+    // Sub-menuni ochish/yopish logikasi (hozir ishlatilmayapti, lekin kodda bor)
     const toggleSubMenu = (submenu: string) => {
         setActiveSubMenu((prevSubMenu) =>
             prevSubMenu === submenu ? null : submenu
         );
     };
+
     const navigate = useNavigate();
+
+    // Mobil menyu elementlari
     const data = [
         {
             id: 1,
@@ -52,48 +64,49 @@ const MobileManuSidebar = ({
             name: t("orders"),
             link: "/orders",
         }
-    ]
+    ];
 
-    // ** DIQQAT: Style qo'shilgan joylar: **
-
-    // ** 1. gi-mobile-menu uchun yuqoridagi kodda `height:"100vh"` allaqachon bor, bu yaxshi. **
-
+    // Menyuning ichki qismi uchun stil
     const menuInnerStyle = {
-        height: "100%", // Ota elementning to'liq balandligini egallashi uchun
-        display: "flex", // Flexbox ni yoqish
-        flexDirection: "column", // Elementlarni ustma-ust taxlash
-        justifyContent: "space-between", // Asosiy kontentni yuqoriga, pastki kontentni pastga itarish uchun
+        height: "100%",
+        display: "flex",
+        flexDirection: "column" as const, // TS uchun to'g'ri tur
+        justifyContent: "space-between",
     };
 
     return (
         <>
+            {/* Menyuni yopuvchi qavat (overlay) */}
             <div
                 style={{display: isMobileMenuOpen ? "block" : "none"}}
                 onClick={closeMobileManu}
                 className="gi-mobile-menu-overlay"
             ></div>
 
-
+            {/* Asosiy mobil menyu konteyneri */}
             {isMobileMenuOpen && (
                 <div id="gi-mobile-menu" className="gi-mobile-menu gi-menu-open" style={{height: "100vh"}}>
                     <div className="gi-menu-title">
-                        {/* ✅ TARJIMA: My Menu */}
                         <span className="menu_title">{t("menuTitle")}</span>
+                        {/* Menyuni yopish tugmasi */}
                         <button onClick={closeMobileManu} className="gi-close-menu">
                             ×
                         </button>
                     </div>
-                    {/* ** 2. gi-menu-inner ga yangi stil berildi ** */}
+
+                    {/* Menyuning ichki qismi (kontent va ijtimoiy tarmoqlar) */}
                     <div className="gi-menu-inner" style={menuInnerStyle}>
 
-                        {/* ** 3. Yangi o'ram (wrapper) qo'shildi va unga flex-grow berildi ** */}
+                        {/* Asosiy menyu elementlari o'rami (scrolling uchun) */}
                         <div style={{flexGrow: 1, overflowY: 'auto'}}>
                             {data.map((item: any) => (
                                 <div className="gi-menu-content" key={item?.id}>
                                     <ul>
                                         <li className="dropdown">
+                                            {/* 👇 MUHIM O'ZGARTIRISH: navigate va closeMobileManu birgalikda chaqiriladi */}
                                             <a onClick={() => {
-                                                navigate(item?.link)
+                                                navigate(item?.link);
+                                                closeMobileManu(); // Sahifaga o'tilganda menyuni yopish
                                             }}>
                                                 {item?.name}
                                             </a>
@@ -109,7 +122,7 @@ const MobileManuSidebar = ({
                             ))}
                         </div>
 
-                        {/* ** 4. Ijtimoiy tarmoqlar bloki endi eng pastda qoladi ** */}
+                        {/* Ijtimoiy tarmoqlar bloki (pastda qoladi) */}
                         <div className="header-res-lan-curr" style={{padding: '5px 0'}}>
                             <div className="header-res-social">
                                 <div className="header-top-social">
@@ -129,11 +142,6 @@ const MobileManuSidebar = ({
                                                 <i className="gicon gi-instagram"></i>
                                             </Link>
                                         </li>
-                                        {/*<li className="list-inline-item">*/}
-                                        {/*    <Link to="#">*/}
-                                        {/*        <i className="gicon gi-linkedin"></i>*/}
-                                        {/*    </Link>*/}
-                                        {/*</li>*/}
                                     </ul>
                                 </div>
                             </div>

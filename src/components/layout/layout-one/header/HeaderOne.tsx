@@ -37,12 +37,7 @@ function HeaderOne() {
     };
 
     // Til kodiga mos keluvchi matnni qaytarish (endilikda tarjima kaliti orqali)
-    const getCurrentLanguageName = (lngCode: string) => {
-        if (lngCode.startsWith('uz')) return t('common.uzbek_language');
-        if (lngCode.startsWith('ru')) return t('common.russian_language');
-        // Agar til sozlamalarda topilmasa
-        return t('common.select_language');
-    };
+
 
     const getCurrentLanguageName2 = (lngCode: string) => {
         if (lngCode.startsWith('uz')) return t('common2.uzbek_language');
@@ -52,10 +47,7 @@ function HeaderOne() {
     };
 
     // Til tanlash uchun massiv (Faqat 'uz' va 'ru')
-    const availableLanguages = [
-        {code: 'uz', nameKey: 'common.uzbek_language'},
-        {code: 'ru', nameKey: 'common.russian_language'},
-    ];
+
 
     const availableLanguages2 = [
         {code2: 'uz', nameKey2: 'common2.uzbek_language'},
@@ -71,10 +63,7 @@ function HeaderOne() {
 
                         {/* */}
                         <div className="col text-center header-top-center">
-                            <div className="header-top-message">
-                                {/* Matnni tarjima qilish */}
-                                {t('header.slogan')}
-                            </div>
+
                         </div>
                         {/* */}
                         <div className="col header-top-right d-none d-lg-block">
@@ -85,28 +74,7 @@ function HeaderOne() {
                                 </Link>
 
 
-                                <Dropdown className="header-top-lan-curr header-top-lan">
-                                    <Dropdown.Toggle variant="" className="dropdown-toggle" id="dropdown-basic">
-                                        {/* Hozirgi aktiv til nomini tarjima orqali ko'rsatish */}
-                                        {getCurrentLanguageName(i18n.language)}
-                                    </Dropdown.Toggle>
-                                    <Dropdown.Menu as="ul">
-                                        {availableLanguages.map((lang) => (
-                                            <Dropdown.Item
-                                                as="li"
-                                                key={lang.code}
-                                                onClick={() => changeLanguage(lang.code)}
-                                                className={i18n.language.startsWith(lang.code) ? 'active' : ''}
-                                            >
 
-
-                                                {/* Dropdown menyusidagi tillarning nomini tarjima orqali ko'rsatish */}
-                                                {t(lang.nameKey)}
-                                            </Dropdown.Item>
-                                        ))}
-                                    </Dropdown.Menu>
-
-                                </Dropdown>
                                 {/* */}
                             </div>
                         </div>
