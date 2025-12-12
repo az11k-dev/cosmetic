@@ -33,6 +33,11 @@ function HeaderManu() {
             id: 5,
             name: t("faq"),
             link: "/faq",
+        },
+        {
+            id: 6,
+            name: t("orders"),
+            link: "/orders",
         }
     ]
 
@@ -41,7 +46,11 @@ function HeaderManu() {
     };
     return (
         <>
-            <div className="gi-header-cat d-none d-lg-block">
+            <div className="gi-header-cat d-none d-lg-block" style={{
+                padding: 0,
+                paddingTop: 0,
+                paddingBottom: 0,
+            }}>
                 <div className="container position-relative">
                     <div className="gi-nav-bar">
                         {/* */}

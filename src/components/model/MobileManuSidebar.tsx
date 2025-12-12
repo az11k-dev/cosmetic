@@ -46,6 +46,11 @@ const MobileManuSidebar = ({
             id: 5,
             name: t("faq"),
             link: "/faq",
+        },
+        {
+            id: 6,
+            name: t("orders"),
+            link: "/orders",
         }
     ]
 
@@ -70,7 +75,7 @@ const MobileManuSidebar = ({
 
 
             {isMobileMenuOpen && (
-                <div id="gi-mobile-menu" className="gi-mobile-menu gi-menu-open" style={{ height:"100vh"}}>
+                <div id="gi-mobile-menu" className="gi-mobile-menu gi-menu-open" style={{height: "100vh"}}>
                     <div className="gi-menu-title">
                         {/* ✅ TARJIMA: My Menu */}
                         <span className="menu_title">{t("menuTitle")}</span>
@@ -82,12 +87,14 @@ const MobileManuSidebar = ({
                     <div className="gi-menu-inner" style={menuInnerStyle}>
 
                         {/* ** 3. Yangi o'ram (wrapper) qo'shildi va unga flex-grow berildi ** */}
-                        <div style={{ flexGrow: 1, overflowY: 'auto' }}>
+                        <div style={{flexGrow: 1, overflowY: 'auto'}}>
                             {data.map((item: any) => (
                                 <div className="gi-menu-content" key={item?.id}>
                                     <ul>
-                                        <li className="dropdown" >
-                                            <a onClick={()=>{navigate(item?.link)}}>
+                                        <li className="dropdown">
+                                            <a onClick={() => {
+                                                navigate(item?.link)
+                                            }}>
                                                 {item?.name}
                                             </a>
                                             <SmoothCollapse
@@ -103,8 +110,8 @@ const MobileManuSidebar = ({
                         </div>
 
                         {/* ** 4. Ijtimoiy tarmoqlar bloki endi eng pastda qoladi ** */}
-                        <div className="header-res-lan-curr" style={{ padding: '5px 0'}}>
-                            <div className="header-res-social" >
+                        <div className="header-res-lan-curr" style={{padding: '5px 0'}}>
+                            <div className="header-res-social">
                                 <div className="header-top-social">
                                     <ul className="mb-0">
                                         <li className="list-inline-item">

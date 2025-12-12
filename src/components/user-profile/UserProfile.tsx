@@ -47,8 +47,10 @@ const UserProfile = () => {
             <section className="gi-vendor-profile padding-tb-40">
                 <div className="container">
                     <Row className="mb-minus-24px">
-                        <VendorSidebar/>
-                        <Col lg={9} md={12} className="mb-24">
+                        <Col lg={9} md={12} className="mb-24" style={{
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                        }}>
                             <Row>
                                 <div className="container">
                                     <div className="gi-vendor-cover">

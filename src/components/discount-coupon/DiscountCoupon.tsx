@@ -214,7 +214,7 @@ const DiscountCoupon = ({onDiscountApplied}: any) => {
                             handleApplyDiscount();
                         }}>
                             <input style={{
-                                minWidth: "200px"
+                                minWidth: "100px"
                             }} className="gi-coupan" type="text" value={couponCode}
                                    onChange={(e) => setCouponCode(e.target.value.toUpperCase())} // Приводим к верхнему регистру
                                    required

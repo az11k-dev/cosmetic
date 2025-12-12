@@ -2,7 +2,7 @@ import {Col, Form, Row, Button} from "react-bootstrap";
 import {
     FaMobileAlt,
     FaGlobeAmericas,
-    FaMapMarkerAlt,
+    FaMapMarkerAlt, FaTelegram,
 } from "react-icons/fa";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
@@ -114,17 +114,21 @@ const Contact = () => {
                             <div className="gi-box">
                                 <div className="detail">
                                     <div className="icon">
-                                        <i className="fa fa-globe" aria-hidden="true">
-                                            <FaGlobeAmericas/>
+                                        <i className="fa fa-telegram" aria-hidden="true">
+                                            <FaTelegram/>
                                         </i>
                                     </div>
                                     <div className="info">
                                         <h3 className="title">{t("website")}</h3>
-                                        <p>
-                                            <i className="fa fa-globe" aria-hidden="true">
-                                                <FaGlobeAmericas/>
+                                        <p style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: 5
+                                        }}>
+                                            <i className="fa fa-telegram" aria-hidden="true">
+                                                <FaTelegram/>
                                             </i>{" "}
-                                            <a href="https://beauty-point.uz">https://beauty-point.uz</a>
+                                            <a href="https://t.me/your_beautypoint">BEAUTY POINT</a>
                                         </p>
                                     </div>
                                 </div>
@@ -142,7 +146,11 @@ const Contact = () => {
                                     </div>
                                     <div className="info">
                                         <h3 className="title">{t("contact")}</h3>
-                                        <p>
+                                        <p style={{
+                                            display: "flex",
+                                            alignItems: "center",
+                                            gap: 5
+                                        }}>
                                             <i className="fa fa-mobile" aria-hidden="true">
                                                 <FaMobileAlt/>
                                             </i>{" "}
@@ -180,7 +188,10 @@ const Contact = () => {
                     </Row>
                     <Row className="p-t-80">
                         <Col md={6}>
-                            <iframe src="//maps.google.com/maps?q=-12.942227,-38.480291&z=15&output=embed"></iframe>
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2997.7271261750943!2d69.2763114!3d41.293042899999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8acf5d8da733%3A0x2fcf5f9eefedbf25!2s77VG%2B7G4%2C%20Avliyoota%20Street%2063%2C%20100015%2C%20Tashkent!5e0!3m2!1sen!2s!4v1765534794672!5m2!1sen!2s"
+                                loading="lazy"
+                                referrerPolicy="no-referrer-when-downgrade"></iframe>
                         </Col>
                         <Col md={6}>
                             <Form noValidate validated={validated} onSubmit={handleSubmit}>
