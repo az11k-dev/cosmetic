@@ -382,6 +382,12 @@ a {
     color: #4a90e2; /* Синий цвет для ссылки */
 }
 
+@media screen and (min-width: 1024px) {
+    #spec-bg-white {
+        display: none;
+    }
+}
+
 .loading-indicator, .no-results {
     padding: 15px;
     text-align: center;

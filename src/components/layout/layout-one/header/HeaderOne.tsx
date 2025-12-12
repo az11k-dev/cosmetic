@@ -57,28 +57,9 @@ function HeaderOne() {
 
     return (
         <>
-            <div className="header-top">
+            <div className="header-top" id={"spec-bg-white"}>
                 <div className="container">
                     <div className="row align-itegi-center">
-
-                        {/* */}
-                        <div className="col text-center header-top-center">
-
-                        </div>
-                        {/* */}
-                        <div className="col header-top-right d-none d-lg-block">
-                            <div className="header-top-right-inner d-flex justify-content-end">
-                                <Link className="gi-help" to="/faq">
-                                    {/* Matnni tarjima qilish */}
-                                    {t('header.help')}
-                                </Link>
-
-
-
-                                {/* */}
-                            </div>
-                        </div>
-                        {/* */}
                         <div className="col header-top-res d-lg-none">
                             <div className="gi-header-bottons">
                                 <div className="right-icons">
