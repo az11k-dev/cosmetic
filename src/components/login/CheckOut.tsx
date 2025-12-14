@@ -188,6 +188,10 @@ const CheckOut = () => {
 
     const vat = selectedMethod === "flat" ? flatDeliveryCost : 0;
 
+    if (!user) {
+        navigate("/login");
+    }
+
     const calculateFinalTotal = useCallback(() => {
         let currentTotal = subTotal + vat;
         const {value, type} = discountState;
@@ -309,11 +313,11 @@ const CheckOut = () => {
                 window.scrollTo(0, 0);
                 navigate("/");
                 if (paymentMethod === "payme") {
-    window.location.href = res?.data?.payment?.payme || "/";
-} else {
-    window.location.href = res?.data?.payment?.click || "/";
+                    window.location.href = res?.data?.payment?.payme || "/";
+                } else {
+                    window.location.href = res?.data?.payment?.click || "/";
                 }
-            
+
             } else {
                 // Если API возвращает 200, но статус не success (может быть 'error' с сообщением)
                 const message = response.data.message || "Неизвестная ошибка при оформлении заказа.";

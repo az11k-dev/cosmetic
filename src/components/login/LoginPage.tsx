@@ -184,7 +184,7 @@ const LoginPage = () => {
                             <div className="gi-login-img">
                                 <img
                                     src={
-                                        "/assets/img/common/login.png"
+                                        "https://skyatransdermic.com/cdn/shop/articles/Top_10_Cosmetic_Companies_in_Uganda_1100x.jpg?v=1734583296"
                                     }
                                     alt="login"
                                 />
